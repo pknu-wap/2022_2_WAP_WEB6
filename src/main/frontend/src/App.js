@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import {Routes, Route} from "react-router-dom";
+
+import HelloWorld from "./routes/helloworld.component";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    return (
+        <Routes>
+            <Route path='/'>
+                <Route path='helloworld' element={<HelloWorld/>}/> {/*react spring 통신 예제 */}
 
+                {/*<Route index={true} element={<Home/>}/> /!* index=true이므로 기본*!/*/}
+
+
+            </Route>
+
+
+        </Routes>
+    );
+}
 export default App;
