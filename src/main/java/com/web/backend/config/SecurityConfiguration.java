@@ -4,7 +4,6 @@ import com.web.backend.service.CustomUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -45,8 +44,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //        http.authorizeRequests().anyRequest().permitAll(); //모든 권한 ok
         http.authorizeRequests().anyRequest().authenticated(); //모든 권한 X
 
-        http.formLogin(); //로그인 해라
+//        http.authorizeRequests((request) -> request.antMatchers("/h2-console/**")
+//                .permitAll().anyRequest().authenticated()).httpBasic(); //h2-console은 모든 유저가능
 
-        http.httpBasic(); //제일 기본적인 인증 방법 세션, 쿠키 등이 필요 없다, 로그아웃이 불가능하다.
+        http.formLogin(); //로그인 해라
+        http.csrf().disable().headers().frameOptions().disable(); // csrf disable
+//        http.httpBasic(); //제일 기본적인 인증 방법 세션, 쿠키 등이 필요 없다, 로그아웃이 불가능하다.
     }
 }

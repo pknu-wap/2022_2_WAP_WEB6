@@ -38,6 +38,7 @@ public class WebProjectApplication {
 
 		user.setPassword(passwordEncoder.encode("pardeep@123"));
 		user.setEnabled(true);
+		user.setAuthorities(authorityEntityList);
 
 		userDetailsRepository.save(user);
 	}
