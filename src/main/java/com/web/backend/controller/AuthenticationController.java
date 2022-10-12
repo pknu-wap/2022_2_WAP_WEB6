@@ -44,7 +44,6 @@ public class AuthenticationController {
         LoginResponse response = new LoginResponse();
         response.setToken(jwtToken);
 
-
         return ResponseEntity.ok(response);
     }
 

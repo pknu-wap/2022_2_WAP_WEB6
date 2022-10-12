@@ -37,12 +37,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //admin 권한 유저 생성
         //memory auth
-        auth.inMemoryAuthentication().withUser("Pardeep").password(passwordEncoder().encode("test@123")).authorities("USER", "ADMIN");
+        auth.inMemoryAuthentication().withUser("Pardeep")
+                .password(passwordEncoder().encode("test@123"))
+                .authorities("USER", "ADMIN");
 
         //Database auth
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
 
+    //암호화 코드
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -63,7 +66,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .permitAll().anyRequest().authenticated()).httpBasic(); //h2-console은 모든 유저가능
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint).and()
-                .authorizeRequests((request) -> request.antMatchers("/h2-console/**", "/api/v1/auth/login").permitAll()
+                .authorizeRequests((request) -> request.antMatchers("/h2-console/**", "/api/v1/auth/login","/api/1.0/users").permitAll()
                         .antMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated())
                 .addFilterBefore(new JWTAuthenticationFilter(userService, jwtTokenHelper),
                         UsernamePasswordAuthenticationFilter.class);
