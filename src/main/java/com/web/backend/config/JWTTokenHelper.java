@@ -16,15 +16,16 @@ public class JWTTokenHelper {
 
 
     @Value("${jwt.auth.app}")
-    private String appName; // 어떤 app에서 사용했는지
+    private String appName;
 
     @Value("${jwt.auth.secret_key}")
     private String secretKey;
 
     @Value("${jwt.auth.expires_in}")
-    private int expiresIn; //expire date
+    private int expiresIn;
 
     private SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
+
 
 
     private Claims getAllClaimsFromToken(String token) {
@@ -41,7 +42,7 @@ public class JWTTokenHelper {
     }
 
 
-    public String getUsernameFromToken(String token) { //username에서 token 가져옴
+    public String getUsernameFromToken(String token) {
         String username;
         try {
             final Claims claims = this.getAllClaimsFromToken(token);
@@ -52,18 +53,16 @@ public class JWTTokenHelper {
         return username;
     }
 
-    // token 생성
     public String generateToken(String username) throws InvalidKeySpecException, NoSuchAlgorithmException {
 
         return Jwts.builder()
-                .setIssuer(appName)
+                .setIssuer( appName )
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(generateExpirationDate())
-                .signWith(SIGNATURE_ALGORITHM, secretKey)
+                .signWith( SIGNATURE_ALGORITHM, secretKey )
                 .compact();
     }
-
 
     private Date generateExpirationDate() {
         return new Date(new Date().getTime() + expiresIn * 1000);
@@ -78,9 +77,8 @@ public class JWTTokenHelper {
         );
     }
 
-    // token유효 기간 체크
     public boolean isTokenExpired(String token) {
-        Date expireDate = getExpirationDate(token);
+        Date expireDate=getExpirationDate(token);
         return expireDate.before(new Date());
     }
 
@@ -108,17 +106,17 @@ public class JWTTokenHelper {
         return issueAt;
     }
 
-    public String getToken(HttpServletRequest request) {
+    public String getToken( HttpServletRequest request ) {
 
-        String authHeader = getAuthHeaderFromHeader(request);
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+        String authHeader = getAuthHeaderFromHeader( request );
+        if ( authHeader != null && authHeader.startsWith("Bearer ")) {
             return authHeader.substring(7);
         }
 
         return null;
     }
 
-    public String getAuthHeaderFromHeader(HttpServletRequest request) {
+    public String getAuthHeaderFromHeader( HttpServletRequest request ) {
         return request.getHeader("Authorization");
     }
 }

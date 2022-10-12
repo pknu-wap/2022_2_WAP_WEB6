@@ -63,7 +63,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .permitAll().anyRequest().authenticated()).httpBasic(); //h2-console은 모든 유저가능
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint).and()
-                .authorizeRequests((request) -> request.antMatchers("/api/v1/auth/login").permitAll()
+                .authorizeRequests((request) -> request.antMatchers("/h2-console/**", "/api/v1/auth/login").permitAll()
                         .antMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated())
                 .addFilterBefore(new JWTAuthenticationFilter(userService, jwtTokenHelper),
                         UsernamePasswordAuthenticationFilter.class);

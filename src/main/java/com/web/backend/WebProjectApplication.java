@@ -28,15 +28,16 @@ public class WebProjectApplication {
 	@PostConstruct // 초기화 후 수행되는 매서드
 	protected void init() {
 		List<AuthorityEntity> authorityEntityList = new ArrayList<>();
+
 		authorityEntityList.add(createAuthority("USER", "User role"));
 		authorityEntityList.add(createAuthority("ADMIN", "Admin role"));
 
 		UserEntity user = new UserEntity();
-		user.setUserName("pardeep161");
-		user.setFirstName("pardeep");
+		user.setUserName("testt");
+		user.setFirstName("test");
 		user.setLastName("H");
 
-		user.setPassword(passwordEncoder.encode("pardeep@123"));
+		user.setPassword(passwordEncoder.encode("testtest"));
 		user.setEnabled(true);
 		user.setAuthorities(authorityEntityList);
 
