@@ -10,6 +10,6 @@ public class AppController {
 
     @GetMapping
     public String testApp() {
-        return "Hello Spring Security";
+        return "hi";
     }
 }

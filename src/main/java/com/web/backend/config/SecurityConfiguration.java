@@ -59,20 +59,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests().anyRequest().permitAll(); //모든 권한 ok
-//        http.authorizeRequests().anyRequest().authenticated(); //모든 권한 X
-
-//        http.authorizeRequests((request) -> request.antMatchers("/h2-console/**")
-//                .permitAll().anyRequest().authenticated()).httpBasic(); //h2-console은 모든 유저가능
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint).and()
-                .authorizeRequests((request) -> request.antMatchers("/h2-console/**", "/api/v1/auth/login","/api/1.0/users").permitAll()
+                // 비로그인 유저의 권한
+                .authorizeRequests((request) -> request.antMatchers("/h2-console/**", "/user/login","/user/register").permitAll()
                         .antMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated())
                 .addFilterBefore(new JWTAuthenticationFilter(userService, jwtTokenHelper),
                         UsernamePasswordAuthenticationFilter.class);
-
-//        http.formLogin(); //로그인 해라
-        http.csrf().disable().headers().frameOptions().disable(); // csrf disable
-//        http.httpBasic(); //제일 기본적인 인증 방법 세션, 쿠키 등이 필요 없다, 로그아웃이 불가능하다.
+        // csrf 토큰 해제
+        http.csrf().disable().headers().frameOptions().disable();
     }
 }

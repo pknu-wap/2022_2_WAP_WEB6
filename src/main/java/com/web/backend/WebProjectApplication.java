@@ -33,11 +33,11 @@ public class WebProjectApplication {
 		authorityEntityList.add(createAuthority("ADMIN", "Admin role"));
 
 		UserEntity user = new UserEntity();
-		user.setUserName("testt");
+		user.setUserName("admin");
 		user.setFirstName("test");
 		user.setLastName("H");
 
-		user.setPassword(passwordEncoder.encode("testtest"));
+		user.setPassword(passwordEncoder.encode("adminadmin"));
 		user.setEnabled(true);
 		user.setAuthorities(authorityEntityList);
 

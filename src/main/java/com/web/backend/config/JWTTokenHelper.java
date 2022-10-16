@@ -17,16 +17,14 @@ public class JWTTokenHelper {
 
     @Value("${jwt.auth.app}")
     private String appName;
-
+    // 비밀키
     @Value("${jwt.auth.secret_key}")
     private String secretKey;
-
+    //만료 시간
     @Value("${jwt.auth.expires_in}")
     private int expiresIn;
-
+    // 암호화 방법
     private SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
-
-
 
     private Claims getAllClaimsFromToken(String token) {
         Claims claims;
@@ -40,7 +38,6 @@ public class JWTTokenHelper {
         }
         return claims;
     }
-
 
     public String getUsernameFromToken(String token) {
         String username;
@@ -93,7 +90,6 @@ public class JWTTokenHelper {
         }
         return expireDate;
     }
-
 
     public Date getIssuedAtDateFromToken(String token) {
         Date issueAt;

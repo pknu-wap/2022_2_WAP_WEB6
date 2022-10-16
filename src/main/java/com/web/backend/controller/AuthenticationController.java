@@ -19,7 +19,7 @@ import java.security.Principal;
 import java.security.spec.InvalidKeySpecException;
 
 @RestController
-@RequestMapping("/api/v1")
+//@RequestMapping("/api/v1")
 @CrossOrigin
 public class AuthenticationController {
     @Autowired
@@ -31,7 +31,8 @@ public class AuthenticationController {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @PostMapping("/auth/login")
+    // 로그인 요청
+    @PostMapping("/user/login")
     public ResponseEntity<?> login(@RequestBody AuthenticationRequest authenticationRequest) throws InvalidKeySpecException, NoSuchAlgorithmException {
         final Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 authenticationRequest.getUserName(), authenticationRequest.getPassword()));
@@ -39,6 +40,7 @@ public class AuthenticationController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         UserEntity user = (UserEntity) authentication.getPrincipal();
+        // 해당 유저 토큰 발급
         String jwtToken = jwtTokenHelper.generateToken(user.getUsername());
 
         LoginResponse response = new LoginResponse();
@@ -47,6 +49,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(response);
     }
 
+    // 모든 유저의 정보 가져오는 요청 test 용
     @GetMapping("/auth/userinfo")
     public ResponseEntity<?> getUserInfo(Principal user) {
         UserEntity userObj = (UserEntity) userDetailsService.loadUserByUsername(user.getName());
@@ -54,10 +57,6 @@ public class AuthenticationController {
         userInfo.setFirstName(userObj.getFirstName());
         userInfo.setLastName(userObj.getLastName());
         userInfo.setRoles(userObj.getAuthorities().toArray());
-
-
         return ResponseEntity.ok(userInfo);
-
-
     }
 }
