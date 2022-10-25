@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Value;
+
 @Component
 public class JWTTokenHelper {
 
@@ -52,12 +54,12 @@ public class JWTTokenHelper {
 
     public String generateToken(String username) throws InvalidKeySpecException, NoSuchAlgorithmException {
 
-        return Jwts.builder()
-                .setIssuer( appName )
+        return Jwts.builder() // 토큰 만들어줌
+                .setIssuer(appName)
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(generateExpirationDate())
-                .signWith( SIGNATURE_ALGORITHM, secretKey )
+                .signWith(SIGNATURE_ALGORITHM, secretKey)
                 .compact();
     }
 
@@ -75,7 +77,7 @@ public class JWTTokenHelper {
     }
 
     public boolean isTokenExpired(String token) {
-        Date expireDate=getExpirationDate(token);
+        Date expireDate = getExpirationDate(token);
         return expireDate.before(new Date());
     }
 
@@ -102,17 +104,17 @@ public class JWTTokenHelper {
         return issueAt;
     }
 
-    public String getToken( HttpServletRequest request ) {
+    public String getToken(HttpServletRequest request) {
 
-        String authHeader = getAuthHeaderFromHeader( request );
-        if ( authHeader != null && authHeader.startsWith("Bearer ")) {
+        String authHeader = getAuthHeaderFromHeader(request);
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
             return authHeader.substring(7);
         }
 
         return null;
     }
 
-    public String getAuthHeaderFromHeader( HttpServletRequest request ) {
+    public String getAuthHeaderFromHeader(HttpServletRequest request) {
         return request.getHeader("Authorization");
     }
 }
