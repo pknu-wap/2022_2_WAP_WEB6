@@ -2,18 +2,21 @@ package com.web.backend.entity;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity // DB가 해당 객체를 인식 가능하게 함
+@Entity
+@Getter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "procon_topic")
-public class ProConEntity {
+@Table(name = "procon_topic_board")
+public class ProConTopicEntity {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,4 +37,7 @@ public class ProConEntity {
     @Column
     private String reason;
 
+    public boolean isPro_con() {
+        return pro_con;
+    }
 }
