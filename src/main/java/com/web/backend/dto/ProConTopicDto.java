@@ -31,6 +31,6 @@ public class ProConTopicDto {
                 created.getContent(),
                 created.getDue_date(),
                 created.getReason()
-        )
+        );
     }
 }
