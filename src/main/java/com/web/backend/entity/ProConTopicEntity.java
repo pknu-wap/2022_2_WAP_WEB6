@@ -16,7 +16,7 @@ import java.util.Date;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "procon_topic_board")
+@Table(name = "procon_topic")
 public class ProConTopicEntity {
 
 

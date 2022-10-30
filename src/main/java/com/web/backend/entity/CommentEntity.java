@@ -34,6 +34,9 @@ public class CommentEntity {
 
     @Column
     private Long dislikeNum;
+    public boolean isProCon() {
+        return proCon;
+    }
 
 
 }

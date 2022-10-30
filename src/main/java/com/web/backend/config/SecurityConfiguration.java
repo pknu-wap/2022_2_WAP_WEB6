@@ -62,7 +62,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint).and()
                 // 비로그인 유저의 권한
-                .authorizeRequests((request) -> request.antMatchers("/h2-console/**", "/user/login","/api/proconTopic").permitAll() // token 없을 경우
+                .authorizeRequests((request) -> request.antMatchers("/h2-console/**", "/user/login","/api/proconTopic","/api/proconTopoic/**/comments").permitAll() // token 없을 경우
                         .antMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated()) //token 있을 경우
                 .addFilterBefore(new JWTAuthenticationFilter(userService, jwtTokenHelper),
                         UsernamePasswordAuthenticationFilter.class);
