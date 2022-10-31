@@ -69,4 +69,15 @@ public class CommentService {
         return CommentDto.createCommentDto(updated);
 
     }
+
+    public CommentDto delete(Long commentId) {
+        // 댓글 조회 예외 발생
+        CommentEntity target = commentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("댓글삭제실패, 해당 댓글이 존재하지 않습니다."));
+        // 댓삭
+        commentRepository.delete(target);
+
+        // 댓글 to DTO
+        return CommentDto.createCommentDto(target);
+    }
 }
