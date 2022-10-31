@@ -38,7 +38,17 @@ public class CommentApiController {
     }
 
 
-    // 댓글 수성
+    // 댓글 수정
+    @PatchMapping("/api/comments/{commentId}")
+    public ResponseEntity<CommentDto> patch(@PathVariable Long commentId,
+                                             @RequestBody CommentDto dto) {
+        // 서비스에게 위임
+        CommentDto updateDto = commentService.update(commentId, dto);
+        // 결과 응답
+        return ResponseEntity.status(HttpStatus.OK).body(updateDto);
+
+    }
+
 
     // 댓글 삭제
 }
