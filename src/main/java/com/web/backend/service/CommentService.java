@@ -2,11 +2,13 @@ package com.web.backend.service;
 
 import com.web.backend.dto.CommentDto;
 import com.web.backend.entity.CommentEntity;
+import com.web.backend.entity.ProConTopicEntity;
 import com.web.backend.repository.CommentRepository;
 import com.web.backend.repository.ProConTopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,5 +35,23 @@ public class CommentService {
         }
         //
         return dtos;
+    }
+
+    @Transactional
+    public CommentDto create(Long proConTopicId, CommentDto dto) {
+        // 게시글 조회 및 예외 처리
+        ProConTopicEntity proConTopic = proConTopicRepository.findById(proConTopicId)
+                .orElseThrow(() -> new IllegalArgumentException("댓글 생성 실패, 해당 게시글 없음")); // 없을시 에러 담음
+
+        // 댓글 엔티티 생성
+        CommentEntity comment = CommentEntity.createComment(dto, proConTopic);
+
+        // 댓글 엔티티를 DB에 저장
+        CommentEntity created = commentRepository.save(comment);
+
+        
+        // DTO로 변경하여 반환
+        return CommentDto.createCommentDto(created);
+        
     }
 }

@@ -6,9 +6,7 @@ import com.web.backend.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,8 +15,9 @@ public class CommentApiController {
 
     @Autowired
     private CommentService commentService;
+    //해당 토론 댓글 목록 조회
 
-    @GetMapping("/api/proconTopoic/{proConTopicId}/comments")
+    @GetMapping("/api/proconTopic/{proConTopicId}/comments")
     public ResponseEntity<List<CommentDto>> comments(@PathVariable Long proConTopicId) {
         // 서비스에게 위임
         List<CommentDto> dtos = commentService.comments(proConTopicId);
@@ -26,9 +25,18 @@ public class CommentApiController {
 
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
-    //해당 토론 댓글 목록 조회
 
     // 댓글 생성
+    @PostMapping("/api/proconTopic/{proConTopicId}/comments")
+    public ResponseEntity<CommentDto> create(@PathVariable Long proConTopicId,
+                                             @RequestBody CommentDto dto) {
+        // 서비스에게 위임
+        CommentDto createdDto = commentService.create(proConTopicId, dto);
+        // 결과 응답
+        return ResponseEntity.status(HttpStatus.OK).body(createdDto);
+
+    }
+
 
     // 댓글 수성
 

@@ -1,9 +1,7 @@
 package com.web.backend.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.web.backend.dto.CommentDto;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -34,9 +32,36 @@ public class CommentEntity {
 
     @Column
     private Long dislikeNum;
+
+
+
     public boolean isProCon() {
         return proCon;
     }
+    public static CommentEntity createComment(CommentDto dto, ProConTopicEntity proConTopic) {
+        // 예외 발생
+        if (dto.getId() != null) {
+            throw new IllegalArgumentException("댓글 생성 실패 ! 댓글의id가 없어야합니다");
+        }
+        if (dto.getProConTopicId() != proConTopic.getId()) { // 받은 json 이랑 target id다를시
+            throw new IllegalArgumentException("댓글 생성 실패 ! 게시글의 id가 잘못되었습니다");
+        }
+
+        // 엔티티 생성 및 반환
+        return new CommentEntity(
+                dto.getId(),
+                proConTopic,
+                dto.getContent(),
+                dto.isProCon(),
+                0L,
+                0L
+
+
+
+        );
+        
+    }
+
 
 
 }

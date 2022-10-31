@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController // REST API 용 // JSON 반환
 @RequestMapping("/")
-public class ProConTopicController {
+public class ProConTopicApiController {
 
     @Autowired
     private ProConTopicService proConTopicService;
