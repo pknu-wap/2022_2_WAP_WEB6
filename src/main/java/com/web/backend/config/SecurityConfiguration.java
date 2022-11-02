@@ -66,7 +66,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                                ,"/api/proconTopoic/**/comments","/api/proconTopic/**/comments","/api/comments/**").permitAll() // token 없을 경우
                  .authorizeRequests((request) -> request.antMatchers("**").permitAll() // token 없을 경우
                         .antMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated()) //token 있을 경우
-                .addFilterBefore(new JWTAuthenticationFilter(userService, jwtTokenHelper),
+                .addFilterBefore(new JWTAuthenticationFilter(userService, jwtTokenHelper), // 토큰 검증
                         UsernamePasswordAuthenticationFilter.class);
         // csrf 토큰 해제
         http.csrf().disable().headers().frameOptions().disable();
