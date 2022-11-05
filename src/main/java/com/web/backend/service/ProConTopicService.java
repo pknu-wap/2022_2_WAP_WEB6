@@ -1,6 +1,7 @@
 package com.web.backend.service;
 
 import com.web.backend.dto.ProConTopicDto;
+import com.web.backend.entity.CommentEntity;
 import com.web.backend.entity.ProConTopicEntity;
 import com.web.backend.repository.ProConTopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,15 @@ public class ProConTopicService {
         return ProConTopicDto.createProConDto(updated);
 
 
+    }
+
+    public ProConTopicDto delete(Long proconId) {
+        ProConTopicEntity target = proConTopicRepository.findById(proconId)
+                .orElseThrow(() -> new IllegalArgumentException("찬반 주제 삭제실패, 해당 댓글이 존재하지 않습니다."));
+
+        //삭제 주제 찬반
+        proConTopicRepository.delete(target);
+
+        return ProConTopicDto.createProConDto(target);
     }
 }

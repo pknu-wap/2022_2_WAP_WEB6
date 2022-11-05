@@ -31,7 +31,7 @@ public class ProConTopicApiController {
         return ResponseEntity.status(HttpStatus.OK).body(createdDto);
 
     }
-    // 댓글 수정
+    // procontopic 수정
     @PatchMapping("/api/proconTopic/{proconId}")
     public ResponseEntity<ProConTopicDto> patch(@PathVariable Long proconId,
                                             @RequestBody ProConTopicDto dto) {
@@ -44,14 +44,15 @@ public class ProConTopicApiController {
 
     }
 
-//    // 댓글 삭제
-//    @DeleteMapping("/api/comments/{commentId}")
-//    public ResponseEntity<CommentDto> delete(@PathVariable Long commentId) {
-//        // 서비스에게 위임
-//        CommentDto updateDto = commentService.delete(commentId);
-//        // 결과 응답
-//        return ResponseEntity.status(HttpStatus.OK).body(updateDto);
-//
-//    }
+    // 찬반토론 주제 삭제
+    @DeleteMapping("/api/proconTopic/{proconId}")
+    public ResponseEntity<ProConTopicDto> delete(@PathVariable Long proconId) {
+        // 서비스에게 위임
+        ProConTopicDto updateDto = proConTopicService.delete(proconId);
+
+        // 결과 응답
+        return ResponseEntity.status(HttpStatus.OK).body(updateDto);
+
+    }
 
 }
