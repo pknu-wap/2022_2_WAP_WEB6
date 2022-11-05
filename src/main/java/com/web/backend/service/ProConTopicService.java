@@ -27,5 +27,18 @@ public class ProConTopicService {
         return ProConTopicDto.createProConDto(created);
     }
 
+    @Transactional
+    public ProConTopicDto update(Long proconId, ProConTopicDto dto) {
+        // 주제 조회 예외 발생
+        ProConTopicEntity target = proConTopicRepository.findById(proconId)
+                .orElseThrow(() -> new IllegalArgumentException("찬반토론 주제 수정 실패 해당 주제가 존재하지 않습니다."));
+        // 주제 수정
+        target.patch(dto);
+        // update DB
+        ProConTopicEntity updated = proConTopicRepository.save(target);
 
+        return ProConTopicDto.createProConDto(updated);
+
+
+    }
 }

@@ -57,4 +57,23 @@ public class ProConTopicEntity {
     public boolean isPro_con() {
         return pro_con;
     }
+
+    public void patch(ProConTopicDto dto) {
+        // 예외
+        if (this.id != dto.getId()) {
+            throw new IllegalArgumentException("찬반 주제 수정 실패 잘못된 id가 입력");
+        }
+
+        // 수정
+        if (dto.getContent() != null) {
+            this.content = dto.getContent();
+        }
+        if (dto.getTopic() != null) {
+            this.topic = dto.getTopic();
+        }
+        if (dto.getReason() != null) {
+            this.reason = dto.getReason();
+        }
+
+    }
 }
