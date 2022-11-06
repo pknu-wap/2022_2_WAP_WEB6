@@ -1,5 +1,6 @@
 package com.web.backend.service;
 
+import com.web.backend.dto.CommentDto;
 import com.web.backend.dto.ProConTopicDto;
 import com.web.backend.entity.CommentEntity;
 import com.web.backend.entity.ProConTopicEntity;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ProConTopicService {
@@ -51,5 +54,23 @@ public class ProConTopicService {
         proConTopicRepository.delete(target);
 
         return ProConTopicDto.createProConDto(target);
+    }
+
+    public List<ProConTopicDto> topics() {
+        // 조회: 댓글 목록
+        List<ProConTopicEntity> topics = proConTopicRepository.findAll();
+
+        // 변환 : 엔티티 -> DTO
+        List<ProConTopicDto> dtos = new ArrayList<ProConTopicDto>();
+
+
+        for (int i = 0; i < topics.size(); i++) {
+            ProConTopicEntity c = topics.get(i);
+            ProConTopicDto dto = ProConTopicDto.createProConDto(c);
+            dtos.add(dto);
+        }
+
+        return dtos;
+
     }
 }
