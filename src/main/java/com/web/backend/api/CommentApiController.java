@@ -1,6 +1,7 @@
 package com.web.backend.api;
 
 import com.web.backend.dto.CommentDto;
+import com.web.backend.dto.ProConTopicDto;
 import com.web.backend.repository.ProConTopicRepository;
 import com.web.backend.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +17,24 @@ public class CommentApiController {
     @Autowired
     private CommentService commentService;
     //해당 토론 댓글 목록 조회
-
-    @GetMapping("/api/proconTopic/{proConTopicId}/comments")
-    public ResponseEntity<List<CommentDto>> comments(@PathVariable Long proConTopicId) {
+    // 해당 proconTopic 댓글 조회
+    @GetMapping("/api/proconTopic/{proconId}/comments")
+    public ResponseEntity<List<CommentDto>> proConComments(@PathVariable Long proconId) {
         // 서비스에게 위임
-        List<CommentDto> dtos = commentService.comments(proConTopicId);
-        //결과 응답
-
+        List<CommentDto> dtos = commentService.proConComments(proconId);
+        // 결과 응답
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
+//    @GetMapping("/api/proconTopic/{proConTopicId}/comments")
+//    public ResponseEntity<List<CommentDto>> comments(@PathVariable Long proConTopicId) {
+//        // 서비스에게 위임
+//        List<CommentDto> dtos = commentService.proConComments(proConTopicId);
+//        //결과 응답
+//        return ResponseEntity.status(HttpStatus.OK).body(dtos);
+//    }
 
     // 댓글 생성
-    @PostMapping("/api/proconTopic/{proConTopicId}/comments")
+    @PostMapping("/api/proconTopic/comments/{proConTopicId}")
     public ResponseEntity<CommentDto> create(@PathVariable Long proConTopicId,
                                              @RequestBody CommentDto dto) {
         // 서비스에게 위임
@@ -57,4 +64,8 @@ public class CommentApiController {
         return ResponseEntity.status(HttpStatus.OK).body(updateDto);
 
     }
+
+
+
+
 }

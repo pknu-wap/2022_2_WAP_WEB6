@@ -20,22 +20,36 @@ public class CommentService {
 
     @Autowired
     private ProConTopicRepository proConTopicRepository;
-
-
-    public List<CommentDto> comments(Long proConTopicId) {
-        // 댓글 목록 조회
-        List<CommentEntity> comments = commentRepository.findByProConTopicId(proConTopicId);
-
-        // 엔티티 -> DTO
+    // 찬반토론 댓글 목록 조회
+    public List<CommentDto> proConComments(Long proconId) {
+        // 조회: 댓글 목록
+        List<CommentEntity> comments = commentRepository.findByProConTopicId(proconId);
+        // 변환: 엔티티 -> DTO
         List<CommentDto> dtos = new ArrayList<CommentDto>();
+
         for (int i = 0; i < comments.size(); i++) {
             CommentEntity c = comments.get(i);
             CommentDto dto = CommentDto.createCommentDto(c);
             dtos.add(dto);
         }
-        //
+
         return dtos;
+
     }
+//    public List<CommentDto> comments(Long proConTopicId) {
+//        // 댓글 목록 조회
+//        List<CommentEntity> comments = commentRepository.findByProConTopicId(proConTopicId);
+//
+//        // 엔티티 -> DTO
+//        List<CommentDto> dtos = new ArrayList<CommentDto>();
+//        for (int i = 0; i < comments.size(); i++) {
+//            CommentEntity c = comments.get(i);
+//            CommentDto dto = CommentDto.createCommentDto(c);
+//            dtos.add(dto);
+//        }
+//        //
+//        return dtos;
+//    }
 
     @Transactional
     public CommentDto create(Long proConTopicId, CommentDto dto) {
@@ -80,4 +94,6 @@ public class CommentService {
         // 댓글 to DTO
         return CommentDto.createCommentDto(target);
     }
+
+
 }

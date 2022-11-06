@@ -45,7 +45,7 @@ public class ProConTopicService {
 
 
     }
-
+    @Transactional
     public ProConTopicDto delete(Long proconId) {
         ProConTopicEntity target = proConTopicRepository.findById(proconId)
                 .orElseThrow(() -> new IllegalArgumentException("찬반 주제 삭제실패, 해당 댓글이 존재하지 않습니다."));
