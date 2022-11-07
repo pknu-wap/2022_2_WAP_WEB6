@@ -85,4 +85,10 @@ task copyReactBuildFiles(type: Copy) {
 	into "$projectDir/src/main/resources/static"
 }
 
+bootJar{
+	archivesBaseName = 'toast'
+	archiveFileName = 'toast.jar'
+	archiveVersion = "0.0.1"
+}
+
 
