@@ -18,7 +18,8 @@ public class UserService {
     }
 
     public UserEntity save(UserEntity user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword())); //암호화하여 저장
+        //암호화하여 저장
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return userRepository.save(user);
 

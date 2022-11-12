@@ -27,8 +27,6 @@ public class UserController {
         List<AuthorityEntity> authorityEntityList = new ArrayList<>();
         authorityEntityList.add(createAuthority("USER", "User role")); //role default 일반유저
 
-        System.out.println(user);
-
         if(user.getUsername() == null){
             throw new UserNotValidException();
         }
@@ -36,7 +34,7 @@ public class UserController {
         user.setAuthorities(authorityEntityList);
         userService.save(user);
 
-        return ResponseEntity.status(HttpStatus.OK).body("true");
+        return ResponseEntity.status(HttpStatus.OK).body(user.getUsername());
     }
 
     private AuthorityEntity createAuthority(String roleCode, String roleDescription) {
