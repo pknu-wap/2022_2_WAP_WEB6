@@ -10,7 +10,7 @@ import javax.persistence.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Comment")
+@Table(name = "comment")
 public class CommentEntity {
 
     @Id
@@ -18,7 +18,7 @@ public class CommentEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "proconTopic_id") //fk
+    @JoinColumn(name = "procontopic_id") //fk
     private ProConTopicEntity proConTopic;
 
     @Column

@@ -22,7 +22,7 @@ public class ProConTopicEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
+//    @NotNull
     private long id;
 
     @Column
