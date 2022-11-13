@@ -33,11 +33,10 @@ public class CommentEntity {
     @Column
     private Long dislikeNum;
 
-
-
     public boolean isProCon() {
         return proCon;
     }
+
     public static CommentEntity createComment(CommentDto dto, ProConTopicEntity proConTopic) {
         // 예외 발생
         if (dto.getId() != null) {

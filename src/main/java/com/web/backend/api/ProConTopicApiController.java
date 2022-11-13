@@ -12,21 +12,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController // REST API 용 // JSON 반환
-@RequestMapping("/")
+//@RequestMapping("/")
 public class ProConTopicApiController {
 
     @Autowired
     private ProConTopicService proConTopicService;
 
-    @GetMapping("proconTopic/test")
+    @GetMapping("/proconTopic/test")
     public String test() {
         return "ProConBoard REST API TEST";
     }
 
     //생성
-    @PostMapping("api/proconTopic")
+    @PostMapping("/api/proconTopic")
     public ResponseEntity<ProConTopicDto> create(@RequestBody ProConTopicDto dto) {
-
         // 서비스에게 위임
         ProConTopicDto createdDto = proConTopicService.create(dto);
 

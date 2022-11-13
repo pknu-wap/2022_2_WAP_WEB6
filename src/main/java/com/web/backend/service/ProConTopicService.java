@@ -7,6 +7,7 @@ import com.web.backend.entity.ProConTopicEntity;
 import com.web.backend.repository.ProConTopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class ProConTopicService {
     private ProConTopicRepository proConTopicRepository;
 
     @Transactional
-    public ProConTopicDto create(ProConTopicDto dto) {
+    public ProConTopicDto create( ProConTopicDto dto) {
         // 예외 처리
         // 나중에
 

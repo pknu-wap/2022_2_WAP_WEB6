@@ -6,9 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -22,7 +20,6 @@ public class ProConTopicEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @NotNull
     private long id;
 
     @Column
@@ -41,6 +38,9 @@ public class ProConTopicEntity {
     private String reason;
 
     public static ProConTopicEntity createProConTopic(ProConTopicDto dto) {
+//        if (dto.getId() != null)
+//            throw new IllegalArgumentException("댓글 생성 실패! 댓글의 id가 없어야 합니다.");
+//        dto.setId(0L);
 
        // 엔티티 생성 및 반환
         return new ProConTopicEntity(
