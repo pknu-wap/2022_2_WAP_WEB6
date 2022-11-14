@@ -1,7 +1,6 @@
-package com.web.backend.entity;
+package com.web.backend.proconboard;
 
 
-import com.web.backend.dto.ProConTopicDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +35,11 @@ public class ProConTopicEntity {
 
     @Column
     private String reason;
+
+//    @ManyToOne
+//    @JoinColumn(name = "user_id") //fk
+//    private UserEntity user;
+
 
     public static ProConTopicEntity createProConTopic(ProConTopicDto dto) {
 //        if (dto.getId() != null)

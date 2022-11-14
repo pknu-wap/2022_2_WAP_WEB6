@@ -1,9 +1,5 @@
-package com.web.backend.api;
+package com.web.backend.comment;
 
-import com.web.backend.dto.CommentDto;
-import com.web.backend.dto.ProConTopicDto;
-import com.web.backend.repository.ProConTopicRepository;
-import com.web.backend.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

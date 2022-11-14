@@ -1,6 +1,5 @@
-package com.web.backend.dto;
+package com.web.backend.comment;
 
-import com.web.backend.entity.CommentEntity;
 import lombok.*;
 
 @AllArgsConstructor

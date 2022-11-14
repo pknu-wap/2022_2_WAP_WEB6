@@ -1,7 +1,7 @@
-package com.web.backend.service;
+package com.web.backend.user;
 
-import com.web.backend.entity.UserEntity;
-import com.web.backend.repository.UserDetailsRepository;
+import com.web.backend.user.UserEntity;
+import com.web.backend.user.UserDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

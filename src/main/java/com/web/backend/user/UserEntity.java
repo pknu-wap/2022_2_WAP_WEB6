@@ -1,6 +1,8 @@
-package com.web.backend.entity;
+package com.web.backend.user;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,6 +14,8 @@ import java.util.List;
 @Table(name = "AUTH_USER_DETAILS")
 @Entity
 @Data
+@Getter
+@ToString
 public class UserEntity implements UserDetails { //UserDetails 는 Spring Security  에서 사용자의 정보를 담는 인터페이스
 
     @Id
@@ -57,6 +61,7 @@ public class UserEntity implements UserDetails { //UserDetails 는 Spring Securi
 
         return authorities;
     }
+
 
     @Override
     public String getPassword() { // 계정의 비밀번호를 리턴

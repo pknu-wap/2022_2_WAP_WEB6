@@ -1,4 +1,4 @@
-package com.web.backend.entity;
+package com.web.backend.user;
 
 import org.springframework.security.core.GrantedAuthority;
 

@@ -1,10 +1,7 @@
-package com.web.backend.service;
+package com.web.backend.comment;
 
-import com.web.backend.dto.CommentDto;
-import com.web.backend.entity.CommentEntity;
-import com.web.backend.entity.ProConTopicEntity;
-import com.web.backend.repository.CommentRepository;
-import com.web.backend.repository.ProConTopicRepository;
+import com.web.backend.proconboard.ProConTopicEntity;
+import com.web.backend.proconboard.ProConTopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

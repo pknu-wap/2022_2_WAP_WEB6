@@ -1,7 +1,7 @@
 package com.web.backend.controller;
 
 import com.web.backend.config.JWTTokenHelper;
-import com.web.backend.entity.UserEntity;
+import com.web.backend.user.UserEntity;
 import com.web.backend.requests.AuthenticationRequest;
 import com.web.backend.response.LoginResponse;
 import com.web.backend.response.UserInfo;

@@ -1,9 +1,7 @@
-package com.web.backend.dto;
+package com.web.backend.proconboard;
 
-import com.web.backend.entity.ProConTopicEntity;
 import lombok.*;
 
-import javax.persistence.Column;
 import java.util.Date;
 
 @AllArgsConstructor

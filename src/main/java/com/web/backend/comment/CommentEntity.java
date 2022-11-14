@@ -1,6 +1,6 @@
-package com.web.backend.entity;
+package com.web.backend.comment;
 
-import com.web.backend.dto.CommentDto;
+import com.web.backend.proconboard.ProConTopicEntity;
 import lombok.*;
 
 import javax.persistence.*;

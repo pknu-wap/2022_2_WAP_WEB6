@@ -1,9 +1,8 @@
-package com.web.backend.api;
+package com.web.backend.proconboard;
 
 
-import com.web.backend.dto.CommentDto;
-import com.web.backend.dto.ProConTopicDto;
-import com.web.backend.service.ProConTopicService;
+import com.web.backend.proconboard.ProConTopicDto;
+import com.web.backend.proconboard.ProConTopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
-package com.web.backend.service;
+package com.web.backend.user;
 
-import com.web.backend.entity.UserEntity;
-import com.web.backend.repository.UserRepository;
+import com.web.backend.user.UserEntity;
+import com.web.backend.user.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 

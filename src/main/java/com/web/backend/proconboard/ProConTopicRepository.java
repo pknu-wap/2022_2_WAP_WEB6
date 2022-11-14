@@ -1,6 +1,5 @@
-package com.web.backend.repository;
+package com.web.backend.proconboard;
 
-import com.web.backend.entity.ProConTopicEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

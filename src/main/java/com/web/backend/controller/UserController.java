@@ -1,8 +1,8 @@
 package com.web.backend.controller;
 
-import com.web.backend.entity.AuthorityEntity;
-import com.web.backend.entity.UserEntity;
-import com.web.backend.service.UserService;
+import com.web.backend.user.AuthorityEntity;
+import com.web.backend.user.UserEntity;
+import com.web.backend.user.UserService;
 import com.web.backend.shared.UserNotValidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
