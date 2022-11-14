@@ -23,10 +23,10 @@ public class ProConTopicApiController {
     }
 
     //생성
-    @PostMapping("/api/proconTopic")
-    public ResponseEntity<ProConTopicDto> create(@RequestBody ProConTopicDto dto) {
+    @PostMapping("/api/proconTopic/{userId}")
+    public ResponseEntity<ProConTopicDto> create(@PathVariable Long userId, @RequestBody ProConTopicDto dto) {
         // 서비스에게 위임
-        ProConTopicDto createdDto = proConTopicService.create(dto);
+        ProConTopicDto createdDto = proConTopicService.create(userId, dto);
 
         return ResponseEntity.status(HttpStatus.OK).body(createdDto);
 

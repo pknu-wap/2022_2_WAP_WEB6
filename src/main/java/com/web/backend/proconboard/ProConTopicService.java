@@ -1,5 +1,7 @@
 package com.web.backend.proconboard;
 
+import com.web.backend.user.UserDetailsRepository;
+import com.web.backend.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +14,20 @@ public class ProConTopicService {
     @Autowired
     private ProConTopicRepository proConTopicRepository;
 
+    @Autowired
+    private UserDetailsRepository userDetailsRepository;
+
     @Transactional
-    public ProConTopicDto create( ProConTopicDto dto) {
+    public ProConTopicDto create( Long userId, ProConTopicDto dto) {
         // 예외 처리
         // 나중에
 
+        // User Entity 조회
+        UserEntity user = userDetailsRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("찬반주제 페이지 생성실패! 대상 유저가 없습"));
+
         // procontopic 엔티티 생성
-        ProConTopicEntity proConTopic = ProConTopicEntity.createProConTopic(dto);
+        ProConTopicEntity proConTopic = ProConTopicEntity.createProConTopic(dto, user);
         // 엔티티 DB에저장
         ProConTopicEntity created = proConTopicRepository.save(proConTopic);
 

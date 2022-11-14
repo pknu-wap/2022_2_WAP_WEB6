@@ -1,6 +1,7 @@
 package com.web.backend.proconboard;
 
 
+import com.web.backend.user.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,12 +37,12 @@ public class ProConTopicEntity {
     @Column
     private String reason;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id") //fk
-//    private UserEntity user;
+    @ManyToOne
+    @JoinColumn(name = "user_id") //fk
+    private UserEntity user;
 
 
-    public static ProConTopicEntity createProConTopic(ProConTopicDto dto) {
+    public static ProConTopicEntity createProConTopic(ProConTopicDto dto, UserEntity user) {
 //        if (dto.getId() != null)
 //            throw new IllegalArgumentException("댓글 생성 실패! 댓글의 id가 없어야 합니다.");
 //        dto.setId(0L);
@@ -53,7 +54,8 @@ public class ProConTopicEntity {
                 dto.getTopic(),
                 dto.getContent(),
                 dto.getDue_date(),
-                dto.getReason()
+                dto.getReason(),
+                user
 
         );
     }

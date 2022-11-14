@@ -1,4 +1,4 @@
-package com.web.backend.controller;
+package com.web.backend.user;
 
 import com.web.backend.user.AuthorityEntity;
 import com.web.backend.user.UserEntity;

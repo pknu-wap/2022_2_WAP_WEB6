@@ -1,5 +1,6 @@
 package com.web.backend.proconboard;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.util.Date;
@@ -17,7 +18,8 @@ public class ProConTopicDto {
     private String content;
     private Date due_date;
     private String reason;
-
+    @JsonProperty("article_id") //json 에서 articleId article_id로 날라온다.
+    private Long userId;
 
     public static ProConTopicDto createProConDto(ProConTopicEntity created) {
         return new ProConTopicDto(
@@ -26,7 +28,8 @@ public class ProConTopicDto {
                 created.getTopic(),
                 created.getContent(),
                 created.getDue_date(),
-                created.getReason()
+                created.getReason(),
+                created.getUser().getId()
         );
     }
 }
