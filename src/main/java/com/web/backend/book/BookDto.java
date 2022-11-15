@@ -13,9 +13,8 @@ public class BookDto {
     private Long id;
     private String title;
 
-    public static void createBookDto(BookEntity created) {
-        return;
-        new BookDto(
+    public static BookDto createBookDto(BookEntity created) {
+        return new BookDto(
                 created.getId(),
                 created.getTitle()
         );

@@ -14,10 +14,10 @@ public class BookApiController {
     @Autowired
     private BookService bookService;
 
-    @PostMapping("api/book/books")
+    @PostMapping("/api/book/books")
     public ResponseEntity<BookDto> register(@RequestBody BookDto bookDto){
 
-        BookDto createdDto = BookService.register(bookDto);
+        BookDto createdDto = bookService.register(bookDto);
         return ResponseEntity.status(HttpStatus.OK).body(createdDto);
 
     }

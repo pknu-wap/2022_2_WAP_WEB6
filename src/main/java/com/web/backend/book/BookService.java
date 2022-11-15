@@ -12,7 +12,7 @@ public class BookService {
 
 
     @Transactional
-    public register(BookDto bookDto) {
+    public BookDto register(BookDto bookDto) {
         BookEntity bookEntity = BookEntity.createBook(bookDto);
 
         BookEntity created = bookRepository.save(bookEntity);
