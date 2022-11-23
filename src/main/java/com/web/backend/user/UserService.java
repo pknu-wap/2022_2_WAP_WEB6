@@ -1,9 +1,12 @@
 package com.web.backend.user;
 
+import com.web.backend.comment.CommentEntity;
 import com.web.backend.user.UserEntity;
 import com.web.backend.user.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -22,6 +25,25 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return userRepository.save(user);
+
+    }
+
+
+    public Boolean checkUserId(UserEntity user) {
+
+        try {
+            String userName = user.getUsername();
+//        System.out.println(user.getUsername());
+            UserEntity result = userRepository.findByUserName(userName);
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+
+
+//        System.out.println(result);
 
     }
 }
