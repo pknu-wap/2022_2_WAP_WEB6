@@ -4,6 +4,10 @@ import Login from './routes/login/Login.js';
 import Join from './routes/join/Join.js';
 import Navigation from "./routes/navigation/navigation";
 import Home from "./routes/home/home";
+import DebateList from "./routes/debateList/DebateList";
+import FreeDebateList from "./routes/debateList/FreeDebateList";
+import DetailDebate from "./routes/debateList/DetailDebate";
+import DetailFree from "./routes/debateList/DetailFree";
 
 function App() {  
 
@@ -15,6 +19,13 @@ function App() {
                 <Route index={true} element={<Home/>}/>
                 <Route path="login" element={ <Login/>} />
                 <Route path="join" element={ <Join/>} />
+
+                {/* <Route path="debateList" element={<DebateList />} /> */}
+                <Route path="debateList/:title" element={<DebateList />} />
+                <Route path="freeDebateList/:title" element={<FreeDebateList />} />
+                {/* <Route path="detailDebate" element={<DetailDebate />} /> */}
+                <Route path="detaildebate/:title/:topic" element={<DetailDebate />} />
+                <Route path="detailfree/:title/:topic" element={<DetailFree />} />
             </Route>
 
 

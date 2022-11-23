@@ -1,0 +1,12 @@
+.topicSection article {
+  background-color: var(--beige-color);
+  padding: 1rem;
+  margin: 1rem 0;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.topicSection a {
+  text-decoration: none;
+  color: black;
+}

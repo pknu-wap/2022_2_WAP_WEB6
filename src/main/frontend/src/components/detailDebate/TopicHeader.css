@@ -1,0 +1,24 @@
+.topicHeader {
+  background-color: var(--dark-brown-color);
+  color: white;
+  font-size: var(--bold-font);
+
+  width: 100%;
+  max-width: 750px;
+  max-height: 100px;
+
+  display: flex;
+  justify-content: center;
+
+  margin: 1rem 0;
+  border-radius: 5px;
+}
+
+.topicHeader span {
+  font-size: 20px;
+  padding: 1rem 0;
+
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
