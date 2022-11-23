@@ -42,12 +42,26 @@ function Join() {
                     }
                 }
             ).then((data) => {
-                if(data.status===200){ // 성공시
+                if(data.status===200 && data.data != "sameIdExist"){ // 성공시
+                    console.log(data)
                     console.log("성공!!")
+
+                    // localStorage.clear()
+                    // localStorage.setItem('id', data.data.id)
+                    // localStorage.setItem('username', data.data.username)
+                    // console.log(localStorage.getItem('id'))
+                    // console.log(localStorage.getItem('username'))
+
+                    window.location.replace('http://localhost:3000/login')
+
+                    // localStorage.setItem('token', data.data.token)
+
                     // props.setUser(response.data);
                     // props.history.push('/dashboard');
-                } else{
-                    console.log("예상치 못한 오류!!")
+                }else if (data.data == "sameIdExist") {
+                    alert("중복된 ID 입니다. 다시 입력해주세요!!")
+                } else {
+                    console.log("예상치 못한 오류!!");
                 }
             });
         } catch (error) {

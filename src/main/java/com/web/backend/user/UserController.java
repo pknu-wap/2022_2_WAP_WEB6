@@ -40,7 +40,7 @@ public class UserController {
             user.setAuthorities(authorityEntityList);
             userService.save(user);
 
-            return ResponseEntity.status(HttpStatus.OK).body(user.getUsername());
+            return ResponseEntity.status(HttpStatus.OK).body(user);
         } else {
             ResponseEntity.status(HttpStatus.OK).body("fail");
         }

@@ -11,10 +11,13 @@ export const UserContext = createContext({ //defaultValue
 
 // .Provider 컴포넌트이다. 필요한 값이 있으면 해당 컴포넌트를 둘러싼다.
 export const UserProvider = ({children}) => {
+    const [userId, setUserId] = useState(null);
+
     const [currentUser, setCurrentUser] = useState(null);
     const [currentToken, setCurrentToken] = useState(null);
 
     const value = {
+        userId,
         currentUser,
         setCurrentUser,
         currentToken,
