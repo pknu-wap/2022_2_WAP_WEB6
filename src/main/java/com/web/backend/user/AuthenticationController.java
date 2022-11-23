@@ -58,24 +58,7 @@ public class AuthenticationController {
 
         response.setToken(jwtToken);
         return new ResponseEntity<>(result, HttpStatus.valueOf(200));
-//        return ResponseEntity.ok(response);
     }
-//    @PostMapping("/user/login")
-//    public ResponseEntity<?> login(@RequestBody AuthenticationRequest authenticationRequest) throws InvalidKeySpecException, NoSuchAlgorithmException {
-//        final Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-//                authenticationRequest.getUserName(), authenticationRequest.getPassword()));
-//
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//        UserEntity user = (UserEntity) authentication.getPrincipal();
-//        // 해당 유저 토큰 발급
-//        String jwtToken = jwtTokenHelper.generateToken(user.getUsername());
-//
-//        LoginResponse response = new LoginResponse();
-//        response.setToken(jwtToken);
-//
-//        return ResponseEntity.ok(response);
-//    }
 
     // 모든 유저의 정보 가져오는 요청 test 용
     @GetMapping("/auth/userinfo")
