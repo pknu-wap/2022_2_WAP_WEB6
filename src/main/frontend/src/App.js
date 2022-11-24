@@ -12,7 +12,7 @@ import DetailFree from "./routes/debateList/DetailFree";
 function App() {  
 
   return (
-    <div className="App">
+    // <div className="App">
 
         <Routes>
             <Route path='/' element={<Navigation/>}>
@@ -32,7 +32,7 @@ function App() {
         </Routes>
 
 
-    </div>
+    // </div>
   );
 }
 

@@ -20,6 +20,7 @@ function Login() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log("fuck")
         try {
             await axios({
                     method: 'post',
@@ -30,7 +31,7 @@ function Login() {
                     }
                 }
             ).then((data) => {
-                if(data.status===200 && data.data != "sameIdExist"){ // 성공시
+                if (data.status === 200) { // 성공시
                     console.log(data)
                     console.log("성공!!")
                     localStorage.clear()
@@ -38,8 +39,8 @@ function Login() {
                     localStorage.setItem('username', data.data.user.username)
                     localStorage.setItem('token', data.data.jwtToken)
 
-                    window.location.replace('http://localhost:3000/')
-                }else if (data.data == "sameIdExist") {
+                    window.location.replace('/')
+                } else if (data.data == "sameIdExist") {
                     alert("중복된 ID 입니다. 다시 입력해주세요!!")
                 } else {
                     console.log("예상치 못한 오류!!");
