@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
-import "@toast-ui/editor/dist/toastui-editor.css";
-import { Editor } from "@toast-ui/react-editor";
+// import "@toast-ui/editor/dist/toastui-editor.css";
+// import { Editor } from "@toast-ui/react-editor";
 
 //에디터 내용 가져오기
 function EditorBox(props) {
@@ -15,7 +15,7 @@ function EditorBox(props) {
   return (
     <>
       <div>
-        <Editor
+        {/* <Editor
           ref={editorRef}
           name="content"
           initialValue=" "
@@ -28,7 +28,7 @@ function EditorBox(props) {
             ["ul", "ol", "task", "indent", "outdent"],
             ["table", "link"],
             ["code", "codeblock"],
-          ]}
+          ]} */}
           //키보드 입력 컨트롤 방지?
           useCommandShortcut={false}
         />
