@@ -13,8 +13,10 @@ const BookItem = ({ article }) => {
       )}
       <div>
         {title}<br/>
-        {authors}
+        {authors}<br/>
+        {contents}
       </div>
+      <div>----------------------------------</div>
     </div>
   );
 };
