@@ -36,7 +36,7 @@ const Home = () => {
         <div>
             <center>
                 <form>
-                    <div className="search">
+                    <div className="Searchbox">
                         <input id="title" type="text" placeholder='책 제목을 검색하세요.'></input>
                         <button onClick={bookSearch} id="bisearch">
                             <BiSearch className="icon" size="35"/>
@@ -49,7 +49,6 @@ const Home = () => {
                 <BookItem article = {article} />
 
             ))}
-
         </div>
 
 

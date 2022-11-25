@@ -2,6 +2,11 @@ import React from "react";
 
 const BookItem = ({ article }) => {
   const { thumbnail, title, authors, contents } = article;
+  const clickMe = () => {
+
+    document.location.href('/')
+
+}
   return (
     <div>
       {thumbnail && (
@@ -15,6 +20,12 @@ const BookItem = ({ article }) => {
         {title}<br/>
         {authors}<br/>
         {contents}
+        <>
+        <br/>
+      <button className = "fdebate" onClick={clickMe}>찬반토론</button>
+
+      </>
+
       </div>
       <div>----------------------------------</div>
     </div>
