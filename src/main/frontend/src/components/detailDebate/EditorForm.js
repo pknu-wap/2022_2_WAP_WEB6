@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import EditorBox from "./EditorBox";
-import "./Form.css";
+import "./EditorForm.css";
 
 //찬성 반대 값 가져오기
 function Selected(props) {
@@ -21,7 +21,7 @@ function Selected(props) {
   );
 }
 
-function Form(props) {
+function EditorForm(props) {
   const [selected, setSelected] = useState("찬성");
   const [content, setContent] = useState("");
   const freeOp = "자유";
@@ -52,4 +52,4 @@ function Form(props) {
   );
 }
 
-export default Form;
+export default EditorForm;

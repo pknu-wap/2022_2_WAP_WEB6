@@ -5,10 +5,11 @@ import React, { useState, useRef } from "react";
 // import Form from "../components/detailDebate/Form";
 import "./DetailDebate.css";
 import dummy from "./data.json";
-import {Form, useParams} from "react-router-dom";
+import { Form, useParams } from "react-router-dom";
 import TopicHeader from "../../components/detailDebate/TopicHeader";
 import BookExplain from "../../components/detailDebate/BookExplan";
 import Opinion from "../../components/detailDebate/Opinion";
+import EditorForm from "../../components/detailDebate/EditorForm";
 
 //자유 토론 상세 페이지
 function DetailFree() {
@@ -38,7 +39,7 @@ function DetailFree() {
         body={content[0].plot}
       ></BookExplain>
       <Opinion opList={data} />
-      <Form onCreate={onCreate}></Form>
+      <EditorForm onCreate={onCreate}></EditorForm>
     </div>
   );
 }

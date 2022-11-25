@@ -5,10 +5,11 @@ import React, { useState, useRef } from "react";
 // import Form from "../components/detailDebate/Form";
 import "./DetailDebate.css";
 import dummy from "./data.json";
-import {Form, useParams} from "react-router-dom";
+import { Form, useParams } from "react-router-dom";
 import TopicHeader from "../../components/detailDebate/TopicHeader";
 import BookExplain from "../../components/detailDebate/BookExplan";
 import Opinion from "../../components/detailDebate/Opinion";
+import EditorForm from "../../components/detailDebate/EditorForm";
 
 //찬반 토론 상세 페이지
 function DetailDebate() {
@@ -39,7 +40,7 @@ function DetailDebate() {
         body={content[0].plot}
       ></BookExplain>
       <Opinion opList={data} />
-      <Form op="찬반" onCreate={onCreate}></Form>
+      <EditorForm op="찬반" onCreate={onCreate}></EditorForm>
     </div>
   );
 }
