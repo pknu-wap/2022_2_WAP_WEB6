@@ -20,5 +20,14 @@ VALUES (6, 3, 25, 52, false, '2번째 찬반토론 2번째 댓글');
 INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content)
 VALUES (7, 3, 25, 52, true, '3번째 찬반토론 3번째 댓글');
 
+INSERT INTO book(id, title, authors, url, contents)
+VALUES (1, '책제목1', '저자1','url1','설명1');
+INSERT INTO book(id, title, authors, url, contents)
+VALUES (2, '책제목2', '저자2','url2','설명2');
+INSERT INTO book(id, title, authors, url, contents)
+VALUES (3, '책제목3', '저자3','url3','설명3');
+INSERT INTO book(id, title, authors, url, contents)
+VALUES (4, '책제목4', '저자4','url4','설명4');
+
 
 
