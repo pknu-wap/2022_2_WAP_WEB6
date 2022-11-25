@@ -16,7 +16,7 @@ function DebateList() {
       <div>
         {topicList.map((topics) => (
           <DebateTopics
-            id={topics.id}
+            key={topics.id}
             topicsList={topics.topic}
             title={topics.title}
             type="procon"

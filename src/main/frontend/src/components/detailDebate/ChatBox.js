@@ -42,7 +42,7 @@ function ChatBox(props) {
           </button>
         </div>
         <div className={visible ? "reply" : ""}>
-          {visible && <EditorBox value="댓글" />}
+          {visible && <EditorBox value="댓글" print="작성" />}
         </div>
       </div>
     </li>
