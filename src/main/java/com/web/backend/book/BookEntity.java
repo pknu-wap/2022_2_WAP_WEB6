@@ -14,10 +14,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "book")
 public class BookEntity {
-    //(저장 정보 : 제목
-    //저자
-    //썸네일
-    //설명)
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;        // 사이트 자체 책 id

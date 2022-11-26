@@ -15,9 +15,10 @@ const BookItem = ({article}) => {
                 method: 'post',
                 url: 'http://localhost:8080/api/check/book',
                 data: {
+                    "id": 0,
                     "url": thumbnail,
                     "title": title,
-                    "authors": authors,
+                    "authors": authors[0],
                     "contents": contents,
                 }
             }
@@ -53,11 +54,6 @@ const BookItem = ({article}) => {
                 {contents}
                 <>
                     <br/>
-                    {/*<button className="fdebate" onClick={() => navigate('/debateList/' + title, {*/}
-                    {/*    state: {*/}
-                    {/*        'thumbnail': thumbnail, 'title': title, 'authors': authors, 'contents': contents*/}
-                    {/*    }*/}
-                    {/*})}>찬반토론*/}
                     <button className="fdebate" onClick={handleSubmit}>찬반토론
                     </button>
 

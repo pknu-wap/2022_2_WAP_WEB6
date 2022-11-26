@@ -21,16 +21,17 @@ public class BookService {
         return BookDto.createBookDto(created);
     }
 
-    public boolean checkBook(String title, String authors) {
+//    public boolean checkBook(String title, String authors) {
+    public BookDto checkBook(BookDto bookDto) {
+        BookEntity result = bookRepository.checkBook(bookDto.getTitle(), bookDto.getAuthors());
 
-        BookEntity result = bookRepository.checkBook(title, authors);
         System.out.println(result);
 
         if (result != null) {
-            return true;
-
+            BookDto resultBookDto = BookDto.createBookDto(result);
+            return resultBookDto;
         } else {
-            return false;
+            return register(bookDto);
         }
 
     }
