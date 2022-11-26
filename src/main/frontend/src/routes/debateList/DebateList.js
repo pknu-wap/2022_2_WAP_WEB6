@@ -5,6 +5,7 @@ import {useParams} from "react-router-dom";
 import DebateHeader from "../../components/debateList/DebateHeader";
 import DebateTopics from "../../components/debateList/DebateTopics";
 import {useLocation} from "react-router";
+import axios from "axios";
 
 //찬반 토론 목록 페이지
 function DebateList() {
@@ -13,8 +14,26 @@ function DebateList() {
 
     const topicList = dummy.debateTopics.filter((book) => book.title === title);
 
-    useEffect(() => {
-
+    useEffect( () => {
+        async function fetchData(){
+            try {
+                await axios({
+                        method: 'get',
+                        url: 'http://localhost:8080/api/proconTopic/'+booknum,
+                    }
+                ).then((data) => {
+                    if (data.status === 200) { // 성공시
+                        console.log(data)
+                        console.log("성공!!")
+                    } else {
+                        console.log("예상치 못한 오류!!");
+                    }
+                });
+            } catch (error) {
+                console.log(error)
+            }
+        };
+        fetchData();
 
 
     }, []);
