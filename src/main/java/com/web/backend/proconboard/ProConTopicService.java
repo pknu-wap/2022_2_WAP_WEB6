@@ -86,4 +86,21 @@ public class ProConTopicService {
         return dtos;
 
     }
+    public List<ProConTopicDto> debateTopics(Long bookId) {
+        // 조회: 댓글 목록
+        List<ProConTopicEntity> topics = proConTopicRepository.getBookDebate(bookId);
+
+        // 변환 : 엔티티 -> DTO
+        List<ProConTopicDto> dtos = new ArrayList<ProConTopicDto>();
+
+
+        for (int i = 0; i < topics.size(); i++) {
+            ProConTopicEntity c = topics.get(i);
+            ProConTopicDto dto = ProConTopicDto.createProConDto(c);
+            dtos.add(dto);
+        }
+
+        return dtos;
+
+    }
 }

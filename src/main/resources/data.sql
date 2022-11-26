@@ -14,6 +14,8 @@ INSERT INTO procon_topic(id, content, due_date, pro_con, reason, topic, user_id,
 VALUES (2, '2번째 content', '2022-02-23', true, '2번째 이유', '2번째 topic', 1, 2);
 INSERT INTO procon_topic(id, content, due_date, pro_con, reason, topic, user_id, book_id)
 VALUES (3, '3번째 content', '2022-02-24', true, '3번째 이유', '3번째 topic', 2, 3);
+INSERT INTO procon_topic(id, content, due_date, pro_con, reason, topic, user_id, book_id)
+VALUES (4, '4번째 content', '2022-02-24', true, '4번째 이유', '3번째 topic', 2, 3);
 
 INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content)
 VALUES (1, 1, 25, 52, true, '1번째 찬반토론 1번째 댓글');

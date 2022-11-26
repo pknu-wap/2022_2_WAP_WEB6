@@ -65,4 +65,11 @@ public class ProConTopicApiController {
 
     }
 
+    @GetMapping("/api/proconTopic/{bookId}")
+    public ResponseEntity<List<ProConTopicDto>> getBookDebate(@PathVariable Long bookId) {
+        // 서비스에게 위임
+        List<ProConTopicDto> dtos = proConTopicService.debateTopics(bookId);
+        // 결과 응답
+        return ResponseEntity.status(HttpStatus.OK).body(dtos);
+    }
 }
