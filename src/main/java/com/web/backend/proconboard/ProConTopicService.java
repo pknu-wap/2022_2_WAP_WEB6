@@ -1,5 +1,7 @@
 package com.web.backend.proconboard;
 
+import com.web.backend.book.BookEntity;
+import com.web.backend.book.BookRepository;
 import com.web.backend.user.UserDetailsRepository;
 import com.web.backend.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +19,11 @@ public class ProConTopicService {
     @Autowired
     private UserDetailsRepository userDetailsRepository;
 
+    @Autowired
+    private BookRepository bookRepository;
+
     @Transactional
-    public ProConTopicDto create( Long userId, ProConTopicDto dto) {
+    public ProConTopicDto create( Long userId, ProConTopicDto dto, Long bookId) {
         // 예외 처리
         // 나중에
 
@@ -26,8 +31,12 @@ public class ProConTopicService {
         UserEntity user = userDetailsRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("찬반주제 페이지 생성실패! 대상 유저가 없습"));
 
+        // Book Entity 조회
+        BookEntity book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 책 id가 없습니다."));
+
         // procontopic 엔티티 생성
-        ProConTopicEntity proConTopic = ProConTopicEntity.createProConTopic(dto, user);
+        ProConTopicEntity proConTopic = ProConTopicEntity.createProConTopic(dto, user, book);
         // 엔티티 DB에저장
         ProConTopicEntity created = proConTopicRepository.save(proConTopic);
 
