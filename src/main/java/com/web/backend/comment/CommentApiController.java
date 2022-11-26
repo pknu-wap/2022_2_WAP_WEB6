@@ -30,11 +30,12 @@ public class CommentApiController {
 //    }
 
     // 댓글 생성
-    @PostMapping("/api/proconTopic/comments/{proConTopicId}")
+    @PostMapping("/api/proconTopic/{proConTopicId}/user/{userId}")
     public ResponseEntity<CommentDto> create(@PathVariable Long proConTopicId,
+                                             @PathVariable Long userId,
                                              @RequestBody CommentDto dto) {
         // 서비스에게 위임
-        CommentDto createdDto = commentService.create(proConTopicId, dto);
+        CommentDto createdDto = commentService.create(userId, proConTopicId, dto);
         // 결과 응답
         return ResponseEntity.status(HttpStatus.OK).body(createdDto);
 

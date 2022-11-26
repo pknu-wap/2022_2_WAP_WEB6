@@ -1,6 +1,7 @@
 package com.web.backend.comment;
 
 import com.web.backend.proconboard.ProConTopicEntity;
+import com.web.backend.user.UserEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +22,9 @@ public class CommentEntity {
     @JoinColumn(name = "procontopic_id") //fk
     private ProConTopicEntity proConTopic;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id") //fk
+    private UserEntity user;
     @Column
     private String content;
 
@@ -37,11 +41,14 @@ public class CommentEntity {
         return proCon;
     }
 
-    public static CommentEntity createComment(CommentDto dto, ProConTopicEntity proConTopic) {
+    public static CommentEntity createComment(CommentDto dto, UserEntity user, ProConTopicEntity proConTopic) {
+
         // 예외 발생
         if (dto.getId() != null) {
             throw new IllegalArgumentException("댓글 생성 실패 ! 댓글의id가 없어야합니다");
         }
+
+
         if (dto.getProConTopicId() != proConTopic.getId()) { // 받은 json 이랑 target id다를시
             throw new IllegalArgumentException("댓글 생성 실패 ! 게시글의 id가 잘못되었습니다");
         }
@@ -50,6 +57,7 @@ public class CommentEntity {
         return new CommentEntity(
                 dto.getId(),
                 proConTopic,
+                user,
                 dto.getContent(),
                 dto.isProCon(),
                 0L,
