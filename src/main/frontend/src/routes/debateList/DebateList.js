@@ -14,12 +14,12 @@ function DebateList() {
 
     const topicList = dummy.debateTopics.filter((book) => book.title === title);
 
-    useEffect( () => {
-        async function fetchData(){
+    useEffect(() => {
+        async function fetchData() {
             try {
                 await axios({
                         method: 'get',
-                        url: 'http://localhost:8080/api/proconTopic/'+booknum,
+                        url: 'http://localhost:8080/api/proconTopic/' + booknum,
                     }
                 ).then((data) => {
                     if (data.status === 200) { // 성공시

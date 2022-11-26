@@ -17,8 +17,6 @@ import java.util.Date;
 @NoArgsConstructor
 @Table(name = "procon_topic")
 public class ProConTopicEntity {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -28,9 +26,6 @@ public class ProConTopicEntity {
 
     @Column
     private String topic;
-
-    @Column
-    private String content;
 
     @Column
     private Date due_date;
@@ -53,12 +48,10 @@ public class ProConTopicEntity {
                 dto.getId(),
                 dto.isPro_con(),
                 dto.getTopic(),
-                dto.getContent(),
                 dto.getDue_date(),
                 dto.getReason(),
                 user,
                 book
-
         );
     }
 
@@ -73,9 +66,6 @@ public class ProConTopicEntity {
         }
 
         // 수정
-        if (dto.getContent() != null) {
-            this.content = dto.getContent();
-        }
         if (dto.getTopic() != null) {
             this.topic = dto.getTopic();
         }
