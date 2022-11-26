@@ -14,6 +14,10 @@ function DebateList() {
 
     const topicList = dummy.debateTopics.filter((book) => book.title === title);
 
+    const [debateList, setDebateList] = useState([]);
+
+
+
     useEffect(() => {
         async function fetchData() {
             try {
@@ -23,6 +27,7 @@ function DebateList() {
                     }
                 ).then((data) => {
                     if (data.status === 200) { // 성공시
+
                         console.log(data)
                         console.log("성공!!")
                     } else {

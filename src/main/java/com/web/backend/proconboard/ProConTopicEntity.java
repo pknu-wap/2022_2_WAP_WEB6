@@ -41,6 +41,9 @@ public class ProConTopicEntity {
     @JoinColumn(name = "book_id") //fk
     private BookEntity book;
 
+    @Column
+    private String book_title;
+
     public static ProConTopicEntity createProConTopic(ProConTopicDto dto, UserEntity user, BookEntity book) {
 
        // 엔티티 생성 및 반환
@@ -51,7 +54,8 @@ public class ProConTopicEntity {
                 dto.getDue_date(),
                 dto.getReason(),
                 user,
-                book
+                book,
+                book.getTitle()
         );
     }
 
