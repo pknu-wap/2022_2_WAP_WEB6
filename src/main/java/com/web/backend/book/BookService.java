@@ -25,7 +25,14 @@ public class BookService {
 
         BookEntity result = bookRepository.checkBook(title, authors);
         System.out.println(result);
-        return false;
+
+        if (result != null) {
+            return true;
+
+        } else {
+            return false;
+        }
+
     }
 
 

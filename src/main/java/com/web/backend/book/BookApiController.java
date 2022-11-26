@@ -19,13 +19,21 @@ public class BookApiController {
 
     }
 
-    @GetMapping("/api/book/title/{title}/authors/{authors}")
-    public ResponseEntity check(@PathVariable String title, @PathVariable String authors) {
-        System.out.println(title);
-        System.out.println(authors);
+    @PostMapping("/api/check/book")
+//    public ResponseEntity check(@PathVariable String title, @PathVariable String authors) {
+    public ResponseEntity check(@RequestBody BookDto bookDto) {
 
-        bookService.checkBook(title, authors);
+//        System.out.println(title);
+//        System.out.println(authors);
+//
+        // 책 있으면 True 없으면 False
+        boolean result = bookService.checkBook(bookDto.getTitle(), bookDto.getAuthors());
 
+        if (result == true) {
+
+        } else {
+
+        }
         return ResponseEntity.status(HttpStatus.OK).body("hi");
 
     }

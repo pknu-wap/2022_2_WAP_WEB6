@@ -12,8 +12,14 @@ const BookItem = ({article}) => {
 
     const checkBook = async () => {
         await axios({
-                method: 'get',
-                url: 'http://localhost:8080/api/book/title/' + title + '/authors/' + authors,
+                method: 'post',
+                url: 'http://localhost:8080/api/check/book',
+                data: {
+                    "url": thumbnail,
+                    "title": title,
+                    "authors": authors,
+                    "contents": contents,
+                }
             }
         ).then((data) => {
             console.log(data);
@@ -52,7 +58,7 @@ const BookItem = ({article}) => {
                     {/*        'thumbnail': thumbnail, 'title': title, 'authors': authors, 'contents': contents*/}
                     {/*    }*/}
                     {/*})}>찬반토론*/}
-                    <button className="fdebate" onClick={ handleSubmit }>찬반토론
+                    <button className="fdebate" onClick={handleSubmit}>찬반토론
                     </button>
 
                 </>
