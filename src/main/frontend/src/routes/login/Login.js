@@ -20,7 +20,7 @@ function Login() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("fuck")
+
         try {
             await axios({
                     method: 'post',

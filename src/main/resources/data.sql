@@ -1,9 +1,9 @@
 INSERT INTO book(id, title, authors, url, contents)
-VALUES (1, '책제목1', '저자1','url1','설명1');
+VALUES (1, '데미안', '데미안','url1','설명1');
 INSERT INTO book(id, title, authors, url, contents)
-VALUES (2, '책제목2', '저자2','url2','설명2');
+VALUES (2, '아가미', '아가미','url2','설명2');
 INSERT INTO book(id, title, authors, url, contents)
-VALUES (3, '책제목3', '저자3','url3','설명3');
+VALUES (3, 'book', 'book','url3','설명3');
 INSERT INTO book(id, title, authors, url, contents)
 VALUES (4, '책제목4', '저자4','url4','설명4');
 

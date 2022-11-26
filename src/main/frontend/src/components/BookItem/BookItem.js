@@ -1,6 +1,7 @@
 import React from "react";
 import DebateList from "../../routes/debateList/DebateList";
 import {Routes, Route, useNavigate} from 'react-router-dom';
+import axios from "axios";
 
 
 const BookItem = ({article}) => {
@@ -8,10 +9,20 @@ const BookItem = ({article}) => {
     const {thumbnail, title, authors, contents} = article;
     const history = useNavigate();
 
+
+    const checkBook = async () => {
+        await axios({
+                method: 'get',
+                url: 'http://localhost:8080/api/book/title/' + title + '/authors/' + authors,
+            }
+        ).then((data) => {
+            console.log(data);
+        });
+    };
+
     const handleSubmit = () => {
-        console.log(title)
 
-
+        checkBook(title, authors);
 
         navigate('/debateList/' + title, {
             state: {

@@ -1,5 +1,6 @@
 package com.web.backend.book;
 
+import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,12 @@ public class BookService {
         return BookDto.createBookDto(created);
     }
 
+    public boolean checkBook(String title, String authors) {
+
+        BookEntity result = bookRepository.checkBook(title, authors);
+        System.out.println(result);
+        return false;
+    }
 
 
 }
