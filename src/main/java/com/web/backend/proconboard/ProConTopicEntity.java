@@ -47,9 +47,6 @@ public class ProConTopicEntity {
     private BookEntity book;
 
     public static ProConTopicEntity createProConTopic(ProConTopicDto dto, UserEntity user, BookEntity book) {
-//        if (dto.getId() != null)
-//            throw new IllegalArgumentException("댓글 생성 실패! 댓글의 id가 없어야 합니다.");
-//        dto.setId(0L);
 
        // 엔티티 생성 및 반환
         return new ProConTopicEntity(

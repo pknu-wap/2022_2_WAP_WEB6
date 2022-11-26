@@ -20,7 +20,6 @@ public class BookEntity {
     //설명)
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-
     private Long id;        // 사이트 자체 책 id
     private String title;       // 제목
     private String authors;   // 저자

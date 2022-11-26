@@ -1,15 +1,26 @@
 import React from "react";
+import DebateList from "../../routes/debateList/DebateList";
+import {Routes, Route, useNavigate} from 'react-router-dom';
+
 
 const BookItem = ({article}) => {
+    const navigate = useNavigate();
     const {thumbnail, title, authors, contents} = article;
-    const clickMe = () => {
-        document.location.href('/')
-
-    }
+    const history = useNavigate();
 
     const handleSubmit = () => {
+        console.log(title)
 
+
+
+        navigate('/debateList/' + title, {
+            state: {
+                'thumbnail': thumbnail, 'title': title, 'authors': authors, 'contents': contents
+            }
+        })
     };
+
+
     return (
         <div>
             {thumbnail && (
@@ -25,7 +36,13 @@ const BookItem = ({article}) => {
                 {contents}
                 <>
                     <br/>
-                    <button className="fdebate" onClick={clickMe}>찬반토론</button>
+                    {/*<button className="fdebate" onClick={() => navigate('/debateList/' + title, {*/}
+                    {/*    state: {*/}
+                    {/*        'thumbnail': thumbnail, 'title': title, 'authors': authors, 'contents': contents*/}
+                    {/*    }*/}
+                    {/*})}>찬반토론*/}
+                    <button className="fdebate" onClick={ handleSubmit }>찬반토론
+                    </button>
 
                 </>
 
