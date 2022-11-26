@@ -14,6 +14,7 @@ public class CommentDto {
     private boolean proCon;
     private Long likeNum;
     private Long dislikeNum;
+    private String userName;
 
 
     // Entity -> dto
@@ -24,7 +25,8 @@ public class CommentDto {
                 c.getContent(),
                 c.isProCon(),
                 c.getLikeNum(),
-                c.getDislikeNum()
+                c.getDislikeNum(),
+                c.getUser().getUsername()
         );
     }
 
