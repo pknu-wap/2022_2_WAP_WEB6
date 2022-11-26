@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import DebateList from "../../routes/debateList/DebateList";
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import axios from "axios";
@@ -7,15 +7,13 @@ import axios from "axios";
 const BookItem = ({article}) => {
     const navigate = useNavigate();
     const {thumbnail, title, authors, contents} = article;
-    const history = useNavigate();
-
+    const [bookId, setBookId] = useState("");
 
     const checkBook = async () => {
         await axios({
                 method: 'post',
                 url: 'http://localhost:8080/api/check/book',
                 data: {
-                    "id": 0,
                     "url": thumbnail,
                     "title": title,
                     "authors": authors[0],
@@ -23,7 +21,12 @@ const BookItem = ({article}) => {
                 }
             }
         ).then((data) => {
-            console.log(data);
+            // setBookId(data.data.id);
+            navigate('/debateList/' + title + '/book/' + data.data.id, {
+                // state: {
+                //     'bookId':data.data.id,'thumbnail': thumbnail, 'title': title, 'authors': authors, 'contents': contents
+                // }
+            })
         });
     };
 
@@ -31,11 +34,7 @@ const BookItem = ({article}) => {
 
         checkBook(title, authors);
 
-        navigate('/debateList/' + title, {
-            state: {
-                'thumbnail': thumbnail, 'title': title, 'authors': authors, 'contents': contents
-            }
-        })
+
     };
 
 

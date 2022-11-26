@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import dummy from "./data.json";
 import {useParams} from "react-router-dom";
@@ -9,14 +9,21 @@ import {useLocation} from "react-router";
 //찬반 토론 목록 페이지
 function DebateList() {
     const {title} = useParams();
+    const {booknum} = useParams();
+
     const topicList = dummy.debateTopics.filter((book) => book.title === title);
-    const {state} = useLocation();
+
+    useEffect(() => {
+
+
+
+    }, []);
+
 
     return (
 
         <div className="wrap">
             <DebateHeader type="debate" debate="찬반 토론"></DebateHeader>
-            {/*<div>{state.thumbnail}</div>*/}
             <div>
                 {topicList.map((topics) => (
                     <DebateTopics
