@@ -37,4 +37,12 @@ public class BookService {
     }
 
 
+    public BookDto getBookInfo(Long bookId) {
+        BookDto createdDto = BookDto.createBookDto(bookRepository.getById(bookId));
+
+        System.out.println(createdDto);
+
+        return createdDto;
+
+    }
 }

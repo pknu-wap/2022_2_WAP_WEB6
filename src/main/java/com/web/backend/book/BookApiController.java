@@ -20,7 +20,7 @@ public class BookApiController {
     }
 
     @PostMapping("/api/check/book")
-    public ResponseEntity<BookDto>  check(@RequestBody BookDto bookDto) {
+    public ResponseEntity<BookDto> check(@RequestBody BookDto bookDto) {
         // 책 있으면 True 없으면 False
         BookDto result = bookService.checkBook(bookDto);
 
@@ -28,6 +28,12 @@ public class BookApiController {
 
     }
 
+    @GetMapping("/api/bookInfo/{bookId}")
+    public ResponseEntity<BookDto> getInfo(@PathVariable Long bookId) {
+        // 책 있으면 True 없으면 False
+        BookDto result = bookService.getBookInfo(bookId);
 
+        return ResponseEntity.status(HttpStatus.OK).body(result);
 
+    }
 }
