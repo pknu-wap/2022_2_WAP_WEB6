@@ -48,7 +48,7 @@ function DebateList() {
                 {debateList.map((topics) => (
                     <DebateTopics
                         // 찬반토론 주제 id
-                        key={topics.id}
+                        id={topics.id}
                         // 주제
                         topicsList={topics.topic}
                         // 책제목

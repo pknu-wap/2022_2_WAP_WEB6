@@ -10,6 +10,7 @@ import TopicHeader from "../../components/TopicHeader/TopicHeader";
 import BookExplain from "../../components/BookExplain/BookExplain";
 import Opinion from "../../components/Opinion/Opinion";
 import EditorForm from "../../components/EditorForm/EditorForm";
+import axios from "axios";
 
 //찬반 토론 상세 페이지
 function DetailDebate() {
@@ -31,13 +32,41 @@ function DetailDebate() {
         setData([newItem, ...data]);
     };
 
+    useEffect(() => {
+        async function fetchComments() {
+            try {
+                await axios({
+                        method: 'get',
+                        url: 'http://localhost:8080/api/proconTopic/'+params.debateId + '/comments',
+                    }
+                ).then((data) => {
+                    if (data.status === 200) { // 성공시
+                        // 댓글 데이터
+                        console.log(data)
+                        console.log("성공!!")
+                    } else {
+                        console.log("예상치 못한 오류!!");
+                    }
+                });
+            } catch (error) {
+                console.log(error)
+            }
+        };
+        fetchComments();
+
+
+
+    }, []);
+
+
     return (
         <div className="wrap">
             <TopicHeader topic={params.topic}></TopicHeader>
+            {/*<div>{params.bookid}</div>*/}
             <BookExplain
                 img="https://image.aladin.co.kr/product/9871/8/cover500/k042535550_1.jpg"
                 title={params.title}
-                body={content[0].plot}
+                body="Sdfsdfsdf"
             ></BookExplain>
             <Opinion opList={data}/>
             <EditorForm op="찬반" onCreate={onCreate}></EditorForm>

@@ -20,25 +20,29 @@ INSERT INTO procon_topic(id, due_date, pro_con, reason, topic, user_id, book_id,
 VALUES (1, '2022-02-22', true, '데미안 토론주제 이유', '데미안 토론주제 1 BLA BLA ', 1, 1, '데미안');
 INSERT INTO procon_topic(id, due_date, pro_con, reason, topic, user_id, book_id, book_title)
 VALUES (2, '2022-02-23', true, '데미안 토론주제 이유', '데미안 토론주제 2 BLA BLA ', 1, 1, '데미안');
+
 INSERT INTO procon_topic(id, due_date, pro_con, reason, topic, user_id, book_id, book_title)
 VALUES (3, '2022-02-24', true, '아가미가 재미있는 이유는 이러이러한 이유 때문이다.', '아가미가 재미 있는 이유', 2, 2, '아가미');
+
 INSERT INTO procon_topic(id, due_date, pro_con, reason, topic, user_id, book_id, book_title)
 VALUES (4, '2022-02-24', true, '자바는 어렵기 때문이다.', '자바를 재미 없는 이유', 2, 3, '자바를 다루는 기술');
 
 INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content, user_id)
-VALUES (1, 1, 25, 52, true, '데미안 토론주제 찬성', 1);
+VALUES (1, 1, 25, 52, true, '데미안 토론주제 찬성 1', 1);
 INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content, user_id)
-VALUES (2, 1, 52, 25, false, '데미안 토론주제 반대', 1);
+VALUES (2, 1, 52, 25, false, '데미안 토론주제 반대 1', 1);
 INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content, user_id)
-VALUES (3, 1, 25, 520, true, '데미안 토론주제 찬성', 1);
+VALUES (3, 1, 25, 520, true, '데미안 토론주제 찬성 1', 1);
+
 INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content, user_id)
-VALUES (4, 2, 25, 52, false, '아가미 토론주제 반대', 2);
+VALUES (4, 2, 25, 52, false, '데미안 토론주제 반대 2', 2);
 INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content, user_id)
-VALUES (5, 2, 25, 52, false, '아가미 토론주제 반대', 2);
+VALUES (5, 2, 25, 52, false, '데미안 토론주제 반대 2', 2);
 INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content, user_id)
-VALUES (6, 2, 25, 52, false, '아가미 토론주제 반대', 2);
+VALUES (6, 2, 25, 52, false, '데미안 토론주제 반대 2', 2);
+
 INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content, user_id)
-VALUES (7, 3, 25, 52, true, '3번째 찬반토론 3번째 댓글', 2);
+VALUES (7, 3, 25, 52, true, '아가미가 재미 있는 이유는 이러한 이유 때문이다. ', 2);
 
 
 
