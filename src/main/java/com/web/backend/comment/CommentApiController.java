@@ -21,13 +21,6 @@ public class CommentApiController {
         // 결과 응답
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
-//    @GetMapping("/api/proconTopic/{proConTopicId}/comments")
-//    public ResponseEntity<List<CommentDto>> comments(@PathVariable Long proConTopicId) {
-//        // 서비스에게 위임
-//        List<CommentDto> dtos = commentService.proConComments(proConTopicId);
-//        //결과 응답
-//        return ResponseEntity.status(HttpStatus.OK).body(dtos);
-//    }
 
     // 댓글 생성
     @PostMapping("/api/proconTopic/{proConTopicId}/user/{userId}")
