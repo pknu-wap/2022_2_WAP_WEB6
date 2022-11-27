@@ -10,7 +10,7 @@ function Topics(props) {
                 to={
                     props.type === "free"
                         ? `/detailfree/${props.title}/${props.topic}`
-                        : `/detaildebate/${props.title}/${props.topic}/debateId/${props.debateId}`
+                        : `/detaildebate/${props.title}/${props.topic}/debateId/${props.debateId}/book/${props.bookId}`
                 }
             >
                 <span>{props.topic}</span>
@@ -33,6 +33,7 @@ function DebateTopics(props) {
                 debateId={props.id}
                 topic={props.topicsList}
                 title={props.title}
+                bookId={props.bookId}
             />
         </section>
     );

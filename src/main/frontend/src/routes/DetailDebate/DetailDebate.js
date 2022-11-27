@@ -53,7 +53,26 @@ function DetailDebate() {
             }
         };
         fetchComments();
-
+        async function fetchBookData() {
+            try {
+                await axios({
+                        method: 'get',
+                        url: 'http://localhost:8080/api/bookInfo/'+ params.bookId,
+                    }
+                ).then((data) => {
+                    if (data.status === 200) { // 성공시
+                        // 책 데이터
+                        console.log(data)
+                        console.log("성공!!")
+                    } else {
+                        console.log("예상치 못한 오류!!");
+                    }
+                });
+            } catch (error) {
+                console.log(error)
+            }
+        };
+        fetchBookData();
 
 
     }, []);
@@ -62,7 +81,6 @@ function DetailDebate() {
     return (
         <div className="wrap">
             <TopicHeader topic={params.topic}></TopicHeader>
-            {/*<div>{params.bookid}</div>*/}
             <BookExplain
                 img="https://image.aladin.co.kr/product/9871/8/cover500/k042535550_1.jpg"
                 title={params.title}

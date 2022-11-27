@@ -25,7 +25,7 @@ function App() {
                 <Route path="debateList/book/:booknum" element={<DebateList />} />
                 <Route path="freeDebateList/:title" element={<FreeDebateList />} />
                 {/* <Route path="detailDebate" element={<DetailDebate />} /> */}
-                <Route path="detaildebate/:title/:topic/debateId/:debateId" element={<DetailDebate />} />
+                <Route path="detaildebate/:title/:topic/debateId/:debateId/book/:bookId" element={<DetailDebate />} />
                 <Route path="detailfree/:title/:topic" element={<DetailFree />} />
             </Route>
 

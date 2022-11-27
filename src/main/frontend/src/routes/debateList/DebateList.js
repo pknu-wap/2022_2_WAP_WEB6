@@ -53,6 +53,8 @@ function DebateList() {
                         topicsList={topics.topic}
                         // 책제목
                         title={topics.bookTitle}
+                        // 책 id
+                        bookId ={booknum}
                         type="procon"
                     ></DebateTopics>
                 ))}
