@@ -2,8 +2,8 @@ import React, {useEffect, useState} from "react";
 
 import dummy from "./data.json";
 import {useParams} from "react-router-dom";
-import DebateHeader from "../../components/debateList/DebateHeader";
-import DebateTopics from "../../components/debateList/DebateTopics";
+import DebateHeader from "../../components/DebateHeader/DebateHeader";
+import DebateTopics from "../../components/DebateTopics/DebateTopics";
 import {useLocation} from "react-router";
 import axios from "axios";
 

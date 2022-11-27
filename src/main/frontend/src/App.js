@@ -5,8 +5,8 @@ import Join from './routes/join/Join.js';
 import Navigation from "./routes/navigation/navigation";
 import Home from "./routes/home/home";
 import DebateList from "./routes/debateList/DebateList";
-import FreeDebateList from "./routes/debateList/FreeDebateList";
-import DetailDebate from "./routes/debateList/DetailDebate";
+import FreeDebateList from "./routes/FreeDebate/FreeDebateList";
+import DetailDebate from "./routes/DetailDebate/DetailDebate";
 import DetailFree from "./routes/debateList/DetailFree";
 
 function App() {  
