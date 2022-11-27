@@ -22,7 +22,7 @@ function App() {
 
                 {/* <Route path="debateList" element={<DebateList />} /> */}
                 {/*<Route path="debateList/:title" element={<DebateList />} />*/}
-                <Route path="debateList/:title/book/:booknum" element={<DebateList />} />
+                <Route path="debateList/book/:booknum" element={<DebateList />} />
                 <Route path="freeDebateList/:title" element={<FreeDebateList />} />
                 {/* <Route path="detailDebate" element={<DetailDebate />} /> */}
                 <Route path="detaildebate/:title/:topic" element={<DetailDebate />} />

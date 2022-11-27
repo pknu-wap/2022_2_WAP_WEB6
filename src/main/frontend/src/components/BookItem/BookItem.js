@@ -10,7 +10,9 @@ const BookItem = ({article}) => {
     const [bookId, setBookId] = useState("");
 
     const checkBook = async () => {
+
         await axios({
+                //해당 책이 있는지 체크
                 method: 'post',
                 url: 'http://localhost:8080/api/check/book',
                 data: {
@@ -22,7 +24,7 @@ const BookItem = ({article}) => {
             }
         ).then((data) => {
             // setBookId(data.data.id);
-            navigate('/debateList/' + title + '/book/' + data.data.id, {
+            navigate('/debateList/book/' + data.data.id, {
                 // state: {
                 //     'bookId':data.data.id,'thumbnail': thumbnail, 'title': title, 'authors': authors, 'contents': contents
                 // }

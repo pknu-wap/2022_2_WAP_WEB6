@@ -9,14 +9,12 @@ import axios from "axios";
 
 //찬반 토론 목록 페이지
 function DebateList() {
-    const {title} = useParams();
+    // const {title} = useParams();
     const {booknum} = useParams();
 
-    const topicList = dummy.debateTopics.filter((book) => book.title === title);
+    // const topicList = dummy.debateTopics.filter((book) => book.title === title);
 
     const [debateList, setDebateList] = useState([]);
-
-
 
     useEffect(() => {
         async function fetchData() {
@@ -30,6 +28,7 @@ function DebateList() {
 
                         console.log(data)
                         console.log("성공!!")
+                        setDebateList(data.data)
                     } else {
                         console.log("예상치 못한 오류!!");
                     }
@@ -39,21 +38,21 @@ function DebateList() {
             }
         };
         fetchData();
-
-
     }, []);
-
 
     return (
 
         <div className="wrap">
             <DebateHeader type="debate" debate="찬반 토론"></DebateHeader>
             <div>
-                {topicList.map((topics) => (
+                {debateList.map((topics) => (
                     <DebateTopics
+                        // 찬반토론 주제 id
                         key={topics.id}
+                        // 주제
                         topicsList={topics.topic}
-                        title={topics.title}
+                        // 책제목
+                        title={topics.bookTitle}
                         type="procon"
                     ></DebateTopics>
                 ))}

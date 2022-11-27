@@ -19,7 +19,9 @@ public class BookEntity {
     private Long id;        // 사이트 자체 책 id
     private String title;       // 제목
     private String authors;   // 저자
+    @Column(length = 500)
     private String url;         //썸네일
+    @Column(length = 1000)
     private String contents;    //책 설명
 
 
