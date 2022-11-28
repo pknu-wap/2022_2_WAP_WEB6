@@ -11,25 +11,50 @@ function Join() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [email, setEmail] = useState("");
 
+    const [isName, setIsName] = useState(false)
+    const [isPassword, setIsPassword] = useState(false)
+    const [isPasswordConfirm, setIsPasswordConfirm] = useState(false)
+
     const onIdHandler = (event) => {
         setId(event.currentTarget.value);
+        console.log(id)
+        if (id.length >= 8) {
+            setIsName(true);
+        } else {
+            setIsName(false);
+
+        }
+        console.log(isName);
     };
 
     const onPasswordHandler = (event) => {
         setPassword(event.currentTarget.value);
+        if (password.length >= 8) {
+            setIsPassword(true);
+        }else{
+            setIsPassword(false);
+        }
+        console.log(isName);
+
     };
 
     const onConfirmPasswordHandler = (event) => {
         setConfirmPassword(event.currentTarget.value);
+        if (password == confirmPassword) {
+            setIsPasswordConfirm(true);
+        }else{
+            setIsPasswordConfirm(false);
+        }
+        console.log(isName);
     };
 
-    const onNameHandler = (event) => {
-        setEmail(event.currentTarget.value);
+    const printErr = () => {
+        alert("올바르지 않은 입력입니다.")
     };
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log(id)
         try {
             await axios({
                     method: 'post',
@@ -37,7 +62,7 @@ function Join() {
                     data: {
                         "userName": id,
                         "password": password,
-                        "email":email
+                        // "email":email
                     }
                 }
             ).then((data) => {
@@ -57,7 +82,6 @@ function Join() {
         }
 
     };
-
 
     return (
         <div className="Join">
@@ -84,14 +108,19 @@ function Join() {
                         : null
                     }
                 </div>
+                {/*<div>*/}
+                {/*    <p id="pass_text">🍞이메일</p>*/}
+                {/*    <input type="email" id="name_input"*/}
+                {/*           value={email} onChange={onNameHandler}*/}
+                {/*           placeholder="이름을 입력하세요"/>*/}
+                {/*</div>*/}
                 <div>
-                    <p id="pass_text">🍞이메일</p>
-                    <input type="email" id="name_input"
-                           value={email} onChange={onNameHandler}
-                           placeholder="이름을 입력하세요"/>
-                </div>
-                <div>
-                    <button className="jo_button2" onClick={handleSubmit}>회원가입</button>
+                    {isName && isPassword && isPasswordConfirm ?
+                        <button className="jo_button2" onClick={handleSubmit}>회원가입</button>
+
+                        : <button className="jo_button2" onClick={printErr}>빈칸을 입력해주세요</button>
+
+                    }
                 </div>
             </div>
         </div>
