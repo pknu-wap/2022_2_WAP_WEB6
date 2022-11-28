@@ -11,7 +11,7 @@ export const NavigationContainer = styled.div`
 export const LogoContainer = styled(Link)`
     height: 100%;
     width: 70px;
-    padding: 25px;
+    padding: 10px;
 `
 
 export const NavLinks = styled.div`
@@ -25,32 +25,12 @@ export const NavLinks = styled.div`
 export const NavLink = styled(Link)`
   padding: 10px 15px;
   cursor: pointer;
+  &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+  }
 `
+export const ImgContainer = styled.img`
+  width: 200px;  
+  height: 100px;
 
-
-//     .navigation {
-//   height: 70px;
-//   width: 100%;
-//   display: flex;
-//   justify-content: space-between;
-//   margin-bottom: 25px;
-//
-// .logo-container {
-//     height: 100%;
-//     width: 70px;
-//     padding: 25px;
-//   }
-//
-// .nav-links-container {
-//     width: 50%;
-//     height: 100%;
-//     display: flex;
-//     align-items: center;
-//     justify-content: flex-end;
-//
-//   .nav-link {
-//       padding: 10px 15px;
-//       cursor: pointer;
-//     }
-//   }
-// }
+`

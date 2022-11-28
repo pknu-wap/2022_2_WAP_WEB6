@@ -1,7 +1,7 @@
 // import './Login.css';
 import {Outlet} from "react-router-dom";
 import {Fragment} from "react";
-import {NavigationContainer, NavLinks, NavLink, LogoContainer} from "./navigation.styles";
+import {NavigationContainer, NavLinks, NavLink, LogoContainer, imgContainer, ImgContainer} from "./navigation.styles";
 import ToastLogo from "../../assets/Toast_logo.png";
 import {useNavigate} from 'react-router-dom'
 import Logo from '../../assets/Toast_logo.png';
@@ -15,26 +15,18 @@ const Navigation = () => {
 
     };
 
+
+
     return (
         <Fragment>
+
             <NavigationContainer>
 
-                    <img src={Logo}/>
-
-
+                <LogoContainer to='/'>
+                    <ImgContainer src={Logo}/>
+                </LogoContainer>
                 <NavLinks>
-                    <NavLink to='/'>
-                        Something
-                    </NavLink>
-                    <NavLink to='/'>
-                        Something
-                    </NavLink>
-                    <NavLink to='/'>
-                        Something
-                    </NavLink>
-                    <NavLink to='/'>
-                        Something
-                    </NavLink>
+
                     {
                         localStorage.getItem('username') ? (
                             <span className='nav-link' onClick={signOutUser} >로그아웃</span>
