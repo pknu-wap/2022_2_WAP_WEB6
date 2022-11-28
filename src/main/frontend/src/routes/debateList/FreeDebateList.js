@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import dummy from "../debateList/data.json";
+import dummy from "./data.json";
 import { useParams } from "react-router-dom";
 import DebateHeader from "../../components/DebateHeader/DebateHeader";
 import DebateTopics from "../../components/DebateTopics/DebateTopics";

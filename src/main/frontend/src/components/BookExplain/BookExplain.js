@@ -5,7 +5,7 @@ function BookExplain(props) {
   return (
     <section className="bookSection">
       <article className="bookImg">
-        <img src={props.img}></img>
+        <img src={props.imgsrc}></img>
       </article>
       <article>
         <div>{props.title}</div>

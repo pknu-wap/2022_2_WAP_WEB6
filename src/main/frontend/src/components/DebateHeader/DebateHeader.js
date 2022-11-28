@@ -12,6 +12,7 @@ function DebateHeader(props) {
   const closeModal = () => {
     setModalOpen(false);
   };
+  console.log(props.title);
 
   return (
     <>
@@ -25,7 +26,12 @@ function DebateHeader(props) {
         <button onClick={openModal}>주제 생성</button>
       </div>
       {modalOpen && (
-        <Modal open={modalOpen} close={closeModal} type={props.type} />
+        <Modal
+          open={modalOpen}
+          close={closeModal}
+          type={props.type}
+          title={props.title}
+        />
       )}
     </>
   );

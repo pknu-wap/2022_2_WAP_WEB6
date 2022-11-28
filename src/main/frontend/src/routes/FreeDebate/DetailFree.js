@@ -4,7 +4,7 @@ import React, { useState, useRef } from "react";
 // import Opinion from "../components/detailDebate/Opinion";
 // import Form from "../components/detailDebate/Form";
 import "../DetailDebate/DetailDebate.css";
-import dummy from "./data.json";
+import dummy from "../debateList/data.json";
 import { Form, useParams } from "react-router-dom";
 import TopicHeader from "../../components/TopicHeader/TopicHeader";
 import BookExplain from "../../components/BookExplain/BookExplain";

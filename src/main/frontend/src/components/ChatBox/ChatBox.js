@@ -5,13 +5,16 @@ import "./ChatBox.css";
 function ChatBox(props) {
   let classNameSet = null;
   let opinionDiv = null;
-  if (props.opinion == "찬성") {
+
+  if (props.proCon == true) {
     opinionDiv = <div className="pro">찬성</div>;
     classNameSet = "pro";
-  } else if (props.opinion == "반대") {
+  } else if (props.proCon == false) {
     opinionDiv = <div className="con">반대</div>;
     classNameSet = "con";
-  } else if (props.opinion == "자유") {
+  }
+  //아직 지정 x
+  else if (props.opinion == "자유") {
     classNameSet = "free";
   }
   const [visible, setVisible] = useState(false);
@@ -32,7 +35,9 @@ function ChatBox(props) {
           <p dangerouslySetInnerHTML={{ __html: props.content }}></p>
         </div>
         <div className={"reaction " + "reaction" + classNameSet}>
-          {/* <span>❤</span> */}
+          {/* 기능 구현X -> 좋아요, 싫어요, 대댓글*/}
+          <span>👍 {props.likeNum}</span>
+          <span>👎 {props.dislikeNum}</span>
           <button
             onClick={() => {
               setVisible(!visible);
@@ -40,6 +45,7 @@ function ChatBox(props) {
           >
             댓글
           </button>
+          <button>삭제</button>
         </div>
         <div className={visible ? "reply" : ""}>
           {visible && <EditorBox value="댓글" print="작성" />}

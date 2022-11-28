@@ -65,6 +65,7 @@
   border: none;
   text-decoration: none;
   background: transparent;
+  padding-right: 0.5rem;
 }
 
 .reply {

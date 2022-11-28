@@ -41,16 +41,16 @@
   color: #999;
   background-color: transparent;
 }
-.modal > section > main {
+.modal > section > form {
   padding: 16px;
   border-bottom: 1px solid #dee2e6;
   border-top: 1px solid #dee2e6;
 }
-.modal > section > footer {
-  padding: 12px 16px;
+.modal .formbtn {
   text-align: right;
+  margin: 0;
 }
-.modal > section > footer button {
+.modal > section > form button {
   padding: 6px 12px;
   color: #fff;
   /* background-color: #6c757d; */
