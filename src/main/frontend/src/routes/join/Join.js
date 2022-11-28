@@ -17,24 +17,21 @@ function Join() {
 
     const onIdHandler = (event) => {
         setId(event.currentTarget.value);
-        console.log(id)
         if (id.length >= 8) {
             setIsName(true);
         } else {
             setIsName(false);
 
         }
-        console.log(isName);
     };
 
     const onPasswordHandler = (event) => {
         setPassword(event.currentTarget.value);
         if (password.length >= 8) {
             setIsPassword(true);
-        }else{
+        } else {
             setIsPassword(false);
         }
-        console.log(isName);
 
     };
 
@@ -42,10 +39,9 @@ function Join() {
         setConfirmPassword(event.currentTarget.value);
         if (password == confirmPassword) {
             setIsPasswordConfirm(true);
-        }else{
+        } else {
             setIsPasswordConfirm(false);
         }
-        console.log(isName);
     };
 
     const printErr = () => {
@@ -54,7 +50,6 @@ function Join() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(id)
         try {
             await axios({
                     method: 'post',
@@ -66,11 +61,11 @@ function Join() {
                     }
                 }
             ).then((data) => {
-                if(data.status===200 && data.data != "sameIdExist"){ // 성공시
-                    console.log(data)
+                if (data.status === 200 && data.data != "sameIdExist") { // 성공시
                     console.log("성공!!")
+                    alert("회원가입 성공 로그인 해주세요")
                     window.location.replace('http://localhost:3000/login')
-                }else if (data.data == "sameIdExist") {
+                } else if (data.data == "sameIdExist") {
                     alert("중복된 ID 입니다. 다시 입력해주세요!!")
                 } else {
                     console.log("예상치 못한 오류!!");
@@ -80,6 +75,7 @@ function Join() {
             console.log(error)
 
         }
+
 
     };
 
@@ -108,17 +104,10 @@ function Join() {
                         : null
                     }
                 </div>
-                {/*<div>*/}
-                {/*    <p id="pass_text">🍞이메일</p>*/}
-                {/*    <input type="email" id="name_input"*/}
-                {/*           value={email} onChange={onNameHandler}*/}
-                {/*           placeholder="이름을 입력하세요"/>*/}
-                {/*</div>*/}
                 <div>
-                    {isName && isPassword && isPasswordConfirm ?
+                    {password == confirmPassword && isName && isPassword ?
                         <button className="jo_button2" onClick={handleSubmit}>회원가입</button>
-
-                        : <button className="jo_button2" onClick={printErr}>빈칸을 입력해주세요</button>
+                        : <button className="jo_button2" onClick={printErr}>올바르게 입력해주세요</button>
 
                     }
                 </div>

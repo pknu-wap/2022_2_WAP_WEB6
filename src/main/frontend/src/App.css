@@ -99,6 +99,17 @@ input[type=text]{
   background-color: rgba(233, 233, 233, 0.955);
 
 }
+input[type=password]{
+  width: 600px;
+  height: 50px;
+  font-size: 22px;
+  border: 0;
+  border-radius: 25px;
+  outline: none;
+  padding-left: 30px;
+  background-color: rgba(233, 233, 233, 0.955);
+
+}
 
 .fdebate{
   
