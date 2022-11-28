@@ -1,5 +1,13 @@
 import React from 'react';
 
-const getToken=()=>{
-    return localStorage.getItem('USER_KEY');
+export const getToken = () => {
+    return localStorage.getItem('token');
 }
+
+export const getUsername = () => {
+    return localStorage.getItem("username");
+};
+
+export const getId = () => {
+    return localStorage.getItem("id")
+};
