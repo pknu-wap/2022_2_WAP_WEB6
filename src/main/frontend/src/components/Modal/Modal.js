@@ -3,6 +3,7 @@ import "./Modal.css";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import {getId} from "../../userInfo/userInfo";
+import * as config from '../../config';
 
 function Date(props) {
   return (
@@ -19,55 +20,9 @@ const Modal = (props) => {
 
   const { open, close, type } = props;
 
-  //const [boolean, setBoolean] = useState(true);
-  //   const [topic, setTopic] = useState("");
-  //   const [reason, setReason] = useState("");
-
-  // const onBooleanHandler = (event) => {
-  //     setBoolean(event.currentTarget.value);
-  // };
-
-  //   const onTopicHandler = (event) => {
-  //     setTopic(event.currentTarget.value);
-  //   };
-  //   const onReasonHandler = (event) => {
-  //     setReason(event.currentTarget.value);
-  //   };
-
-  /*const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      await axios({
-        method: "post",
-        url: "http://localhost:8080/api/userId/1/bookId/" + booknum,
-        data: {
-          id: 0,
-          //pro_con: true,
-          topic: topic,
-          due_date: "2022-12-22",
-          reason: setReason,
-        },
-      }).then((data) => {
-        if (data.status === 200) {
-          // 성공시
-          // window.location.replace('/')
-        } else if (data.data == "sameIdExist") {
-          alert("중복된 ID 입니다. 다시 입력해주세요!!");
-        } else {
-          console.log("예상치 못한 오류!!");
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };*/
-
   const topicRef = useRef(null);
   const explanRef = useRef(null);
   const dateRef = useRef(null);
-
-  // const debateId = useRef(5);
-  // console.log(debateId.current);
 
   const handleSubmit = async (event) => {
     if (getId() == null){
@@ -78,7 +33,7 @@ const Modal = (props) => {
     try {
       await axios({
         method: "post",
-        url: "http://localhost:8080/api/userId/1/bookId/" + booknum,
+        url: "http://"+config.URL+"/api/userId/1/bookId/" + booknum,
         data: {
           id: 0, //dataId.current
           pro_con: type == "debate" ? true : false,

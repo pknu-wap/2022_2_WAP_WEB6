@@ -2,6 +2,7 @@ import './Login.css';
 import {Routes, Route, Link, useNavigate} from 'react-router-dom'
 import axios from "axios";
 import {useState} from "react";
+import * as config from '../../config';
 
 function Login() {
     let navigate = useNavigate()
@@ -24,7 +25,7 @@ function Login() {
         try {
             await axios({
                     method: 'post',
-                    url: 'http://localhost:8080/user/login',
+                    url: 'http://'+config.URL+'/user/login',
                     data: {
                         "userName": id,
                         "password": password,

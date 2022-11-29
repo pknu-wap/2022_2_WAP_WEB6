@@ -4,6 +4,7 @@ import "./EditorForm.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {getToken, getId, getUsername} from "../../userInfo/userInfo";
+import * as config from '../../config';
 
 //찬성 반대 값 가져오기
 function Selected(props) {
@@ -42,7 +43,7 @@ function EditorForm(props) {
     try {
       await axios({
         method: "post",
-        url: `http://localhost:8080/api/proconTopic/${props.TopicId}/user/`+getId(),
+        url: `http://${config.URL}/api/proconTopic/${props.TopicId}/user/`+getId(),
         data: {
           content: content,
           proCon: selected == "찬성" ? true : false,

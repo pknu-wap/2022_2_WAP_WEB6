@@ -2,6 +2,7 @@ import './Join.css';
 import {useState} from 'react';
 import {Routes, Route, Link, useNavigate} from 'react-router-dom'
 import axios from "axios";
+import * as config from '../../config';
 
 function Join() {
     let navigate = useNavigate()
@@ -53,7 +54,7 @@ function Join() {
         try {
             await axios({
                     method: 'post',
-                    url: 'http://localhost:8080/user/register',
+                    url: 'http://'+config.URL+'/user/register',
                     data: {
                         "userName": id,
                         "password": password,
@@ -64,7 +65,7 @@ function Join() {
                 if (data.status === 200 && data.data != "sameIdExist") { // 성공시
                     console.log("성공!!")
                     alert("회원가입 성공 로그인 해주세요")
-                    window.location.replace('http://localhost:3000/login')
+                    window.location.replace('http://'+config.URL+'/login')
                 } else if (data.data == "sameIdExist") {
                     alert("중복된 ID 입니다. 다시 입력해주세요!!")
                 } else {
