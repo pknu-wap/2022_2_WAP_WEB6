@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.3bef9cb3.css",
+    "main.js": "/static/js/main.bbae3113.js",
+    "static/js/787.cda612ba.chunk.js": "/static/js/787.cda612ba.chunk.js",
+    "static/media/Toast_logo.png": "/static/media/Toast_logo.71941de3b17cacfbe22b.png",
+    "index.html": "/index.html",
+    "main.3bef9cb3.css.map": "/static/css/main.3bef9cb3.css.map",
+    "main.bbae3113.js.map": "/static/js/main.bbae3113.js.map",
+    "787.cda612ba.chunk.js.map": "/static/js/787.cda612ba.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3bef9cb3.css",
+    "static/js/main.bbae3113.js"
+  ]
+}
