@@ -4,6 +4,7 @@ import DebateHeader from "../../components/DebateHeader/DebateHeader";
 import DebateTopics from "../../components/DebateTopics/DebateTopics";
 import { useLocation } from "react-router";
 import axios from "axios";
+import * as config from '../../config';
 
 //찬반 토론 목록 페이지
 function DebateList() {
@@ -18,7 +19,7 @@ function DebateList() {
       try {
         await axios({
           method: "get",
-          url: "http://localhost:8080/api/proconTopic/" + booknum,
+          url: "http://"+config.URL+"/api/proconTopic/" + booknum,
         }).then((data) => {
           if (data.status === 200) {
             // 성공시
@@ -41,7 +42,7 @@ function DebateList() {
       try {
         await axios({
           method: "get",
-          url: "http://localhost:8080/api/bookInfo/" + booknum,
+          url: "http://"+config.URL+"/api/bookInfo/" + booknum,
         }).then((response) => {
           if (response.status === 200) {
             // 성공시

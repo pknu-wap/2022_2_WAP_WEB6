@@ -5,6 +5,8 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+src/main/frontend/static/
+
 ### STS ###
 .apt_generated
 .classpath
@@ -37,3 +39,19 @@ out/
 
 node_modules
 bower_components
+src/main/frontend/build/static/css/main.3bef9cb3.css
+src/main/frontend/build/static/css/main.3bef9cb3.css.map
+src/main/frontend/build/static/js/main.ceae07de.js
+src/main/frontend/build/static/js/main.ceae07de.js.LICENSE.txt
+src/main/frontend/build/static/js/main.ceae07de.js.map
+src/main/resources/static/static/css/main.3bef9cb3.css
+src/main/resources/static/static/css/main.3bef9cb3.css.map
+src/main/resources/static/static/js/main.83cd1469.js
+src/main/resources/static/static/js/main.83cd1469.js.LICENSE.txt
+src/main/resources/static/static/js/main.83cd1469.js.map
+src/main/resources/static/static/js/main.8af2953d.js
+src/main/resources/static/static/js/main.8af2953d.js.LICENSE.txt
+src/main/resources/static/static/js/main.8af2953d.js.map
+src/main/resources/static/static/js/main.ceae07de.js
+src/main/resources/static/static/js/main.ceae07de.js.LICENSE.txt
+src/main/resources/static/static/js/main.ceae07de.js.map

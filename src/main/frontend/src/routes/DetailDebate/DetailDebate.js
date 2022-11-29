@@ -10,6 +10,7 @@ import BookExplain from "../../components/BookExplain/BookExplain";
 import Opinion from "../../components/Opinion/Opinion";
 import EditorForm from "../../components/EditorForm/EditorForm";
 import axios from "axios";
+import * as config from '../../config';
 
 //찬반 토론 상세 페이지
 function DetailDebate() {
@@ -42,7 +43,7 @@ function DetailDebate() {
         await axios({
           method: "get",
           url:
-            "http://localhost:8080/api/proconTopic/" +
+            "http://"+config.URL+"/api/proconTopic/" +
             params.debateId +
             "/comments",
         }).then((response) => {
@@ -67,7 +68,7 @@ function DetailDebate() {
       try {
         await axios({
           method: "get",
-          url: "http://localhost:8080/api/bookInfo/" + params.bookId,
+          url: "http://"+config.URL+"/api/bookInfo/" + params.bookId,
         }).then((response) => {
           if (response.status === 200) {
             // 성공시

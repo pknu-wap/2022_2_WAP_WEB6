@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import DebateList from "../../routes/debateList/DebateList";
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import axios from "axios";
-
+import * as config from '../../config';
 
 const BookItem = ({article}) => {
     const navigate = useNavigate();
@@ -14,7 +14,7 @@ const BookItem = ({article}) => {
         await axios({
                 //해당 책이 있는지 체크
                 method: 'post',
-                url: 'http://localhost:8080/api/check/book',
+                url: 'http://'+config.URL+'/api/check/book',
                 data: {
                     "url": thumbnail,
                     "title": title,
