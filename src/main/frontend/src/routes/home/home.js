@@ -15,11 +15,7 @@ const Home = () => {
             headers: {Authorization: 'KakaoAK 8d39abafc96ae6955e8238b4b400703a'}
         })
             .then(function (msg) {    //msg : api에서 받아온 정보 저장
-    
-                //  for (int i = 0; i < msg.data.documents.length; i++;){
-                //     console.log(msg.data.documents[i]);
-                //  }
-
+ 
                 let arr = msg.data.documents;
                setArticles(arr);
                console.log(articles)
@@ -38,8 +34,8 @@ const Home = () => {
                 <form>
                     <div className="Searchbox">
                         <input id="title" type="text" placeholder='책 제목을 검색하세요.'></input>
-                        <button onClick={bookSearch} id="bisearch">
-                            <BiSearch className="icon" size="35"/>
+                        <button className="icon" onClick={bookSearch} id="bisearch">
+                            <BiSearch size="35"/>
                         </button>
                     </div>
                 </form>
@@ -50,6 +46,24 @@ const Home = () => {
 
             ))}
         </div>
+
+        // <div>
+        //     <center>
+        //         <form>
+        //             <div className="Searchbox">
+        //                 <input id="title" type="text" placeholder='책 제목을 검색하세요.'></input>
+        //                 <button onClick={bookSearch} id="bisearch">
+        //                     <BiSearch className="icon" size="35"/>
+        //                 </button>
+        //             </div>
+        //         </form>
+        //     </center>
+        //
+        //     {articles.map((article) => (
+        //         <BookItem article = {article} />
+        //
+        //     ))}
+        // </div>
 
 
     )

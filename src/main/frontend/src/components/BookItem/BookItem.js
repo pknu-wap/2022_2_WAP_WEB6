@@ -41,27 +41,35 @@ const BookItem = ({article}) => {
 
 
     return (
-        <div>
+        <div className="container">
             {thumbnail && (
-                <div className="thumbnail">
+                <div>
                     <a href={thumbnail} target="_blank" rel="noopener noreferrer">
-                        <img src={thumbnail} alt="thumbnail"/>
+                        <img className="thumbnail" src={thumbnail} alt="thumbnail" />
                     </a>
                 </div>
             )}
-            <div>
-                {title}<br/>
-                {authors}<br/>
-                {contents}
-                <>
-                    <br/>
-                    <button className="fdebate" onClick={handleSubmit}>찬반토론
-                    </button>
-
-                </>
-
+            <div className="factor">
+                <text className="title">
+                    {title}
+                    <br />
+                </text>
+                <text className="authors">
+                    {authors}
+                    <br />
+                </text>
+                <text className="contents">
+                    <br />
+                    {contents}…
+                </text>
+                <div>
+                    <br />
+                </div>
+                <button className="fdebate" onClick={handleSubmit}>
+                    찬반토론
+                </button>
             </div>
-            <div>----------------------------------</div>
+
         </div>
     );
 };
