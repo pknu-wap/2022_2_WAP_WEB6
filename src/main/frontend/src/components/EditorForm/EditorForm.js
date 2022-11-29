@@ -3,6 +3,7 @@ import EditorBox from "../EditorBox/EditorBox";
 import "./EditorForm.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {getToken, getId, getUsername} from "../../userInfo/userInfo";
 
 //찬성 반대 값 가져오기
 function Selected(props) {
@@ -32,10 +33,16 @@ function EditorForm(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (getId() == null) {
+      alert("로그인을 해주세요!");
+      window.location.replace("/login");
+    }
+
+
     try {
       await axios({
         method: "post",
-        url: `http://localhost:8080/api/proconTopic/${props.TopicId}/user/1`,
+        url: `http://localhost:8080/api/proconTopic/${props.TopicId}/user/`+getId(),
         data: {
           content: content,
           proCon: selected == "찬성" ? true : false,
@@ -43,7 +50,6 @@ function EditorForm(props) {
         },
       }).then((data) => {
         if (data.status === 200) {
-          // 성공시
 
           console.log("댓글등록 성공");
           window.location.reload();

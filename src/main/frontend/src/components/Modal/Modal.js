@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import "./Modal.css";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import {getId} from "../../userInfo/userInfo";
 
 function Date(props) {
   return (
@@ -69,6 +70,11 @@ const Modal = (props) => {
   // console.log(debateId.current);
 
   const handleSubmit = async (event) => {
+    if (getId() == null){
+      alert("로그인을 해주세요!");
+      window.location.replace("/login")
+    }
+
     try {
       await axios({
         method: "post",
