@@ -65,7 +65,7 @@ function Join() {
                 if (data.status === 200 && data.data != "sameIdExist") { // 성공시
                     console.log("성공!!")
                     alert("회원가입 성공 로그인 해주세요")
-                    window.location.replace('http://'+config.URL+'/login')
+                    window.location.replace('/login')
                 } else if (data.data == "sameIdExist") {
                     alert("중복된 ID 입니다. 다시 입력해주세요!!")
                 } else {
