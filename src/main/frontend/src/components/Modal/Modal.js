@@ -3,6 +3,7 @@ import "./Modal.css";
 import axios from "axios";
 import {useParams, useNavigate} from "react-router-dom";
 import {getId} from "../../userInfo/userInfo";
+import * as config from '../../config';
 
 function Date(props) {
     return (
@@ -35,7 +36,7 @@ const Modal = (props) => {
             try {
                 await axios({
                     method: "post",
-                    url: "http://localhost:8080/api/userId/1/bookId/" + booknum,
+                    url: "http://"+config.URL+"/api/userId/1/bookId/" + booknum,
                     data: {
                         id: 0, //dataId.current
                         pro_con: type == "debate" ? true : false,
