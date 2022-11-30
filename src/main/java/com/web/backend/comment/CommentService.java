@@ -38,20 +38,6 @@ public class CommentService {
         return dtos;
 
     }
-//    public List<CommentDto> comments(Long proConTopicId) {
-//        // 댓글 목록 조회
-//        List<CommentEntity> comments = commentRepository.findByProConTopicId(proConTopicId);
-//
-//        // 엔티티 -> DTO
-//        List<CommentDto> dtos = new ArrayList<CommentDto>();
-//        for (int i = 0; i < comments.size(); i++) {
-//            CommentEntity c = comments.get(i);
-//            CommentDto dto = CommentDto.createCommentDto(c);
-//            dtos.add(dto);
-//        }
-//        //
-//        return dtos;
-//    }
 
     @Transactional
     public CommentDto create(Long userId, Long proConTopicId, CommentDto dto) {
@@ -76,10 +62,10 @@ public class CommentService {
 
     @Transactional
     public CommentDto update(Long commentId, CommentDto dto) {
-
         // 댓글 조회 및 예외 처리
         CommentEntity target = commentRepository.findById(commentId).orElseThrow(()
                 -> new IllegalArgumentException("댓글 수정 실패 해당 댓글 없음"));
+
         // 댓글 수정
         target.patch(dto);
         // DB로 갱신

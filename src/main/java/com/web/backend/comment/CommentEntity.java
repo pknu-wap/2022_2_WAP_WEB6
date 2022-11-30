@@ -70,6 +70,9 @@ public class CommentEntity {
         if (this.id != dto.getId()) {
             throw new IllegalArgumentException("댓글 수정 실패 잘못된 id가 입력");
         }
+        if (this.user.getId() != dto.getUserId()) {
+            throw new IllegalArgumentException("댓글 수정 실패 잘못된 id가 입력");
+        }
 
         // 수정
         if (dto.getContent() != null) {
