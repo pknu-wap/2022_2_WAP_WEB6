@@ -85,19 +85,27 @@ function Join() {
             <div className="Join_Box">
                 <div>
                     <p id="id_text">🍞아이디</p>
-                    <input type="text" id="id_input"
+                    <input type="text" id="id_iput"
                            value={id} onChange={onIdHandler}
                            placeholder="아이디를 입력하세요"/>
+                    {   id.length <= 8 ?
+                        <p id="notice">* 아이디가 너무 짧습니다.</p> :
+                        null
+                    }
                 </div>
                 <div>
                     <p id="pass_text">🍞비밀번호</p>
-                    <input type="password" id="password_input2"
+                    <input type="password" id="password_iput"
                            value={password} onChange={onPasswordHandler}
                            placeholder="비밀번호를 입력하세요"></input>
+                    {   id.length <= 8 ?
+                        <p id="notice">* 비밀번호가 너무 짧습니다.</p> :
+                        null
+                    }
                 </div>
                 <div>
                     <p id="pass_text">🍞비밀번호 확인</p>
-                    <input type="password" id="password_input3"
+                    <input type="password" id="password_iput"
                            value={confirmPassword} onChange={onConfirmPasswordHandler}
                            placeholder="비밀번호를 재 입력하세요"></input>
                     {password !== confirmPassword ?
