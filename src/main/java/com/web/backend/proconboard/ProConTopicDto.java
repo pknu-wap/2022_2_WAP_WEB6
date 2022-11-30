@@ -19,6 +19,7 @@ public class ProConTopicDto {
     private String reason;
     @JsonProperty("user_id") //json 에서 articleId article_id로 날라온다.
     private Long userId;
+    private Long bookId;
     private String bookTitle;
 
     public static ProConTopicDto createProConDto(ProConTopicEntity created) {
@@ -29,6 +30,7 @@ public class ProConTopicDto {
                 created.getDue_date(),
                 created.getReason(),
                 created.getUser().getId(),
+                created.getBook().getId(),
                 created.getBook_title()
         );
     }

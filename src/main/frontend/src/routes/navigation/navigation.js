@@ -15,8 +15,6 @@ const Navigation = () => {
 
     };
 
-
-
     return (
         <Fragment>
 
@@ -26,7 +24,9 @@ const Navigation = () => {
                     <ImgContainer src={Logo}/>
                 </LogoContainer>
                 <NavLinks>
-
+                    <NavLink to='/allDebate'>
+                        모든토론
+                    </NavLink>
                     {
                         localStorage.getItem('username') ? (
                             <span className='nav-link' onClick={signOutUser} >로그아웃</span>

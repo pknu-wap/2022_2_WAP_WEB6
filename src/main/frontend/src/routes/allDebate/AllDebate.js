@@ -5,10 +5,11 @@ import DebateTopics from "../../components/DebateTopics/DebateTopics";
 import { useLocation } from "react-router";
 import axios from "axios";
 import * as config from "../../config";
-import "./DebateList.css";
+import "./AllDebate.css";
+import Header from "../../components/Header/Header";
 
 //찬반 토론 목록 페이지
-function DebateList() {
+function AllDebate() {
   const { booknum } = useParams();
 
   const [debateList, setDebateList] = useState([]);
@@ -22,7 +23,7 @@ function DebateList() {
       try {
         await axios({
           method: "get",
-          url: "http://" + config.URL + "/api/proconTopic/" + booknum,
+          url: "http://" + config.URL + "/api/proconTopic/allTopic",
         }).then((data) => {
           if (data.status === 200) {
             // 성공시
@@ -68,15 +69,12 @@ function DebateList() {
 
   return (
       <div className="wrap">
-        <DebateHeader
+        <Header
             type="debate"
-            debate="찬반 토론"
+            debate="모든 토론"
             title={bookTitle}
-        ></DebateHeader>
-        <div className="bookContent">
-          <h3>{bookTitle} 줄거리</h3>
-          <span>{content}</span>
-        </div>
+        ></Header>
+
         <div>
           {debateList.map((topics) => (
               <DebateTopics
@@ -90,6 +88,9 @@ function DebateList() {
                   bookId={booknum}
                   // Due_date
                   dueDate={topics.due_date}
+                  // Book_id
+                  bookId={topics.bookId}
+
                   type="procon"
               ></DebateTopics>
           ))}
@@ -98,4 +99,4 @@ function DebateList() {
   );
 }
 
-export default DebateList;
+export default AllDebate;

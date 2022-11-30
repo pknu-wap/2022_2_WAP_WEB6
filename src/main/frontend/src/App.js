@@ -8,6 +8,7 @@ import DebateList from "./routes/debateList/DebateList";
 import FreeDebateList from "./routes/debateList/FreeDebateList";
 import DetailDebate from "./routes/DetailDebate/DetailDebate";
 import DetailFree from "./routes/FreeDebate/DetailFree";
+import AllDebate from "./routes/allDebate/AllDebate";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route index={true} element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="join" element={<Join />} />
+        <Route path="allDebate" element={<AllDebate />} />
 
         {/* <Route path="debateList" element={<DebateList />} /> */}
         {/*<Route path="debateList/:title" element={<DebateList />} />*/}

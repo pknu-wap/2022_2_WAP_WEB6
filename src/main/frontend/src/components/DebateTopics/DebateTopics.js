@@ -33,6 +33,7 @@ function DebateTopics(props) {
         topic={props.topicsList}
         title={props.title}
         bookId={props.bookId}
+        dueDate={props.dueDate}
       />
     </section>
   );
