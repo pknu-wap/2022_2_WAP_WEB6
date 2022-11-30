@@ -69,7 +69,6 @@ ol {
   padding: 0;
   border: 0;
   outline: 0;
-
 }
 
 body {
@@ -82,7 +81,7 @@ div .wrap {
   margin: 0 auto;
 }
 
-.Searchbox{
+.Searchbox {
   position: relative;
   display: flex;
   justify-content: center;
@@ -90,7 +89,7 @@ div .wrap {
   margin-top: 10px;
 }
 
-input[type=text]{
+.Searchbox input[type="text"] {
   width: 700px;
   height: 50px;
   font-size: 22px;
@@ -99,7 +98,6 @@ input[type=text]{
   outline: none;
   padding-left: 30px;
   background-color: rgba(233, 233, 233, 0.955);
-
 }
 
 .fdebate {
@@ -107,7 +105,7 @@ input[type=text]{
   margin-bottom: 10px;
   margin-right: 20px;
   width: 20px;
-  height:40px;
+  height: 40px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -129,18 +127,18 @@ input[type=text]{
   display: inline-block;
   width: auto;
 
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
   cursor: pointer;
 
   transition: 0.5s;
-
 }
 
 .thumbnail {
   margin-top: 100px;
   margin-left: 200px;
-  width:200px;
+  width: 200px;
   background-size: cover;
   border-radius: 3%;
 }
@@ -149,6 +147,7 @@ input[type=text]{
   margin-left: 20px;
   margin-top: 100px;
   margin-right: 200px;
+  min-width: 400px;
 }
 
 .icon {
@@ -163,11 +162,11 @@ input[type=text]{
   display: flex;
   flex-direction: row;
 
+  min-width: 800px;
 }
 
 .title {
   font-size: 30px;
-
 }
 
 .contents {
@@ -177,4 +176,9 @@ input[type=text]{
 
 .authors {
   margin-bottom: 10px;
+}
+
+.nav-link {
+  cursor: pointer;
+  padding: 10px 15px;
 }

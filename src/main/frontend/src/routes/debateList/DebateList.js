@@ -4,7 +4,8 @@ import DebateHeader from "../../components/DebateHeader/DebateHeader";
 import DebateTopics from "../../components/DebateTopics/DebateTopics";
 import { useLocation } from "react-router";
 import axios from "axios";
-import * as config from '../../config';
+import * as config from "../../config";
+import "./DebateList.css";
 
 //찬반 토론 목록 페이지
 function DebateList() {
@@ -12,6 +13,7 @@ function DebateList() {
 
   const [debateList, setDebateList] = useState([]);
   const [bookTitle, setBookTitle] = useState();
+  const [content, setContent] = useState();
 
   useEffect(() => {
     //책 목록
@@ -19,7 +21,7 @@ function DebateList() {
       try {
         await axios({
           method: "get",
-          url: "http://"+config.URL+"/api/proconTopic/" + booknum,
+          url: "http://" + config.URL + "/api/proconTopic/" + booknum,
         }).then((data) => {
           if (data.status === 200) {
             // 성공시
@@ -42,7 +44,7 @@ function DebateList() {
       try {
         await axios({
           method: "get",
-          url: "http://"+config.URL+"/api/bookInfo/" + booknum,
+          url: "http://" + config.URL + "/api/bookInfo/" + booknum,
         }).then((response) => {
           if (response.status === 200) {
             // 성공시
@@ -50,6 +52,7 @@ function DebateList() {
             console.log(response);
             console.log("성공!");
             setBookTitle(response.data.title);
+            setContent(response.data.contents);
           } else {
             console.log("예상치 못한 오류!!");
           }
@@ -68,6 +71,10 @@ function DebateList() {
         debate="찬반 토론"
         title={bookTitle}
       ></DebateHeader>
+      <div className="bookContent">
+        <h3>{bookTitle} 줄거리</h3>
+        <span>{content}</span>
+      </div>
       <div>
         {debateList.map((topics) => (
           <DebateTopics

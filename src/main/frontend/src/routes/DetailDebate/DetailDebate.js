@@ -10,12 +10,13 @@ import BookExplain from "../../components/BookExplain/BookExplain";
 import Opinion from "../../components/Opinion/Opinion";
 import EditorForm from "../../components/EditorForm/EditorForm";
 import axios from "axios";
-import * as config from '../../config';
+import * as config from "../../config";
 
 //찬반 토론 상세 페이지
 function DetailDebate() {
   const [comment, setComment] = useState([]);
   const [bookdata, setBookdata] = useState([]);
+  const [debatedata, setDebatedata] = useState([]);
 
   const dataId = useRef(0);
   const params = useParams();
@@ -43,7 +44,9 @@ function DetailDebate() {
         await axios({
           method: "get",
           url:
-            "http://"+config.URL+"/api/proconTopic/" +
+            "http://" +
+            config.URL +
+            "/api/proconTopic/" +
             params.debateId +
             "/comments",
         }).then((response) => {
@@ -68,7 +71,7 @@ function DetailDebate() {
       try {
         await axios({
           method: "get",
-          url: "http://"+config.URL+"/api/bookInfo/" + params.bookId,
+          url: "http://" + config.URL + "/api/bookInfo/" + params.bookId,
         }).then((response) => {
           if (response.status === 200) {
             // 성공시
@@ -85,7 +88,35 @@ function DetailDebate() {
       }
     }
     fetchBookData();
+
+    //토론 정보 get
+    async function fetchDebateData() {
+      try {
+        await axios({
+          method: "get",
+          url: "http://" + config.URL + "/api/proconTopic/" + params.bookId,
+        }).then((response) => {
+          if (response.status === 200) {
+            // 성공시
+            // 책 데이터
+            console.log(response);
+            console.log("성공");
+            setDebatedata(response.data);
+          } else {
+            console.log("예상치 못한 오류!!");
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchDebateData();
   }, []);
+
+  //주제 설명(api=>reason)
+  const bodyContent = debatedata.map((topic) =>
+    topic.id == params.debateId ? topic.reason : ""
+  );
 
   return (
     <div className="wrap">
@@ -93,7 +124,7 @@ function DetailDebate() {
       <BookExplain
         imgsrc={bookdata.url}
         title={bookdata.title}
-        body={bookdata.contents}
+        body={bodyContent}
       ></BookExplain>
       <Opinion opList={comment} />
       <EditorForm
