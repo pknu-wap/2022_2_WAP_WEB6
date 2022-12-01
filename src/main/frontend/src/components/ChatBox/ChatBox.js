@@ -70,7 +70,7 @@ function ChatBox(props) {
           {opinionDiv}
         </div>
         <div className={"msg-container " + "msg" + classNameSet}>
-          <h5>{props.user}</h5>
+          <h5>{props.userName}</h5>
           <p dangerouslySetInnerHTML={{ __html: props.content }}></p>
         </div>
         <div className={"reaction " + "reaction" + classNameSet}>

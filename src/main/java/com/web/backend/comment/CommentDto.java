@@ -15,7 +15,7 @@ public class CommentDto {
     private Long likeNum;
     private Long dislikeNum;
     private Long userId;
-
+    private String userName;
 
     // Entity -> dto
     public static CommentDto createCommentDto(CommentEntity c) {
@@ -26,7 +26,8 @@ public class CommentDto {
                 c.isProCon(),
                 c.getLikeNum(),
                 c.getDislikeNum(),
-                c.getUser().getId()
+                c.getUser().getId(),
+                c.getUser().getUsername()
         );
     }
 
