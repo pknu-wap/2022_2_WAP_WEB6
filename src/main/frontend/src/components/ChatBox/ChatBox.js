@@ -84,7 +84,7 @@ function ChatBox(props) {
           {/*>*/}
           {/*  댓글*/}
           {/*</button>*/}
-          <button>수정</button>
+          {/*<button>수정</button>*/}
         </div>
         <div className={visible ? "reply" : ""}>
           {visible && <EditorBox value="댓글" print="작성" />}
