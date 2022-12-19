@@ -1,0 +1,16 @@
+.bookSection {
+  display: flex;
+  align-items: center;
+}
+.bookImg {
+  /* width: 100%; */
+  margin: 1rem 1rem 1rem 0;
+}
+.bookSection article img {
+  /* width: 100%; */
+  width: 130px;
+}
+
+.bookSection article div {
+  padding-bottom: 0.5rem;
+}
