@@ -7,14 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import org.springframework.web.bind.annotation.GetMapping;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
 public class WebProjectApplication {
-
+	@GetMapping("/message")
+	public String getMessage(){
+		return "for docker file test";
+	}
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
