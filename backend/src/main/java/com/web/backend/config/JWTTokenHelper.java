@@ -68,11 +68,12 @@ public class JWTTokenHelper {
     }
 
     // JWT accessToken 생성
-    public String generateRefreshToken(String id) {
+    public String generateRefreshToken(String username) {
         String refreshToken = Jwts.builder()
-                .setId(id)
+                .setIssuer(appName) // app 이름 toast-app
+                .setId(username)
+                .setIssuedAt(new Date()) // 현 시간
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 5)) // 5시간
-                .setIssuedAt(new Date(System.currentTimeMillis()))
                 .signWith(SIGNATURE_ALGORITHM, secretKey)
                 .compact();
 
@@ -131,6 +132,7 @@ public class JWTTokenHelper {
 
         return null;
     }
+
     // Authorization header
     public String getAuthHeaderFromHeader(HttpServletRequest request) {
         return request.getHeader("Authorization");
