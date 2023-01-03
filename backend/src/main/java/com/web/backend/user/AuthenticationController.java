@@ -49,10 +49,15 @@ public class AuthenticationController {
         UserEntity user = (UserEntity) authentication.getPrincipal();
         // 해당 유저 토큰 발급
         String jwtToken = jwtTokenHelper.generateToken(user.getUsername());
+        // refresh token
+        String jwtRefreshToken = jwtTokenHelper.generateRefreshToken(user.getUsername());
+
+
 
         LoginResponse response = new LoginResponse();
 
         result.put("jwtToken", jwtToken);
+        result.put("jwtRefreshToken", jwtRefreshToken);
         result.put("user", user);
 
 

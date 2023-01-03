@@ -13,17 +13,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     private UserDetailsService userDetailsService;
     private JWTTokenHelper jwtTokenHelper;
 
+
+    // 인증에서 제외할 url
+//    private static final List<String> EXCLUDE_URL =
+//            Collections.unmodifiableList(
+//                    Arrays.asList(
+////                            "/favicon.ico",
+////                            "/admin",
+//                    ));
+
     public JWTAuthenticationFilter(UserDetailsService userDetailsService, JWTTokenHelper jwtTokenHelper) {
         this.userDetailsService = userDetailsService;
         this.jwtTokenHelper = jwtTokenHelper;
-
     }
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

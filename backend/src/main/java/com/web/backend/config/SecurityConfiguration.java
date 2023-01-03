@@ -32,18 +32,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationEntryPoint authenticationEntryPoint;
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        //admin 권한 유저 생성
-//        //memory auth
-//        auth.inMemoryAuthentication().withUser("Pardeep")
-//                .password(passwordEncoder().encode("test@123"))
-//                .authorities("USER", "ADMIN");
-//
-//        //Database auth
-//        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
-//    }
-
     //암호화 코드
     @Bean
     public PasswordEncoder passwordEncoder() {

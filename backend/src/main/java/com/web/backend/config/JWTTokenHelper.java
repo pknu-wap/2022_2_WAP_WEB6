@@ -3,10 +3,12 @@ package com.web.backend.config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
@@ -16,7 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 @Component
 public class JWTTokenHelper {
 
-
+    public static final long JWT_TOKEN_VALIDITY = 1000 * 60 * 60;
     @Value("${jwt.auth.app}")
     private String appName;
     // 비밀키
@@ -28,6 +30,7 @@ public class JWTTokenHelper {
     // 암호화 방법
     private SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
 
+    // token으로 사용자 속성정보 조회
     private Claims getAllClaimsFromToken(String token) {
         Claims claims;
         try {
@@ -40,7 +43,7 @@ public class JWTTokenHelper {
         }
         return claims;
     }
-
+    // token 에서 유저이름 가져옴
     public String getUsernameFromToken(String token) {
         String username;
         try {
@@ -52,6 +55,7 @@ public class JWTTokenHelper {
         return username;
     }
 
+    //토큰 생성
     public String generateToken(String username) throws InvalidKeySpecException, NoSuchAlgorithmException {
 
         return Jwts.builder() // 토큰 만들어줌
@@ -61,6 +65,18 @@ public class JWTTokenHelper {
                 .setExpiration(generateExpirationDate()) // 만료 날짜
                 .signWith(SIGNATURE_ALGORITHM, secretKey) // 방식
                 .compact();
+    }
+
+    // JWT accessToken 생성
+    public String generateRefreshToken(String id) {
+        String refreshToken = Jwts.builder()
+                .setId(id)
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 5)) // 5시간
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .signWith(SIGNATURE_ALGORITHM, secretKey)
+                .compact();
+
+        return refreshToken;
     }
 
     private Date generateExpirationDate() {
