@@ -1,73 +1,76 @@
-.Join{
-    display: flex;
-    justify-content: center;
+.Join {
+  display: flex;
+  justify-content: center;
 }
 
-.Join_Box{
-    text-align : left;
+.Join_Box {
+  text-align: left;
 }
 
-#id_text{
-    margin-right: 10px;
-    font-weight: 900;
-    font-size : 20px;
-    color : #C79562;
-    margin-bottom: 10px;
+.Join_Box div {
+  margin-bottom: 1rem;
 }
 
-#pass_text{
-    margin-right: 10px;
-    font-weight: 900;
-    font-size : 20px;
-    color : #C79562;
-    margin-bottom: 10px;
+#id_text {
+  margin-right: 10px;
+  font-weight: 900;
+  font-size: 20px;
+  color: #c79562;
+  margin-bottom: 10px;
 }
 
-#id_iput{
-    border-radius: 10px;
-    border-color: #C79562;
-    padding: 10px;
-    margin-bottom: 10px;
-    width: 280px;
+#pass_text {
+  margin-right: 10px;
+  font-weight: 900;
+  font-size: 20px;
+  color: #c79562;
+  margin-bottom: 10px;
 }
 
-#password_iput2{
-    border-radius: 10px;
-    border-color: #C79562;
-    padding: 10px;
-    margin-bottom: 10px;
-    width: 280px;
+#id_iput {
+  border-radius: 10px;
+  border-color: #c79562;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 280px;
 }
 
-#password_iput3{
-    border-radius: 10px;
-    border-color: #C79562;
-    padding: 10px;
-    width: 280px;
+#password_iput2 {
+  border-radius: 10px;
+  border-color: #c79562;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 280px;
 }
 
-
-#name_iput{
-    border-radius: 10px;
-    border-color: #C79562;
-    padding: 10px;
-    margin-bottom: 30px;
-    width: 280px;
+#password_iput3 {
+  border-radius: 10px;
+  border-color: #c79562;
+  padding: 10px;
+  width: 280px;
 }
 
-#notice{
-    font-size : 13px;
-    color : #b96716;
-    font-weight: 900;
+#name_iput {
+  border-radius: 10px;
+  border-color: #c79562;
+  padding: 10px;
+  margin-bottom: 30px;
+  width: 280px;
 }
 
-.jo_button2{
-    background-color: #C79562;
-    border-radius: 10px;
-    border-color: #C79562;
-    color: white;
-    width: 305px;
-    height: 40px;
-    font-weight: 600;
-    cursor: pointer;
+#notice {
+  font-size: 13px;
+  color: #b96716;
+  font-weight: 900;
+}
+
+.jo_button2 {
+  background-color: #c79562;
+  border-radius: 10px;
+  border-color: #c79562;
+  color: white;
+  width: 305px;
+  height: 40px;
+  font-weight: 600;
+  cursor: pointer;
 }
