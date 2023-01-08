@@ -41,7 +41,7 @@ public class AuthenticationController {
     private RefreshTokenService refreshTokenService;
     // 로그인 요청
     @PostMapping("/user/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody AuthenticationRequest authenticationRequest) throws InvalidKeySpecException, NoSuchAlgorithmException {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         Map<String, Object> result = new HashMap<>();
 
         final Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(

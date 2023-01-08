@@ -1,8 +1,17 @@
 package com.web.backend.config;
 
+import com.web.backend.proconboard.ProConTopicEntity;
+import com.web.backend.proconboard.ProConTopicRepository;
+import com.web.backend.refreshToken.RefreshTokenEntity;
+import com.web.backend.refreshToken.RefreshTokenRepository;
+import com.web.backend.refreshToken.RefreshTokenService;
+import com.web.backend.user.UserDetailsRepository;
+import com.web.backend.user.UserEntity;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -12,6 +21,7 @@ import javax.transaction.Transactional;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
 
@@ -43,6 +53,7 @@ public class JWTTokenHelper {
         }
         return claims;
     }
+
     // token 에서 유저이름 가져옴
     public String getUsernameFromToken(String token) {
         String username;
@@ -80,6 +91,7 @@ public class JWTTokenHelper {
         return refreshToken;
     }
 
+    // 만료 날짜 생성
     private Date generateExpirationDate() {
         return new Date(new Date().getTime() + expiresIn * 1000);
     }
@@ -123,6 +135,7 @@ public class JWTTokenHelper {
         return issueAt;
     }
 
+    //get token from request
     public String getToken(HttpServletRequest request) {
 
         String authHeader = getAuthHeaderFromHeader(request);
@@ -137,4 +150,41 @@ public class JWTTokenHelper {
     public String getAuthHeaderFromHeader(HttpServletRequest request) {
         return request.getHeader("Authorization");
     }
+
+    @Autowired
+    private RefreshTokenRepository refreshTokenRepository;
+    @Autowired
+    private UserDetailsRepository userDetailsRepository;
+
+    @Autowired
+    private RefreshTokenService refreshTokenService;
+    // refreshTOken 만료 체크 후 재발급
+    public Boolean reGenerateRefreshToken(String userName, UserDetails userDetails){
+        UserEntity user = userDetailsRepository.findByUserName(userName);
+        RefreshTokenEntity target = refreshTokenRepository.findById(user.getId()).get();
+        String refreshToken = target.getRefreshToken();
+
+
+        if (validateToken(refreshToken, userDetails)) {
+
+
+        }
+        // refreshToken 만료 여부 체크
+        try {
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(refreshToken);
+            return true;
+        }
+        catch(ExpiredJwtException e) {
+            String reGenRefreshToken = generateRefreshToken(user.getUsername());
+            refreshTokenService.saveRefreshToken(user, reGenRefreshToken);
+
+            return true;
+        }
+
+        catch(Exception e) {
+//            log.error("[reGenerateRefreshToken] refreshToken 재발급 중 문제 발생 : {}", e.getMessage());
+            return false;
+        }
+    }
+
 }
