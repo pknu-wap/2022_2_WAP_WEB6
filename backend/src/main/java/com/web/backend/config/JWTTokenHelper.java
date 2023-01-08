@@ -155,20 +155,15 @@ public class JWTTokenHelper {
     private RefreshTokenRepository refreshTokenRepository;
     @Autowired
     private UserDetailsRepository userDetailsRepository;
-
     @Autowired
     private RefreshTokenService refreshTokenService;
-    // refreshTOken 만료 체크 후 재발급
-    public Boolean reGenerateRefreshToken(String userName, UserDetails userDetails){
+    // refreshToken 만료 체크 후 재발급
+    public Boolean reGenerateRefreshToken(String userName){
         UserEntity user = userDetailsRepository.findByUserName(userName);
         RefreshTokenEntity target = refreshTokenRepository.findById(user.getId()).get();
         String refreshToken = target.getRefreshToken();
 
 
-        if (validateToken(refreshToken, userDetails)) {
-
-
-        }
         // refreshToken 만료 여부 체크
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(refreshToken);
