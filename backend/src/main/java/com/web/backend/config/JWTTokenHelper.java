@@ -10,6 +10,7 @@ import com.web.backend.user.UserEntity;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -93,6 +94,7 @@ public class JWTTokenHelper {
     // 만료 날짜 생성
     private Date generateExpirationDate() {
         return new Date(new Date().getTime() + expiresIn * 1000);
+       // return new Date(new Date().getTime() + expiresIn * 100);/
     }
 
     // 토큰 유효성 검증
@@ -156,6 +158,7 @@ public class JWTTokenHelper {
     private UserDetailsRepository userDetailsRepository;
     @Autowired
     private RefreshTokenService refreshTokenService;
+
     // refreshToken 만료 체크 후 재발급
     public Boolean reGenerateRefreshToken(String userName){
         UserEntity user = userDetailsRepository.findByUserName(userName);
@@ -183,50 +186,33 @@ public class JWTTokenHelper {
 
 
     @Transactional
-    public Map<String, Object> generateAccessToken(String refreshToken, String accessToken, String userId) {
+    public Map<String, Object> generateAccessToken(String refreshToken, String accessToken, String userId) throws InvalidKeySpecException, NoSuchAlgorithmException {
         Map<String, Object> returnMap = new HashMap<String, Object>();
-        RefreshTokenEntity target = refreshTokenRepository.findById(Long.valueOf(userId)).get();
+        RefreshTokenEntity refreshTokenEntity = refreshTokenRepository.findById(Long.valueOf(userId)).get();
         String userName = "";
-        System.out.println(target.getRefreshToken());
-        System.out.println(accessToken);
-        System.out.println(getUsernameFromToken(target.getRefreshToken()));
-        System.out.println(getUsernameFromToken(accessToken));
-//        validateToken(accessToken, userId);
-        //refresh 토큰 만료 여부
-        boolean tokenFl = false;
-        try {
-            refreshToken = refreshToken.substring(7);
-            userName = getUsernameFromToken(refreshToken);
-            tokenFl = true;
-        } catch (MalformedJwtException e) {
-//            log.error("Invalid JWT token: {}", e.getMessage());
-            System.out.println("Invalid JWT token: {}");
 
-        } catch (ExpiredJwtException e) {
-//            log.error("JWT token is expired: {}", e.getMessage());
-            System.out.println("JWT token is expired: {}");
-
-        } catch (UnsupportedJwtException e) {
-//            log.error("JWT token is unsupported: {}", e.getMessage());
-            System.out.println("JWT token is unsupported: {}");
-
-        } catch (IllegalArgumentException e) {
-//            log.error("JWT claims string is empty: {}", e.getMessage());
-            System.out.println("JWT claims string is empty: {}");
-
-        }
-        if(!tokenFl) {
+        // token 정보가 존재하지 않는 경우
+        if(refreshTokenEntity == null) {
             returnMap.put("result", "fail");
-            returnMap.put("msg", "refresh token이 만료되었거나 정보가 존재하지 않습니다.");
-
-
-//            refreshTokenService.delRefreshToken(rDTO.getAdmRefreshTokenIdx());
-
+            returnMap.put("msg", "refresh token 정보가 존재하지 않습니다.");
             return returnMap;
         }
-        //refresh 토큰 유효할시 accessToken 재발급
+
+        if (!isTokenExpired(refreshToken) && refreshTokenEntity.getRefreshToken().equals(refreshToken)) {
+                userName = getUsernameFromToken(refreshToken);
+                String newToken = generateToken(userName);
+                returnMap.put("result", "success");
+                returnMap.put("accessToken", newToken);
+
+
+        }else {
+            returnMap.put("result", "fail");
+            returnMap.put("msgf", "refresh token이 만료되었거나 정보가 존재하지 않습니다.");
+        }
 
         return returnMap;
+
+
     }
 
 }
