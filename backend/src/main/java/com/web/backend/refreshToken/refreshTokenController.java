@@ -1,5 +1,6 @@
 package com.web.backend.refreshToken;
 
+import com.web.backend.config.JWTTokenHelper;
 import com.web.backend.proconboard.ProConTopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,11 +14,12 @@ import java.util.Map;
 public class refreshTokenController {
     @Autowired
     private RefreshTokenService refreshTokenService;
-
+    @Autowired
+    private JWTTokenHelper jwtTokenHelper;
     @PostMapping("token/refresh")
     public Map<String, Object> JwtTokenRefresh(@RequestBody HashMap<String, Object> param) {
 
-        Map<String, Object> returnMap = refreshTokenService.generateAcessToken(param.get("refreshToken").toString(),
+        Map<String, Object> returnMap = jwtTokenHelper.generateAccessToken(param.get("refreshToken").toString(),
                 param.get("accessToken").toString(), param.get("userId").toString());
 
 

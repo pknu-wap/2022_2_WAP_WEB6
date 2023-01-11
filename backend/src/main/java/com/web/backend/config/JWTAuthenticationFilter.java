@@ -43,11 +43,11 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
         // request 에서 token 가져옴
         String authToken = jwtTokenHelper.getToken(request);
-
+        System.out.println(authToken);
         if (null != authToken) {
             //token 가져옴
             String userName = jwtTokenHelper.getUsernameFromToken(authToken);
-
+            System.out.println(userName);
             if (null != userName) {
 
                 UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
@@ -60,7 +60,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
 
                     //reGenerateRefresh Token
-                    jwtTokenHelper.generateRefreshToken(userName);
+//                    jwtTokenHelper.generateRefreshToken(userName);
 
                 }
 

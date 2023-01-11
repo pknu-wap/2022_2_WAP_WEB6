@@ -7,10 +7,7 @@ import com.web.backend.refreshToken.RefreshTokenRepository;
 import com.web.backend.refreshToken.RefreshTokenService;
 import com.web.backend.user.UserDetailsRepository;
 import com.web.backend.user.UserEntity;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +18,8 @@ import javax.transaction.Transactional;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -180,6 +179,54 @@ public class JWTTokenHelper {
 //            log.error("[reGenerateRefreshToken] refreshToken 재발급 중 문제 발생 : {}", e.getMessage());
             return false;
         }
+    }
+
+
+    @Transactional
+    public Map<String, Object> generateAccessToken(String refreshToken, String accessToken, String userId) {
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+        RefreshTokenEntity target = refreshTokenRepository.findById(Long.valueOf(userId)).get();
+        String userName = "";
+        System.out.println(target.getRefreshToken());
+        System.out.println(accessToken);
+        System.out.println(getUsernameFromToken(target.getRefreshToken()));
+        System.out.println(getUsernameFromToken(accessToken));
+//        validateToken(accessToken, userId);
+        //refresh 토큰 만료 여부
+        boolean tokenFl = false;
+        try {
+            refreshToken = refreshToken.substring(7);
+            userName = getUsernameFromToken(refreshToken);
+            tokenFl = true;
+        } catch (MalformedJwtException e) {
+//            log.error("Invalid JWT token: {}", e.getMessage());
+            System.out.println("Invalid JWT token: {}");
+
+        } catch (ExpiredJwtException e) {
+//            log.error("JWT token is expired: {}", e.getMessage());
+            System.out.println("JWT token is expired: {}");
+
+        } catch (UnsupportedJwtException e) {
+//            log.error("JWT token is unsupported: {}", e.getMessage());
+            System.out.println("JWT token is unsupported: {}");
+
+        } catch (IllegalArgumentException e) {
+//            log.error("JWT claims string is empty: {}", e.getMessage());
+            System.out.println("JWT claims string is empty: {}");
+
+        }
+        if(!tokenFl) {
+            returnMap.put("result", "fail");
+            returnMap.put("msg", "refresh token이 만료되었거나 정보가 존재하지 않습니다.");
+
+
+//            refreshTokenService.delRefreshToken(rDTO.getAdmRefreshTokenIdx());
+
+            return returnMap;
+        }
+        //refresh 토큰 유효할시 accessToken 재발급
+
+        return returnMap;
     }
 
 }
