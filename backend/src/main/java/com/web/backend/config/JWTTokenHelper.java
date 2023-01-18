@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +40,13 @@ public class JWTTokenHelper {
     private int expiresIn;
     // 암호화 방법
     private SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
+
+    @Autowired
+    private RefreshTokenRepository refreshTokenRepository;
+    @Autowired
+    private UserDetailsRepository userDetailsRepository;
+    @Autowired
+    private RefreshTokenService refreshTokenService;
 
     // token으로 사용자 속성정보 조회
     private Claims getAllClaimsFromToken(String token) {
@@ -80,15 +88,16 @@ public class JWTTokenHelper {
 
     // JWT accessToken 생성
     public String generateRefreshToken(String username) {
-        String refreshToken = Jwts.builder()
+        return Jwts.builder()
                 .setIssuer(appName) // app 이름 toast-app
-                .setId(username)
+                .setSubject(username)
                 .setIssuedAt(new Date()) // 현 시간
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 5)) // 5시간
+//                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 5)) // 5시간
+                .setExpiration(new Date(new Date().getTime() + expiresIn * 50)) // 5시간
                 .signWith(SIGNATURE_ALGORITHM, secretKey)
                 .compact();
 
-        return refreshToken;
+
     }
 
     // 만료 날짜 생성
@@ -106,13 +115,19 @@ public class JWTTokenHelper {
                         !isTokenExpired(token)
         );
     }
+    // accessToken 유효시간 알림(second)
 
     // 토큰 시간 만료 체크
     public boolean isTokenExpired(String token) {
         Date expireDate = getExpirationDate(token);
-        return expireDate.before(new Date());
-    }
+        System.out.println("-----------------------------------------");
+        System.out.println("expireDate: " + expireDate);
+//        System.out.println(expireDate.before(new Date()));
+        System.out.println("-----------------------------------------");
 
+//        return expireDate.before(new Date());
+        return false;
+    }
     // 토큰 만료 시간 리턴
     private Date getExpirationDate(String token) {
         Date expireDate;
@@ -152,36 +167,51 @@ public class JWTTokenHelper {
         return request.getHeader("Authorization");
     }
 
-    @Autowired
-    private RefreshTokenRepository refreshTokenRepository;
-    @Autowired
-    private UserDetailsRepository userDetailsRepository;
-    @Autowired
-    private RefreshTokenService refreshTokenService;
+
 
     // refreshToken 만료 체크 후 재발급
     public Boolean reGenerateRefreshToken(String userName){
         UserEntity user = userDetailsRepository.findByUserName(userName);
         RefreshTokenEntity target = refreshTokenRepository.findById(user.getId()).get();
         String refreshToken = target.getRefreshToken();
+        System.out.println(refreshToken);
+        isTokenExpired(refreshToken);
 
+//        System.out.println(refreshToken);
+//        UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
+//        refreshToken = refreshToken.substring(7);
+//        System.out.println(refreshToken);
+//        System.out.println(isTokenExpired(refreshToken));
 
+//        if (isTokenExpired(refreshToken)) {
+//
+//            System.out.println(refreshToken);
+//            String reGenRefreshToken = generateRefreshToken(user.getUsername());
+//            System.out.println(reGenRefreshToken);
+//
+//            refreshTokenService.saveRefreshToken(user, reGenRefreshToken);
+//            return true;
+//
+//        }
+        return true;
+
+//        isTokenExpired(refreshToken);
         // refreshToken 만료 여부 체크
-        try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(refreshToken);
-            return true;
-        }
-        catch(ExpiredJwtException e) {
-            String reGenRefreshToken = generateRefreshToken(user.getUsername());
-            refreshTokenService.saveRefreshToken(user, reGenRefreshToken);
+//        try {
+//            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(refreshToken);
+//            return true;
+//        }
+//        catch(ExpiredJwtException e) {
+//            String reGenRefreshToken = generateRefreshToken(user.getUsername());
+//            refreshTokenService.saveRefreshToken(user, reGenRefreshToken);
+//
+//            return true;
+//        }
 
-            return true;
-        }
-
-        catch(Exception e) {
-//            log.error("[reGenerateRefreshToken] refreshToken 재발급 중 문제 발생 : {}", e.getMessage());
-            return false;
-        }
+//        catch(Exception e) {
+////            log.error("[reGenerateRefreshToken] refreshToken 재발급 중 문제 발생 : {}", e.getMessage());
+//            return false;
+//        }
     }
 
 

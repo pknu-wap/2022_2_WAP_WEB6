@@ -1,5 +1,8 @@
 package com.web.backend.config;
 
+import com.web.backend.refreshToken.RefreshTokenService;
+import com.web.backend.user.UserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +25,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     private UserDetailsService userDetailsService;
     private JWTTokenHelper jwtTokenHelper;
 
+    private RefreshTokenService refreshTokenService;
 
     // 인증에서 제외할 url
 //    private static final List<String> EXCLUDE_URL =
@@ -34,6 +38,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     public JWTAuthenticationFilter(UserDetailsService userDetailsService, JWTTokenHelper jwtTokenHelper) {
         this.userDetailsService = userDetailsService;
         this.jwtTokenHelper = jwtTokenHelper;
+
     }
 
 
@@ -43,11 +48,12 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
         // request 에서 token 가져옴
         String authToken = jwtTokenHelper.getToken(request);
-        System.out.println(authToken);
+
+        String userName = null;
         if (null != authToken) {
             //token 가져옴
-            String userName = jwtTokenHelper.getUsernameFromToken(authToken);
-            System.out.println(userName);
+            userName = jwtTokenHelper.getUsernameFromToken(authToken);
+//            System.out.println(userName);
             if (null != userName) {
 
                 UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
@@ -59,14 +65,26 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
 
-                    //reGenerateRefresh Token
-//                    jwtTokenHelper.generateRefreshToken(userName);
-
                 }
 
             }
 
         }
+        //reGenerateRefresh Token
+//        try {
+            if(userName != null) {
+                System.out.println("------------------------------------------------------");
+                System.out.println("새로운 토큰 생성");
+                System.out.println("------------------------------------------------------");
+                jwtTokenHelper.reGenerateRefreshToken(userName);
+            }
+//        }catch (Exception e) {
+//            System.out.println("------------------------------------------------------");
+//            System.out.println("[JwtRequestFilter] refreshToken 재발급 체크 중 문제 발생 : {}");
+//            System.out.println("------------------------------------------------------");
+////            log.error("[JwtRequestFilter] refreshToken 재발급 체크 중 문제 발생 : {}", e.getMessage());
+//        }
+
 
         filterChain.doFilter(request, response);
 
