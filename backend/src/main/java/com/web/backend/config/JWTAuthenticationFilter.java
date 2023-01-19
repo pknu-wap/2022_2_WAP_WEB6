@@ -72,12 +72,12 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         }
         //reGenerateRefresh Token
 //        try {
-            if(userName != null) {
-                System.out.println("------------------------------------------------------");
-                System.out.println("새로운 토큰 생성");
-                System.out.println("------------------------------------------------------");
-                jwtTokenHelper.reGenerateRefreshToken(userName);
-            }
+//            if(userName != null) {
+//                System.out.println("------------------------------------------------------");
+//                System.out.println("새로운 토큰 생성");
+//                System.out.println("------------------------------------------------------");
+//                jwtTokenHelper.reGenerateRefreshToken(userName);
+//            }
 //        }catch (Exception e) {
 //            System.out.println("------------------------------------------------------");
 //            System.out.println("[JwtRequestFilter] refreshToken 재발급 체크 중 문제 발생 : {}");

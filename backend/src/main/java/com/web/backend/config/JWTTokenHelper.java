@@ -93,7 +93,7 @@ public class JWTTokenHelper {
                 .setSubject(username)
                 .setIssuedAt(new Date()) // 현 시간
 //                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 5)) // 5시간
-                .setExpiration(new Date(new Date().getTime() + expiresIn * 50)) // 5시간
+                .setExpiration(new Date(new Date().getTime() + expiresIn * 30)) // 5시간
                 .signWith(SIGNATURE_ALGORITHM, secretKey)
                 .compact();
 
@@ -125,16 +125,23 @@ public class JWTTokenHelper {
 //        System.out.println(expireDate.before(new Date()));
         System.out.println("-----------------------------------------");
 
-//        return expireDate.before(new Date());
-        return false;
+        return expireDate.before(new Date());
+//        return false;
     }
     // 토큰 만료 시간 리턴
     private Date getExpirationDate(String token) {
         Date expireDate;
         try {
             final Claims claims = this.getAllClaimsFromToken(token);
+            System.out.println("-----------------------------------------");
+            System.out.println("Claims: " + claims);
+            System.out.println("-----------------------------------------");
+
             expireDate = claims.getExpiration();
         } catch (Exception e) {
+            System.out.println("-----------------------------------------");
+            System.out.println("expireDate is: " + "null");
+            System.out.println("-----------------------------------------");
             expireDate = null;
         }
         return expireDate;
@@ -175,7 +182,7 @@ public class JWTTokenHelper {
         RefreshTokenEntity target = refreshTokenRepository.findById(user.getId()).get();
         String refreshToken = target.getRefreshToken();
         System.out.println(refreshToken);
-        isTokenExpired(refreshToken);
+//        isTokenExpired(refreshToken);
 
 //        System.out.println(refreshToken);
 //        UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
@@ -183,16 +190,19 @@ public class JWTTokenHelper {
 //        System.out.println(refreshToken);
 //        System.out.println(isTokenExpired(refreshToken));
 
-//        if (isTokenExpired(refreshToken)) {
-//
-//            System.out.println(refreshToken);
-//            String reGenRefreshToken = generateRefreshToken(user.getUsername());
-//            System.out.println(reGenRefreshToken);
-//
-//            refreshTokenService.saveRefreshToken(user, reGenRefreshToken);
-//            return true;
-//
-//        }
+        System.out.println("-----------------------------------------");
+        System.out.println("isTokenExpired: " + isTokenExpired(refreshToken));
+        System.out.println("-----------------------------------------");
+        if (!isTokenExpired(refreshToken)) {
+
+            System.out.println(refreshToken);
+            String reGenRefreshToken = generateRefreshToken(user.getUsername());
+            System.out.println(reGenRefreshToken);
+
+            refreshTokenService.saveRefreshToken(user, reGenRefreshToken);
+            return true;
+
+        }
         return true;
 
 //        isTokenExpired(refreshToken);
