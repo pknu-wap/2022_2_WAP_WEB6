@@ -7,6 +7,7 @@ import axios from "axios";
 import * as config from "../../config";
 import "./AllDebate.css";
 import Header from "../../components/Header/Header";
+import Pagination from "../../components/Pagination/Pagination";
 
 //찬반 토론 목록 페이지
 function AllDebate() {
@@ -16,6 +17,10 @@ function AllDebate() {
   const [bookTitle, setBookTitle] = useState();
   const [content, setContent] = useState();
   const [dueDate, setDueDate] = useState();
+
+  const [limit, setLimit] = useState(5);
+  const [page, setPage] = useState(1);
+  const offset = (page - 1) * limit;
 
   useEffect(() => {
     //책 목록
@@ -68,34 +73,50 @@ function AllDebate() {
   }, []);
 
   return (
-      <div className="wrap">
-        <Header
-            type="debate"
-            debate="모든 토론"
-            title={bookTitle}
-        ></Header>
-
-        <div>
-          {debateList.map((topics) => (
-              <DebateTopics
-                  // 찬반토론 주제 id
-                  id={topics.id}
-                  // 주제
-                  topicsList={topics.topic}
-                  // 책제목
-                  title={topics.bookTitle}
-                  // 책 id
-                  bookId={booknum}
-                  // Due_date
-                  dueDate={topics.due_date}
-                  // Book_id
-                  bookId={topics.bookId}
-
-                  type="procon"
-              ></DebateTopics>
-          ))}
-        </div>
-      </div>
+    <div className="wrap">
+      <Header type="debate" debate="모든 토론" title={bookTitle}></Header>
+      <label>
+        페이지 당 표시할 게시물 수:&nbsp;
+        <select
+          type="number"
+          value={limit}
+          onChange={({ target: { value } }) => setLimit(Number(value))}
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="100">100</option>
+        </select>
+      </label>
+      <main>
+        {debateList.slice(offset, offset + limit).map((topics) => (
+          <DebateTopics
+            // 찬반토론 주제 id
+            id={topics.id}
+            // 주제
+            topicsList={topics.topic}
+            // 책제목
+            title={topics.bookTitle}
+            // 책 id
+            bookId={booknum}
+            // Due_date
+            dueDate={topics.due_date}
+            // Book_id
+            bookId={topics.bookId}
+            type="procon"
+          ></DebateTopics>
+        ))}
+      </main>
+      <footer>
+        <Pagination
+          total={debateList.length}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+        />
+      </footer>
+    </div>
   );
 }
 
