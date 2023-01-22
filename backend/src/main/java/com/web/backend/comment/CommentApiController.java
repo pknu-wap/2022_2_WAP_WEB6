@@ -1,5 +1,6 @@
 package com.web.backend.comment;
 
+import com.web.backend.config.APIResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,12 @@ public class CommentApiController {
         // 결과 응답
         return ResponseEntity.status(HttpStatus.OK).body(createdDto);
 
+    }
+    //Sorting해서 전달
+    @GetMapping("/api/getCommentsSort")
+    public APIResponse<List<CommentDto>> getCommentsWithSort(){
+        List<CommentDto> dtos = commentService.getCommentsWithSorting("likeNum");
+        return new APIResponse<>(dtos.size(), dtos);
     }
 
     // 댓글 수정

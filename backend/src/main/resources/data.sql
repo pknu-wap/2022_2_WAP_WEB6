@@ -44,6 +44,30 @@ VALUES (6, 2, 25, 52, false, '데미안 토론주제 반대 2', 2);
 INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content, user_id)
 VALUES (7, 3, 25, 52, true, '아가미가 재미 있는 이유는 이러한 이유 때문이다. ', 2);
 
+INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content, user_id)
+VALUES (8, 2, 25, 52, false, '데미안 토론주제 반대 2', 2);
+INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content, user_id)
+VALUES (9, 2, 25, 52, false, '데미안 토론주제 반대 2', 2);
+INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content, user_id)
+VALUES (10, 2, 25, 52, false, '데미안 토론주제 반대 2', 2);
+INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content, user_id)
+VALUES (11, 2, 25, 52, false, '데미안 토론주제 반대 2', 2);
+INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content, user_id)
+VALUES (12, 2, 25, 52, false, '데미안 토론주제 반대 2', 2);
+INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content, user_id)
+VALUES (13, 2, 25, 52, false, '데미안 토론주제 반대 2', 2);
+INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content, user_id)
+VALUES (14, 2, 25, 52, false, '데미안 토론주제 반대 2', 2);
+
+INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content, user_id)
+VALUES (15, 2, 25, 52, true, '데미안 토론주제 반대 2', 2);
+
+INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content, user_id)
+VALUES (16, 2, 25, 52, true, '데미안 토론주제 반대 2', 2);
+
+INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content, user_id)
+VALUES (17, 2, 25, 52, true, '데미안 토론주제 반대 2', 2);
+
 
 
 

@@ -5,8 +5,10 @@ import com.web.backend.proconboard.ProConTopicRepository;
 import com.web.backend.user.UserDetailsRepository;
 import com.web.backend.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,28 @@ public class CommentService {
 
     @Autowired
     private ProConTopicRepository proConTopicRepository;
+
+//    @PostConstruct
+//    public void initDB(){
+//
+//    }
+
+    //
+    public List<CommentDto> getCommentsWithSorting(String field){
+
+//        List<CommentEntity> comments =commentRepository.findAll(Sort.by(field));
+        List<CommentEntity> comments =commentRepository.findAll(Sort.by(Sort.Direction.DESC, field));
+        List<CommentDto> dtos = new ArrayList<CommentDto>();
+
+        for (int i = 0; i < comments.size(); i++) {
+            CommentEntity c = comments.get(i);
+            CommentDto dto = CommentDto.createCommentDto(c);
+            dtos.add(dto);
+        }
+
+        return dtos;
+    }
+
     // 찬반토론 댓글 목록 조회
     public List<CommentDto> proConComments(Long proconId) {
         // 조회: 댓글 목록
