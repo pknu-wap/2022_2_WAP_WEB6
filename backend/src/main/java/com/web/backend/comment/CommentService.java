@@ -14,7 +14,9 @@ import org.springframework.data.domain.Pageable;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentService {
@@ -65,13 +67,13 @@ public class CommentService {
         List<CommentEntity> comments = commentRepository.findByProConTopicId(proconId);
 
         List<CommentDto> dtos = new ArrayList<CommentDto>();
-
         for (int i = 0; i < comments.size(); i++) {
 
             CommentEntity c = comments.get(i);
             CommentDto dto = CommentDto.createCommentDto(c);
             dtos.add(dto);
         }
+        dtos = dtos.stream().sorted(Comparator.comparing(CommentDto::getLikeNum).reversed()).collect(Collectors.toList());
 
         PageRequest pageRequest = PageRequest.of(offset, pageSize);
         int start = (int) pageRequest.getOffset();
