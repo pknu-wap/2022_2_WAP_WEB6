@@ -5,9 +5,12 @@ import com.web.backend.proconboard.ProConTopicRepository;
 import com.web.backend.user.UserDetailsRepository;
 import com.web.backend.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Pageable;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -30,11 +33,9 @@ public class CommentService {
 //
 //    }
 
-    //
-    public List<CommentDto> getCommentsWithSorting(String field){
-
+    public List<CommentDto> getCommentsWithSorting(String field) {
 //        List<CommentEntity> comments =commentRepository.findAll(Sort.by(field));
-        List<CommentEntity> comments =commentRepository.findAll(Sort.by(Sort.Direction.DESC, field));
+        List<CommentEntity> comments = commentRepository.findAll(Sort.by(Sort.Direction.DESC, field));
         List<CommentDto> dtos = new ArrayList<CommentDto>();
 
         for (int i = 0; i < comments.size(); i++) {
@@ -45,6 +46,42 @@ public class CommentService {
 
         return dtos;
     }
+
+    public Page<CommentEntity> getCommentsWithPagination(int offset, int pageSize) {
+//        List<CommentEntity> comments = commentRepository.findAll(Sort.by(Sort.Direction.DESC, field));
+
+//        Page<CommentEntity> products = commentRepository.
+//        findAll(PageRequest.of(offset, pageSize).withSort(Sort.by("something")))
+
+        Page<CommentEntity> comments = commentRepository.findAll(
+                PageRequest.of(offset, pageSize));
+
+        return comments;
+    }
+
+    public Page<CommentDto> proConCommentsWithPagination(int offset, int pageSize, Long proconId) {
+        offset -= 1;
+
+        List<CommentEntity> comments = commentRepository.findByProConTopicId(proconId);
+
+        List<CommentDto> dtos = new ArrayList<CommentDto>();
+
+        for (int i = 0; i < comments.size(); i++) {
+
+            CommentEntity c = comments.get(i);
+            CommentDto dto = CommentDto.createCommentDto(c);
+            dtos.add(dto);
+        }
+
+        PageRequest pageRequest = PageRequest.of(offset, pageSize);
+        int start = (int) pageRequest.getOffset();
+        int end = Math.min((start + pageRequest.getPageSize()), dtos.size());
+        Page<CommentDto> commentPage = new PageImpl<>(dtos.subList(start, end), pageRequest, dtos.size());
+
+
+        return commentPage;
+    }
+
 
     // 찬반토론 댓글 목록 조회
     public List<CommentDto> proConComments(Long proconId) {
@@ -73,15 +110,15 @@ public class CommentService {
                 .orElseThrow(() -> new IllegalArgumentException("찬반주제 페이지 생성실패! 대상 유저가 없습"));
 
         // 댓글 엔티티 생성
-        CommentEntity comment = CommentEntity.createComment(dto, user, proConTopic );
+        CommentEntity comment = CommentEntity.createComment(dto, user, proConTopic);
 
         // 댓글 엔티티를 DB에 저장
         CommentEntity created = commentRepository.save(comment);
 
-        
+
         // DTO로 변경하여 반환
         return CommentDto.createCommentDto(created);
-        
+
     }
 
     @Transactional
