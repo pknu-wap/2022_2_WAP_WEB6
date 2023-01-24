@@ -2,15 +2,23 @@ package com.web.backend.proconboard;
 
 import com.web.backend.book.BookEntity;
 import com.web.backend.book.BookRepository;
+import com.web.backend.comment.CommentDto;
 import com.web.backend.user.UserDetailsRepository;
 import com.web.backend.user.UserEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class ProConTopicService {
     @Autowired
@@ -23,7 +31,7 @@ public class ProConTopicService {
     private BookRepository bookRepository;
 
     @Transactional
-    public ProConTopicDto create( Long userId, ProConTopicDto dto, Long bookId) {
+    public ProConTopicDto create(Long userId, ProConTopicDto dto, Long bookId) {
         // 예외 처리
         // 나중에
 
@@ -58,6 +66,7 @@ public class ProConTopicService {
 
 
     }
+
     @Transactional
     public ProConTopicDto delete(Long proconId) {
         ProConTopicEntity target = proConTopicRepository.findById(proconId)
@@ -86,6 +95,7 @@ public class ProConTopicService {
         return dtos;
 
     }
+
     public List<ProConTopicDto> debateTopics(Long bookId) {
         // 조회: 댓글 목록
         List<ProConTopicEntity> topics = proConTopicRepository.getBookDebate(bookId);
@@ -102,5 +112,30 @@ public class ProConTopicService {
 
         return dtos;
 
+    }
+
+    public Page<ProConTopicDto> Topics(Long bookId, boolean debateStatus, int offset, int pageSize) {
+        offset -= 1;
+
+        List<ProConTopicEntity> topics = proConTopicRepository.getAvailableBookDebate(bookId, debateStatus);
+        System.out.println(topics);
+
+        List<ProConTopicDto> dtos = new ArrayList<ProConTopicDto>();
+
+        for (int i = 0; i < topics.size(); i++) {
+            ProConTopicEntity c = topics.get(i);
+            ProConTopicDto dto = ProConTopicDto.createProConDto(c);
+            dtos.add(dto);
+        }
+        //등록된 순으로 sort
+        dtos = dtos.stream().sorted(Comparator.comparing(ProConTopicDto::getId)).collect(Collectors.toList());
+
+
+        PageRequest pageRequest = PageRequest.of(offset, pageSize);
+        int start = (int) pageRequest.getOffset();
+        int end = Math.min((start + pageRequest.getPageSize()), dtos.size());
+        Page<ProConTopicDto> proconTopics = new PageImpl<>(dtos.subList(start, end), pageRequest, dtos.size());
+
+        return proconTopics;
     }
 }

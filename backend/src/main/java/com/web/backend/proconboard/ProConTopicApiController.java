@@ -1,14 +1,19 @@
 package com.web.backend.proconboard;
 
 
+import com.web.backend.config.APIResponse;
 import com.web.backend.proconboard.ProConTopicDto;
 import com.web.backend.proconboard.ProConTopicService;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Marker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+@Slf4j
 
 @RestController // REST API 용 // JSON 반환
 //@RequestMapping("/")
@@ -41,7 +46,20 @@ public class ProConTopicApiController {
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
 
-    // procontopic 수정
+
+    // 만료기간 판별하여 topic 조회
+    @GetMapping("/api/proconTopic/{proconId}/status/{debateStatus}/page/{offset}/size/{pageSize}")
+    public APIResponse<Page<ProConTopicDto>> availableTopics(@PathVariable Long proconId, @PathVariable boolean debateStatus,
+    @PathVariable int offset, @PathVariable int pageSize) {
+        Page<ProConTopicDto> topics = proConTopicService.Topics(proconId, debateStatus, offset, pageSize);
+//        log.info((Marker) dtos, "INFO");
+
+        return new APIResponse<>(topics.getSize(), topics);
+    }
+
+
+
+        // procontopic 수정
     @PatchMapping("/api/proconTopic/{proconId}")
     public ResponseEntity<ProConTopicDto> patch(@PathVariable Long proconId,
                                                 @RequestBody ProConTopicDto dto) {
@@ -53,6 +71,8 @@ public class ProConTopicApiController {
         return ResponseEntity.status(HttpStatus.OK).body(updateDto);
 
     }
+
+
 
     // 찬반토론 주제 삭제
     @DeleteMapping("/api/proconTopic/{proconId}")

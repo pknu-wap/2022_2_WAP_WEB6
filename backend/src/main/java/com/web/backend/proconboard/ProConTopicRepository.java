@@ -1,6 +1,5 @@
 package com.web.backend.proconboard;
 
-import com.web.backend.book.BookEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,4 +13,11 @@ public interface ProConTopicRepository extends JpaRepository<ProConTopicEntity, 
 
     @Query(value = "SELECT * FROM PROCON_TOPIC WHERE book_id = :bookid ", nativeQuery = true)
     List<ProConTopicEntity> getBookDebate(@Param("bookid") Long bookid);
+
+
+    @Query(value = "SELECT * FROM PROCON_TOPIC WHERE book_id = :bookid AND expired = :debateStatus", nativeQuery = true)
+    List<ProConTopicEntity> getAvailableBookDebate(@Param("bookid") Long bookid, @Param("debateStatus") Boolean debateStatus);
+
+
+
 }
