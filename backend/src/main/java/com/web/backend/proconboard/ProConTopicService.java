@@ -13,11 +13,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import java.time.LocalDate;
 @Slf4j
 @Service
 public class ProConTopicService {
@@ -117,9 +120,19 @@ public class ProConTopicService {
     public Page<ProConTopicDto> Topics(Long bookId, boolean debateStatus, int offset, int pageSize) {
         offset -= 1;
 
-        List<ProConTopicEntity> topics = proConTopicRepository.getAvailableBookDebate(bookId, debateStatus);
-        System.out.println(topics);
+        LocalDateTime formatedDate = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String now = formatedDate.format(formatter);
 
+        List<ProConTopicEntity> topics = null;
+        // 만료된 토론 목록들
+        if (debateStatus) {
+            topics = proConTopicRepository.getNotAvailableBookDebate(bookId, now);
+        }else {//만료 되지않은 토론 목록
+            topics = proConTopicRepository.getAvailableBookDebate(bookId, now);
+
+        }
+        
         List<ProConTopicDto> dtos = new ArrayList<ProConTopicDto>();
 
         for (int i = 0; i < topics.size(); i++) {
