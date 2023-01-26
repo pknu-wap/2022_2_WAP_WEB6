@@ -112,7 +112,7 @@ public class CommentService {
                 .orElseThrow(() -> new IllegalArgumentException("찬반주제 페이지 생성실패! 대상 유저가 없습"));
 
         // 댓글 엔티티 생성
-        CommentEntity comment = CommentEntity.createComment(dto, user, proConTopic);
+        CommentEntity comment = CommentEntity.createComment(dto, user,0L, proConTopic);
 
         // 댓글 엔티티를 DB에 저장
         CommentEntity created = commentRepository.save(comment);
@@ -121,6 +121,22 @@ public class CommentService {
         // DTO로 변경하여 반환
         return CommentDto.createCommentDto(created);
 
+    }
+    @Transactional
+    public CommentDto createReplyComment(Long userId, Long proConTopicId, Long parentId, CommentDto dto) {
+
+        ProConTopicEntity proConTopic = proConTopicRepository.findById(proConTopicId)
+                .orElseThrow(() -> new IllegalArgumentException("댓글 생성 실패, 해당 게시글 없음")); // 없을시 에러 담음
+
+        UserEntity user = userDetailsRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("찬반주제 페이지 생성실패! 대상 유저가 없습"));
+
+        CommentEntity comment = CommentEntity.createComment(dto, user, parentId, proConTopic);
+
+        // 댓글 엔티티를 DB에 저장
+        CommentEntity created = commentRepository.save(comment);
+
+        return CommentDto.createCommentDto(created);
     }
 
     @Transactional
@@ -148,6 +164,7 @@ public class CommentService {
         // 댓글 to DTO
         return CommentDto.createCommentDto(target);
     }
+
 
 
 }

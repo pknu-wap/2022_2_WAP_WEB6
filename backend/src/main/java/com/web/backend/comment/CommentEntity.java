@@ -37,17 +37,28 @@ public class CommentEntity {
     @Column
     private Long dislikeNum;
 
+    @Column
+    private boolean reply;
+
+    @Column
+    private Long parentCommentId;
+
+
+
     public boolean isProCon() {
         return proCon;
     }
 
-    public static CommentEntity createComment(CommentDto dto, UserEntity user, ProConTopicEntity proConTopic) {
+    public boolean isReply() {
+        return reply;
+    }
+
+    public static CommentEntity createComment(CommentDto dto, UserEntity user, Long parentId, ProConTopicEntity proConTopic) {
 
         // 예외 발생
         if (dto.getId() != null) {
             throw new IllegalArgumentException("댓글 생성 실패 ! 댓글의id가 없어야합니다");
         }
-
 
         if (dto.getProConTopicId() != proConTopic.getId()) { // 받은 json 이랑 target id다를시
             throw new IllegalArgumentException("댓글 생성 실패 ! 게시글의 id가 잘못되었습니다");
@@ -61,10 +72,13 @@ public class CommentEntity {
                 dto.getContent(),
                 dto.isProCon(),
                 0L,
-                0L
+                0L,
+                dto.isReply(),
+                parentId
         );
-        
+
     }
+
     public void patch(CommentDto dto) {
         // 예외
         if (this.id != dto.getId()) {
