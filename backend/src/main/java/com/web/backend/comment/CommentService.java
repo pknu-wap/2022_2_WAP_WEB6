@@ -102,6 +102,23 @@ public class CommentService {
 
     }
 
+    //댓글 대댓글 조회
+    public List<CommentDto> replyComments(Long proconId, Long parentCommentId) {
+        List<CommentEntity> comments = commentRepository.findByCommentId(proconId, parentCommentId);
+//        List<CommentEntity> comments = commentRepository.findByCommentId(proconId);
+
+        // 변환: 엔티티 -> DTO
+        List<CommentDto> dtos = new ArrayList<CommentDto>();
+
+        for (int i = 0; i < comments.size(); i++) {
+            CommentEntity c = comments.get(i);
+            CommentDto dto = CommentDto.createCommentDto(c);
+            dtos.add(dto);
+        }
+
+        return dtos;
+    }
+
     @Transactional
     public CommentDto create(Long userId, Long proConTopicId, CommentDto dto) {
         // 게시글 조회 및 예외 처리
@@ -164,7 +181,6 @@ public class CommentService {
         // 댓글 to DTO
         return CommentDto.createCommentDto(target);
     }
-
 
 
 }

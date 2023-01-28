@@ -24,6 +24,14 @@ public class CommentApiController {
         // 결과 응답
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
+    // 대댓글 조회
+    @GetMapping("/api/reply/proconTopic/{proconId}/motherComment/{parentCommentId}")
+    public ResponseEntity<List<CommentDto>> replyComments(@PathVariable Long proconId, @PathVariable Long parentCommentId) {
+        // 서비스에게 위임
+        List<CommentDto> dtos = commentService.replyComments(proconId, parentCommentId);
+        // 결과 응답
+        return ResponseEntity.status(HttpStatus.OK).body(dtos);
+    }
 
     // 댓글 생성
     @PostMapping("/api/proconTopic/{proConTopicId}/user/{userId}")
@@ -55,6 +63,7 @@ public class CommentApiController {
         Page<CommentDto> comments = commentService.proConCommentsWithPagination(offset, pageSize, proconId);
         return new APIResponse<>(comments.getSize(), comments);
     }
+    
 
     // 댓글 수정
     @PatchMapping("/api/comments/{commentId}")
