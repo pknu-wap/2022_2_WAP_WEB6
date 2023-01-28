@@ -43,7 +43,7 @@ public class WebProjectApplication {
         user.setUserName("admin");
         user.setFirstName("test");
         user.setLastName("H");
-
+        user.setNotificationCount(0L);
         user.setPassword(passwordEncoder.encode("adminadmin"));
         user.setEnabled(true);
         user.setAuthorities(authorityEntityList);
@@ -57,7 +57,7 @@ public class WebProjectApplication {
         dummyUser.setUserName("user");
         dummyUser.setFirstName("user");
         dummyUser.setLastName("H");
-
+        user.setNotificationCount(0L);
         dummyUser.setPassword(passwordEncoder.encode("useruser"));
         dummyUser.setEnabled(true);
         dummyUser.setAuthorities(dummyAuthorityEntityList);
@@ -72,7 +72,7 @@ public class WebProjectApplication {
         dummyUser2.setUserName("user2");
         dummyUser2.setFirstName("user2");
         dummyUser2.setLastName("H");
-
+        user.setNotificationCount(0L);
         dummyUser2.setPassword(passwordEncoder.encode("useruser"));
         dummyUser2.setEnabled(true);
         dummyUser2.setAuthorities(dummyAuthorityEntityList2);

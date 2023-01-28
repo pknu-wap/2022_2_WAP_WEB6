@@ -41,7 +41,8 @@ public class CommentEntity {
     private boolean reply;
 
     @Column
-    private Long parent_comment_id;
+//    private Long parent_comment_id;
+    private Long parentCommentId;
 
 
 

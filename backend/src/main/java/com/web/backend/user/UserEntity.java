@@ -50,6 +50,9 @@ public class UserEntity implements UserDetails { //UserDetails 는 Spring Securi
     @Column(name = "enabled")
     private boolean enabled=true;
 
+    @Column(name = "notictication_count")
+    public Long notificationCount;
+
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "AUTH_USER_AUTHORITY", joinColumns = @JoinColumn(referencedColumnName = "id")
             ,inverseJoinColumns = @JoinColumn(referencedColumnName ="id"))

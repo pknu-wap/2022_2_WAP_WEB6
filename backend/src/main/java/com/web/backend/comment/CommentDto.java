@@ -33,7 +33,7 @@ public class CommentDto {
                 c.getUser().getId(),
                 c.getUser().getUsername(),
                 c.isReply(),
-                c.getParent_comment_id()
+                c.getParentCommentId()
         );
     }
 
