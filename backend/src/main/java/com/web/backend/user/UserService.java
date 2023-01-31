@@ -41,9 +41,13 @@ public class UserService {
     public Boolean notificationIncrement(Long userId) {
         try {
             UserEntity target = userRepository.findByUserId(userId);
+
             Long noticicationCount = target.getNotificationCount();
             noticicationCount += 1L;
+
             target.setNotificationCount(noticicationCount);
+            userRepository.save(target);
+
             return true;
         } catch (Exception e) {
             // 알림 저장 실패
