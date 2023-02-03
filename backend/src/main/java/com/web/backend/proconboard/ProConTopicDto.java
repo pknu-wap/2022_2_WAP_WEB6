@@ -22,6 +22,9 @@ public class ProConTopicDto {
     private Long bookId;
     private String bookTitle;
 
+    private boolean expired;
+
+
     public static ProConTopicDto createProConDto(ProConTopicEntity created) {
         return new ProConTopicDto(
                 created.getId(),
@@ -31,7 +34,8 @@ public class ProConTopicDto {
                 created.getReason(),
                 created.getUser().getId(),
                 created.getBook().getId(),
-                created.getBook_title()
+                created.getBook_title(),
+                created.isDate()
         );
     }
 

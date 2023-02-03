@@ -44,6 +44,10 @@ public class ProConTopicEntity {
     @Column
     private String book_title;
 
+    @Column
+    private boolean expired;
+
+
     public static ProConTopicEntity createProConTopic(ProConTopicDto dto, UserEntity user, BookEntity book) {
 
        // 엔티티 생성 및 반환
@@ -55,12 +59,16 @@ public class ProConTopicEntity {
                 dto.getReason(),
                 user,
                 book,
-                book.getTitle()
+                book.getTitle(),
+                false
         );
     }
 
     public boolean isPro_con() {
         return pro_con;
+    }
+    public boolean isDate() {
+        return expired;
     }
 
     public void patch(ProConTopicDto dto) {
