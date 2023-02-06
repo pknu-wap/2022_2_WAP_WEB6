@@ -24,12 +24,21 @@ public class CommentApiController {
         // 결과 응답
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
+    // 대댓글 조회
+    @GetMapping("/api/reply/proconTopic/{proconId}/motherComment/{parentCommentId}")
+    public ResponseEntity<List<CommentDto>> replyComments(@PathVariable Long proconId, @PathVariable Long parentCommentId) {
+        // 서비스에게 위임
+        List<CommentDto> dtos = commentService.replyComments(proconId, parentCommentId);
+        // 결과 응답
+        return ResponseEntity.status(HttpStatus.OK).body(dtos);
+    }
 
     // 댓글 생성
     @PostMapping("/api/proconTopic/{proConTopicId}/user/{userId}")
     public ResponseEntity<CommentDto> create(@PathVariable Long proConTopicId,
                                              @PathVariable Long userId,
                                              @RequestBody CommentDto dto) {
+
         // 서비스에게 위임
         CommentDto createdDto = commentService.create(userId, proConTopicId, dto);
         // 결과 응답
@@ -37,12 +46,24 @@ public class CommentApiController {
 
     }
 
+    // 대댓글
+    @PostMapping("/api/proconTopic/{proConTopicId}/user/{userId}/parent/{parentId}")
+    public ResponseEntity<CommentDto> commentReply(@PathVariable Long proConTopicId,
+                                                   @PathVariable Long userId,
+                                                   @PathVariable Long parentId,
+                                                   @RequestBody CommentDto dto) {
+
+        CommentDto createdDto = commentService.createReplyComment(userId, proConTopicId, parentId, dto);
+        // 결과 응답
+        return ResponseEntity.status(HttpStatus.OK).body(createdDto);
+    }
     //paging 해서 전달
     @GetMapping("/api/CommentsPaged/page/{offset}/size/{pageSize}/proconId/{proconId}")
-    public APIResponse<Page<CommentDto>> getCommentsTopicPaged(@PathVariable int offset, @PathVariable int pageSize, @PathVariable Long proconId ) {
+    public APIResponse<Page<CommentDto>> getCommentsTopicPaged(@PathVariable int offset, @PathVariable int pageSize, @PathVariable Long proconId) {
         Page<CommentDto> comments = commentService.proConCommentsWithPagination(offset, pageSize, proconId);
         return new APIResponse<>(comments.getSize(), comments);
     }
+    
 
     // 댓글 수정
     @PatchMapping("/api/comments/{commentId}")
@@ -64,6 +85,8 @@ public class CommentApiController {
         return ResponseEntity.status(HttpStatus.OK).body(updateDto);
 
     }
+
+
 
 
     //    //Sorting해서 전달

@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-
 public interface ProConTopicRepository extends JpaRepository<ProConTopicEntity, Long> {
 
     @Query(value = "SELECT * FROM PROCON_TOPIC WHERE book_id = :bookid ", nativeQuery = true)

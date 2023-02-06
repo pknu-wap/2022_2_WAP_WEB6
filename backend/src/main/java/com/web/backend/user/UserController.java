@@ -7,6 +7,7 @@ import com.web.backend.shared.UserNotValidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -36,10 +37,10 @@ public class UserController {
         }
         boolean result = userService.checkUserId(user);
         if (result == true) {
+            user.setNotificationCount(0L);
             user.setEnabled(true);
             user.setAuthorities(authorityEntityList);
             userService.save(user);
-
             return ResponseEntity.status(HttpStatus.OK).body(user);
         } else {
             ResponseEntity.status(HttpStatus.OK).body("fail");
@@ -47,6 +48,17 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("sameIdExist");
 
     }
+
+    @PostMapping("/api/increment/notification/targetUser/{userId}")
+    public ResponseEntity addNotification(@PathVariable Long userId) {
+        if (userService.notificationIncrement(userId)) {
+            return ResponseEntity.status(HttpStatus.OK).body("success");
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body("fail");
+
+        }
+    }
+
 
     private AuthorityEntity createAuthority(String roleCode, String roleDescription) {
         AuthorityEntity authority = new AuthorityEntity();

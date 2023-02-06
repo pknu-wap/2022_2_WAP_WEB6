@@ -12,8 +12,6 @@ import java.util.List;
 public class UserService {
     UserRepository userRepository;
     BCryptPasswordEncoder passwordEncoder;
-
-
     public UserService(UserRepository userRepository) {
         super();
         this.userRepository = userRepository;
@@ -27,13 +25,9 @@ public class UserService {
         return userRepository.save(user);
 
     }
-
-
     public Boolean checkUserId(UserEntity user) {
-
         try {
             String userName = user.getUsername();
-//        System.out.println(user.getUsername());
             UserEntity result = userRepository.findByUserName(userName);
 
             return true;
@@ -41,9 +35,24 @@ public class UserService {
         } catch (Exception e) {
             return false;
         }
+    }
 
 
-//        System.out.println(result);
+    public Boolean notificationIncrement(Long userId) {
+        try {
+            UserEntity target = userRepository.findByUserId(userId);
+
+            Long noticicationCount = target.getNotificationCount();
+            noticicationCount += 1L;
+
+            target.setNotificationCount(noticicationCount);
+            userRepository.save(target);
+
+            return true;
+        } catch (Exception e) {
+            // 알림 저장 실패
+            return false;
+        }
 
     }
 }

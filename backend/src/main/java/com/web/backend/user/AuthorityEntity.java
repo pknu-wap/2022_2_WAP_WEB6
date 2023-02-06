@@ -1,11 +1,13 @@
 package com.web.backend.user;
 
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 
 @Table(name = "AUTH_AUTHORITY")
 @Entity
+@Getter
 public class AuthorityEntity implements GrantedAuthority {
 
     @Id
@@ -25,6 +27,7 @@ public class AuthorityEntity implements GrantedAuthority {
         // TODO Auto-generated method stub
         return roleCode;
     }
+
 
 
 

@@ -13,9 +13,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
 
 //    SELECT * FROM BOOK WHERE title=N'데미안' AND authors=N'데미안'
     @Query(value = "SELECT * FROM book WHERE title = :title AND authors = :authors", nativeQuery = true)
-    BookEntity checkBook(@Param("title") String title,
-                         @Param("authors") String authors
-                         );
+    BookEntity checkBook(@Param("title") String title, @Param("authors") String authors);
 
 
 

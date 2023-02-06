@@ -2,6 +2,8 @@ package com.web.backend.comment;
 
 import lombok.*;
 
+import javax.persistence.Column;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -17,6 +19,8 @@ public class CommentDto {
     private Long userId;
     private String userName;
 
+    private boolean reply;
+    private Long parentCommentId;
     // Entity -> dto
     public static CommentDto createCommentDto(CommentEntity c) {
         return new CommentDto(
@@ -27,7 +31,9 @@ public class CommentDto {
                 c.getLikeNum(),
                 c.getDislikeNum(),
                 c.getUser().getId(),
-                c.getUser().getUsername()
+                c.getUser().getUsername(),
+                c.isReply(),
+                c.getParentCommentId()
         );
     }
 
