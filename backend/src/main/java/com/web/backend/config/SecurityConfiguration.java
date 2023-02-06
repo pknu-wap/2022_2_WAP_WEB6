@@ -32,18 +32,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationEntryPoint authenticationEntryPoint;
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        //admin 권한 유저 생성
-//        //memory auth
-//        auth.inMemoryAuthentication().withUser("Pardeep")
-//                .password(passwordEncoder().encode("test@123"))
-//                .authorities("USER", "ADMIN");
-//
-//        //Database auth
-//        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
-//    }
-
     //암호화 코드
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -62,8 +50,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(authenticationEntryPoint).and()
                 // 비로그인 유저의 권한
 //                .authorizeRequests((request) -> request.antMatchers("/h2-console/**", "/user/login","/api/proconTopic"
-//                                ,"/api/proconTopoic/**/comments","/api/proconTopic/**/comments","/api/comments/**").permitAll() // token 없을 경우
-                 .authorizeRequests((request) -> request.antMatchers("**").permitAll() // token 없을 경우
+//                                ,"/api/proconTopoic/**/comments","/api/proconTopic/**/comments","/api/proconTopic/allTopic","/api/comments/**","/user/register").permitAll() // token 없을 경우
+                 .authorizeRequests((request) -> request.antMatchers("/**").permitAll() // token 없을 경우
                         .antMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated()) //token 있을 경우
                 .addFilterBefore(new JWTAuthenticationFilter(userService, jwtTokenHelper), // 토큰 검증
                         UsernamePasswordAuthenticationFilter.class);

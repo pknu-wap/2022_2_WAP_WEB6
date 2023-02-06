@@ -1,6 +1,7 @@
 package com.web.backend.user;
 
 import com.web.backend.config.JWTTokenHelper;
+import com.web.backend.refreshToken.RefreshTokenService;
 import com.web.backend.user.UserEntity;
 import com.web.backend.requests.AuthenticationRequest;
 import com.web.backend.response.LoginResponse;
@@ -36,9 +37,11 @@ public class AuthenticationController {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private RefreshTokenService refreshTokenService;
     // 로그인 요청
     @PostMapping("/user/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody AuthenticationRequest authenticationRequest) throws InvalidKeySpecException, NoSuchAlgorithmException {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         Map<String, Object> result = new HashMap<>();
 
         final Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -49,10 +52,18 @@ public class AuthenticationController {
         UserEntity user = (UserEntity) authentication.getPrincipal();
         // 해당 유저 토큰 발급
         String jwtToken = jwtTokenHelper.generateToken(user.getUsername());
+        // refresh token
+        String jwtRefreshToken = jwtTokenHelper.generateRefreshToken(user.getUsername());
+
+        refreshTokenService.saveRefreshToken(user, jwtRefreshToken);
+
 
         LoginResponse response = new LoginResponse();
 
+
+
         result.put("jwtToken", jwtToken);
+        result.put("jwtRefreshToken", jwtRefreshToken);
         result.put("user", user);
 
 
