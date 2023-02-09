@@ -34,5 +34,4 @@ public class ProConTopicDto {
                 created.getBook_title()
         );
     }
-
 }
