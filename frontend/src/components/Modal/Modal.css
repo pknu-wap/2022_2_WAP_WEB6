@@ -53,10 +53,14 @@
 .modal > section > form button {
   padding: 6px 12px;
   color: #fff;
-  /* background-color: #6c757d; */
   background-color: var(--dark-brown-color);
   border-radius: 5px;
   font-size: 13px;
+}
+.modal > section > form button:disabled {
+  opacity: 70%;
+  /* background-color: #6c757d; */
+  cursor: not-allowed;
 }
 .modal.openModal {
   display: flex;

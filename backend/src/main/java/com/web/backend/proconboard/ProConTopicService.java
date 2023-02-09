@@ -117,6 +117,7 @@ public class ProConTopicService {
 
     }
 
+<<<<<<< HEAD
     public Page<ProConTopicDto> Topics(Long bookId, boolean debateStatus, int offset, int pageSize) {
         offset -= 1;
 
@@ -135,11 +136,21 @@ public class ProConTopicService {
         
         List<ProConTopicDto> dtos = new ArrayList<ProConTopicDto>();
 
+=======
+    //마이페이지 - 토론 조회
+    public List<ProConTopicDto> getTopicsByUser(Long userId){
+        List<ProConTopicEntity> topics = proConTopicRepository.getTopicByUserId(userId);
+        // 변환 : 엔티티 -> DTO
+        List<ProConTopicDto> dtos = new ArrayList<ProConTopicDto>();
+
+
+>>>>>>> feature/due-date
         for (int i = 0; i < topics.size(); i++) {
             ProConTopicEntity c = topics.get(i);
             ProConTopicDto dto = ProConTopicDto.createProConDto(c);
             dtos.add(dto);
         }
+<<<<<<< HEAD
         //등록된 순으로 sort
         dtos = dtos.stream().sorted(Comparator.comparing(ProConTopicDto::getId)).collect(Collectors.toList());
 
@@ -151,4 +162,10 @@ public class ProConTopicService {
 
         return proconTopics;
     }
+=======
+
+        return dtos;
+    }
+
+>>>>>>> feature/due-date
 }
