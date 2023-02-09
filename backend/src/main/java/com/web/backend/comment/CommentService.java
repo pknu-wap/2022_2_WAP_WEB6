@@ -1,6 +1,5 @@
 package com.web.backend.comment;
 
-import com.web.backend.proconboard.ProConTopicDto;
 import com.web.backend.proconboard.ProConTopicEntity;
 import com.web.backend.proconboard.ProConTopicRepository;
 import com.web.backend.user.UserDetailsRepository;
@@ -87,20 +86,5 @@ public class CommentService {
         return CommentDto.createCommentDto(target);
     }
 
-    //마이페이지 - 댓글 조회
-    public List<CommentDto> getCommentsByUser(Long userId) {
-        List<CommentEntity> comments = commentRepository.getCommentByUserId(userId);
-        // 변환 : 엔티티 -> DTO
-        List<CommentDto> dtos = new ArrayList<CommentDto>();
-
-
-        for (int i = 0; i < comments.size(); i++) {
-            CommentEntity c = comments.get(i);
-            CommentDto dto = CommentDto.createCommentDto(c);
-            dtos.add(dto);
-        }
-
-        return dtos;
-    }
 
 }

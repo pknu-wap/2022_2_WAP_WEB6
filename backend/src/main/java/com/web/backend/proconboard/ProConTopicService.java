@@ -103,21 +103,4 @@ public class ProConTopicService {
         return dtos;
 
     }
-
-    //마이페이지 - 토론 조회
-    public List<ProConTopicDto> getTopicsByUser(Long userId){
-        List<ProConTopicEntity> topics = proConTopicRepository.getTopicByUserId(userId);
-        // 변환 : 엔티티 -> DTO
-        List<ProConTopicDto> dtos = new ArrayList<ProConTopicDto>();
-
-
-        for (int i = 0; i < topics.size(); i++) {
-            ProConTopicEntity c = topics.get(i);
-            ProConTopicDto dto = ProConTopicDto.createProConDto(c);
-            dtos.add(dto);
-        }
-
-        return dtos;
-    }
-
 }
