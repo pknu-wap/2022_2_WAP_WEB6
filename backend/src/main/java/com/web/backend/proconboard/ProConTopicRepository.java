@@ -15,7 +15,6 @@ public interface ProConTopicRepository extends JpaRepository<ProConTopicEntity, 
     @Query(value = "SELECT * FROM PROCON_TOPIC WHERE book_id = :bookid ", nativeQuery = true)
     List<ProConTopicEntity> getBookDebate(@Param("bookid") Long bookid);
 
-<<<<<<< HEAD
 
 //    @Query(value = "SELECT * FROM PROCON_TOPIC WHERE book_id = :bookid AND expired = :debateStatus", nativeQuery = true)
 //    List<ProConTopicEntity> getAvailableBookDebate(@Param("bookid") Long bookid, @Param("debateStatus") Boolean debateStatus);
@@ -26,11 +25,8 @@ public interface ProConTopicRepository extends JpaRepository<ProConTopicEntity, 
     @Query(value = "SELECT * FROM PROCON_TOPIC WHERE due_date < CURRENT_DATE", nativeQuery = true)
     List<ProConTopicEntity> getNotAvailableBookDebate(@Param("bookid") Long bookid, @Param("formatedDate") String now);
 
-
-=======
     //마이페이지 - 토론조회
     @Query(value = "SELECT * FROM PROCON_TOPIC WHERE user_id = :userid ", nativeQuery = true)
     List<ProConTopicEntity> getTopicByUserId(@Param("userid") Long userid);
->>>>>>> feature/due-date
 
 }

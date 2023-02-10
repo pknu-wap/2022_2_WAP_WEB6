@@ -139,7 +139,6 @@ public class CommentService {
         // DTO로 변경하여 반환
         return CommentDto.createCommentDto(created);
 
-<<<<<<< HEAD
     }
     @Transactional
     public CommentDto createReplyComment(Long userId, Long proConTopicId, Long parentId, CommentDto dto) {
@@ -156,8 +155,7 @@ public class CommentService {
         CommentEntity created = commentRepository.save(comment);
 
         return CommentDto.createCommentDto(created);
-=======
->>>>>>> feature/due-date
+
     }
 
     @Transactional
@@ -191,7 +189,6 @@ public class CommentService {
         List<CommentEntity> comments = commentRepository.getCommentByUserId(userId);
         // 변환 : 엔티티 -> DTO
         List<CommentDto> dtos = new ArrayList<CommentDto>();
-
 
         for (int i = 0; i < comments.size(); i++) {
             CommentEntity c = comments.get(i);
