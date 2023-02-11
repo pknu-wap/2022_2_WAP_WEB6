@@ -54,7 +54,7 @@ function DetailDebate() {
             // 성공시
             // 댓글 데이터
             console.log(response);
-            console.log("성공!!");
+            console.log("comment data");
             setComment(response.data);
           } else {
             console.log("예상치 못한 오류!!");
@@ -77,7 +77,7 @@ function DetailDebate() {
             // 성공시
             // 책 데이터
             console.log(response);
-            console.log("성공!!");
+            console.log("book data");
             setBookdata(response.data);
           } else {
             console.log("예상치 못한 오류!!");
@@ -100,7 +100,7 @@ function DetailDebate() {
             // 성공시
             // 책 데이터
             console.log(response);
-            console.log("성공");
+            console.log("debate data");
             setDebatedata(response.data);
           } else {
             console.log("예상치 못한 오류!!");
@@ -118,9 +118,18 @@ function DetailDebate() {
     topic.id == params.debateId ? topic.reason : ""
   );
 
+  //마감 날짜 => 자유 토론 시 체크 추가하기
+  const dueDate = debatedata.map((topic) =>
+    topic.id == params.debateId ? topic.due_date : ""
+  );
+
   return (
     <div className="wrap">
-      <TopicHeader topic={params.topic}></TopicHeader>
+      <TopicHeader
+        topic={params.topic}
+        // due_date={dueDate[params.debateId - 1]}
+        due_date={dueDate}
+      ></TopicHeader>
       <BookExplain
         imgsrc={bookdata.url}
         title={bookdata.title}

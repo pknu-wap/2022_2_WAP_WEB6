@@ -25,6 +25,8 @@ public interface ProConTopicRepository extends JpaRepository<ProConTopicEntity, 
     @Query(value = "SELECT * FROM PROCON_TOPIC WHERE due_date < CURRENT_DATE", nativeQuery = true)
     List<ProConTopicEntity> getNotAvailableBookDebate(@Param("bookid") Long bookid, @Param("formatedDate") String now);
 
-
+    //마이페이지 - 토론조회
+    @Query(value = "SELECT * FROM PROCON_TOPIC WHERE user_id = :userid ", nativeQuery = true)
+    List<ProConTopicEntity> getTopicByUserId(@Param("userid") Long userid);
 
 }

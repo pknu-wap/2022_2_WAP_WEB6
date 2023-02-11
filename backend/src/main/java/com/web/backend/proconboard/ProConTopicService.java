@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import java.time.LocalDate;
+
 @Slf4j
 @Service
 public class ProConTopicService {
@@ -132,7 +133,7 @@ public class ProConTopicService {
             topics = proConTopicRepository.getAvailableBookDebate(bookId, now);
 
         }
-        
+
         List<ProConTopicDto> dtos = new ArrayList<ProConTopicDto>();
 
         for (int i = 0; i < topics.size(); i++) {
@@ -150,5 +151,20 @@ public class ProConTopicService {
         Page<ProConTopicDto> proconTopics = new PageImpl<>(dtos.subList(start, end), pageRequest, dtos.size());
 
         return proconTopics;
+    }
+
+
+    //마이페이지 - 토론 조회
+    public List<ProConTopicDto> getTopicsByUser(Long userId){
+        List<ProConTopicEntity> topics = proConTopicRepository.getTopicByUserId(userId);
+        // 변환 : 엔티티 -> DTO
+        List<ProConTopicDto> dtos = new ArrayList<ProConTopicDto>();
+
+        for (int i = 0; i < topics.size(); i++) {
+            ProConTopicEntity c = topics.get(i);
+            ProConTopicDto dto = ProConTopicDto.createProConDto(c);
+            dtos.add(dto);
+        }
+        return dtos;
     }
 }
