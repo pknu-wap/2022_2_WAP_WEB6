@@ -21,9 +21,7 @@ public class LikeCommentService {
 
         if (likeCommentEntity == null) {
             likeCommentEntity = createLikeComment(commentId, userId);
-
         }
-
 
         if (likeCommentEntity.getLikeStatus() == 0) {
             likeCommentEntity.setLikeStatus(1);
@@ -38,6 +36,7 @@ public class LikeCommentService {
 
     }
     public LikeCommentEntity createLikeComment(Long commentId, Long userId) {
+
         return LikeCommentEntity.createLikeComment(commentId, userId);
     }
 }

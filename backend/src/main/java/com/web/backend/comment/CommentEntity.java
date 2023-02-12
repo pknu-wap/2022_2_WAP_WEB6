@@ -45,8 +45,6 @@ public class CommentEntity {
 //    private Long parent_comment_id;
     private Long parentCommentId;
 
-
-
     public boolean isProCon() {
         return proCon;
     }

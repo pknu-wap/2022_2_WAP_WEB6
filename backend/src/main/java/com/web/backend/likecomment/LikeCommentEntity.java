@@ -27,14 +27,16 @@ public class LikeCommentEntity {
 
     @JoinColumn(name = "comment_id")
     private Long commentId;
+//    @ManyToOne
+//    @JoinColumn(name = "comment_id")
+//    private CommentEntity commentEntity;
 
+//    cascade = CascadeType.PERSIST
 //    @ManyToOne
 //    @JoinColumn(name = "user_id")
 //    private UserEntity user;
 //
-//    @ManyToOne
-//    @JoinColumn(name = "comment_id")
-//    private CommentEntity commentEntity;
+
 
     public static LikeCommentEntity createLikeComment(Long commentId, Long userId) {
 

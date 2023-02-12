@@ -1,4 +1,4 @@
-package com.web.backend.likecomment;
+package com.web.backend.dislikecomment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -7,22 +7,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-
 @RestController
-public class LikeCommentApiController {
+
+public class DislikeCommentApiController {
 
     @Autowired
-    private LikeCommentService likeCommentService;
+    private DislikeCommentService dislikeCommentService;
 
 
-    @PostMapping("/api/toggle/like/comment/{commentId}/user/{userId}")
+    @PostMapping("/api/toggle/dislike/comment/{commentId}/user/{userId}")
     public ResponseEntity<?> likeComment(@PathVariable Long commentId,
                                          @PathVariable Long userId) {
 
-        likeCommentService.toggleLikeComment(commentId, userId);
+        dislikeCommentService.toggleDislikeComment(commentId, userId);
         return ResponseEntity.status(HttpStatus.OK).body("success");
 
     }
-
 }
