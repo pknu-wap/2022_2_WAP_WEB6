@@ -14,7 +14,8 @@
 }
 
 /* 찬성일 때 */
-.userImgpro {
+.userImgpro,
+.getBtn-pro {
   float: left;
 }
 .userImgpro div {
@@ -22,7 +23,7 @@
 }
 .reactionpro {
   float: right;
-  margin-right: 50px;
+  /* margin-right: 50px; */
 }
 .msgpro {
   border: 3px solid var(--blue-color);
@@ -37,7 +38,7 @@
 }
 .reactioncon {
   float: left;
-  margin-left: 50px;
+  /* margin-left: 50px; */
 }
 .msgcon {
   border: 3px solid var(--dark-brown-color);
@@ -50,6 +51,7 @@
 }
 .reaction {
   padding: 0.5rem;
+  margin: 0 50px;
 }
 .msg-container h5 {
   margin: 0.2rem;
@@ -72,4 +74,50 @@
   /* position: absolute; */
   padding: 2rem 3rem;
   margin-top: 0.5rem;
+}
+
+.nestedComment-btn {
+  cursor: pointer;
+  padding: 0.5rem;
+  margin: 0 0 0 50px;
+}
+
+.nestedComment-btn span {
+  padding-left: 0.3rem;
+}
+
+/*찬성 대댓글*/
+.getBtn-pro {
+  margin-left: 50px;
+}
+
+/*반대 대댓글*/
+.getBtn-con {
+  float: right;
+  margin-right: 50px;
+}
+
+.chatBox,
+.ChatBox-container {
+  margin-bottom: 3rem;
+}
+
+.commentBox {
+  position: relative;
+  padding: 1rem 0 0 0;
+}
+
+.commetUserImg {
+  float: left;
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+}
+
+.commentWrap {
+  margin: 2rem 2rem;
+}
+
+.commentBox .msg-container {
+  border-bottom: 1px solid steelblue;
 }

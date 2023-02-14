@@ -1,14 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EditorBox from "../EditorBox/EditorBox";
 import "./ChatBox.css";
 import axios from "axios";
 import * as config from "../../config";
 import { useParams } from "react-router-dom";
 import { getId } from "../../userInfo/userInfo";
+import { AiOutlineUp, AiOutlineDown } from "react-icons/ai";
+
+function CommentBox({ name, content, likeNum, dislikeNum }) {
+  return (
+    <li className="commentBox">
+      <div className="commetUserImg">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/4553/4553212.png"
+          height="30"
+          width="30"
+        ></img>
+      </div>
+      <div className="msg-container">
+        <h5>{name}</h5>
+        <p dangerouslySetInnerHTML={{ __html: content }}></p>
+      </div>
+      <div className="reaction">
+        <span>👍 {likeNum}</span>
+        <span>👎 {dislikeNum}</span>
+      </div>
+    </li>
+  );
+}
 
 function ChatBox(props) {
   const params = useParams();
   const [content, setContent] = useState("");
+  const [nestedComment, setNestedCommet] = useState([]);
+  const [postVisible, setPostVisible] = useState(false);
+  const [getVisible, setGetVisible] = useState(false);
+
+  const validContent = content.length > 0;
+
   let classNameSet = null;
   let opinionDiv = null;
 
@@ -23,11 +52,32 @@ function ChatBox(props) {
   else if (props.opinion == "자유") {
     classNameSet = "free";
   }
-  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    //대댓글 get
+    async function fetchNestedComment() {
+      try {
+        await axios({
+          method: "get",
+          url: `http://${config.URL}/api/reply/proconTopic/${params.debateId}/motherComment/${props.id}`,
+        }).then((response) => {
+          if (response.status === 200) {
+            //console.log(response);
+            setNestedCommet(response.data);
+          } else {
+            console.log("예상치 못한 오류!!");
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchNestedComment();
+  }, [getVisible === true]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     if (getId() == null) {
       alert("로그인을 해주세요!");
       window.location.replace("/login");
@@ -54,6 +104,7 @@ function ChatBox(props) {
                 `/parent/${props.id}`
             );
             console.log(data);
+            window.location.reload();
             //   console.log("성공!!")
             //   localStorage.clear()
             //   localStorage.setItem('id', data.data.user.id)
@@ -74,7 +125,7 @@ function ChatBox(props) {
   };
 
   return (
-    <li className="chatBox">
+    <li>
       <div className="ChatBox-container">
         <div className={"userImg" + classNameSet}>
           <img
@@ -94,23 +145,44 @@ function ChatBox(props) {
           <span>👎 {props.dislikeNum}</span>
           <button
             onClick={() => {
-              setVisible(!visible);
+              setPostVisible(!postVisible);
             }}
           >
-            댓글
+            답글
           </button>
-          {/* <button>수정</button> */}
         </div>
-        <div className={visible ? "reply" : ""}>
-          {visible && (
+        <div className={postVisible ? "reply" : ""}>
+          {postVisible && (
             <EditorBox
               //value="댓글"
               print="작성"
               setContent={setContent}
               onSubmit={handleSubmit}
+              disabled={!validContent}
             />
           )}
         </div>
+        <div
+          className={"nestedComment-btn " + "getBtn-" + classNameSet}
+          onClick={() => setGetVisible(!getVisible)}
+        >
+          {getVisible ? <AiOutlineUp /> : <AiOutlineDown />}
+          <span>답글</span>
+        </div>
+        <ol className="commentWrap">
+          {getVisible &&
+            nestedComment.map((it) => {
+              return (
+                <CommentBox
+                  key={it.id}
+                  name={it.userName}
+                  content={it.content}
+                  likeNum={it.likeNum}
+                  dislikeNum={it.dislikeNum}
+                />
+              );
+            })}
+        </ol>
       </div>
     </li>
   );
