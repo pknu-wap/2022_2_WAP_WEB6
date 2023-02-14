@@ -1,72 +1,80 @@
 import axios from "axios";
-import {BiSearch} from "react-icons/bi";
-import React, {useEffect, useState} from 'react';
+import { BiSearch } from "react-icons/bi";
+import React, { useEffect, useState, useRef } from "react";
 import BookItem from "../../components/BookItem/BookItem";
+import Pagination from "../../components/Pagination/Pagination";
 
 const Home = () => {
-    const [articles, setArticles] = useState([]);
-    const bookSearch = (event) => {
-        event.preventDefault(); //의도치 않은 이벤트 발생하지 않게 하는 함수
-        const bookName = document.getElementById('title').value;
-        console.log(bookName);
+  const isMounted = useRef(false);
+  const [articles, setArticles] = useState([]);
+  const [mta, setMta] = useState([]);
+  const [page, setPage] = useState(1);
+  const [bookName, setBookName] = useState("");
+  const size = 10;
 
-        axios.get("https://dapi.kakao.com/v3/search/book?target=title", {
-            params: {query: bookName},   //bookName 요청
-            headers: {Authorization: 'KakaoAK 8d39abafc96ae6955e8238b4b400703a'}
-        })
-            .then(function (msg) {    //msg : api에서 받아온 정보 저장
- 
-                let arr = msg.data.documents;
-               setArticles(arr);
-               console.log(articles)
+  //책 검색 api
+  const getAPI = async () => {
+    axios
+      .get("https://dapi.kakao.com/v3/search/book?target=title", {
+        params: { query: bookName, page: page, size: size }, //bookName 요청
+        headers: { Authorization: "KakaoAK 8d39abafc96ae6955e8238b4b400703a" },
+      })
+      .then(function (msg) {
+        //msg : api에서 받아온 정보 저장
+        setArticles(msg.data.documents);
+        setMta(msg.data.meta);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
+  useEffect(() => {
+    if (isMounted.current) getAPI();
+    else isMounted.current = true;
+    window.scrollTo(0, 0);
+  }, [bookName, page]);
 
-            })
-            .catch(function (error) {
-                    console.log(error)
-                }
-            )
-    }
-    return (
+  const bookSearch = (event) => {
+    event.preventDefault();
+    //const bookName = document.getElementById("title").value;
+    setBookName(document.getElementById("title").value);
+  };
 
-        <div>
-            <center>
-                <form>
-                    <div className="Searchbox">
-                        <input id="title" type="text" placeholder='책 제목을 검색하세요.'></input>
-                        <button className="icon" onClick={bookSearch} id="bisearch">
-                            <BiSearch size="35"/>
-                        </button>
-                    </div>
-                </form>
-            </center>
+  console.log(articles, mta);
+  //console.log(bookName, page);
+  //console.log(Array.isArray(articles), articles);
 
-            {articles.map((article) => (
-                <BookItem article = {article} />
+  return (
+    <div>
+      <center>
+        <form>
+          <div className="Searchbox">
+            <input
+              id="title"
+              type="text"
+              placeholder="책 제목을 검색하세요."
+            ></input>
+            <button className="icon" onClick={bookSearch} id="bisearch">
+              <BiSearch size="35" />
+            </button>
+          </div>
+        </form>
+      </center>
 
-            ))}
-        </div>
-
-        // <div>
-        //     <center>
-        //         <form>
-        //             <div className="Searchbox">
-        //                 <input id="title" type="text" placeholder='책 제목을 검색하세요.'></input>
-        //                 <button onClick={bookSearch} id="bisearch">
-        //                     <BiSearch className="icon" size="35"/>
-        //                 </button>
-        //             </div>
-        //         </form>
-        //     </center>
-        //
-        //     {articles.map((article) => (
-        //         <BookItem article = {article} />
-        //
-        //     ))}
-        // </div>
-
-
-    )
+      {articles.map((article, index) => (
+        <BookItem article={article} key={index} />
+      ))}
+      {Array.isArray(articles) && articles.length === 0 ? null : (
+        <Pagination
+          total={mta.total_count}
+          limit={size}
+          page={page}
+          setPage={setPage}
+        />
+      )}
+    </div>
+  );
 };
 
 export default Home;

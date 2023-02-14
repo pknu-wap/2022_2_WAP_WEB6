@@ -11,12 +11,15 @@ import Opinion from "../../components/Opinion/Opinion";
 import EditorForm from "../../components/EditorForm/EditorForm";
 import axios from "axios";
 import * as config from "../../config";
+import Pagination from "../../components/Pagination/Pagination";
 
 //찬반 토론 상세 페이지
 function DetailDebate() {
   const [comment, setComment] = useState([]);
   const [bookdata, setBookdata] = useState([]);
   const [debatedata, setDebatedata] = useState([]);
+  const [page, setPage] = useState(1);
+  const size = 10;
 
   const dataId = useRef(0);
   const params = useParams();
@@ -38,24 +41,18 @@ function DetailDebate() {
   };
 
   useEffect(() => {
-    //댓글 get
-    async function fetchComments() {
+    async function commentPagination() {
       try {
         await axios({
           method: "get",
-          url:
-            "http://" +
-            config.URL +
-            "/api/proconTopic/" +
-            params.debateId +
-            "/comments",
+          //댓글 페이징 요청
+          url: `http://${config.URL}/api/CommentsPaged/page/${page}/size/${size}/proconId/${params.debateId}`,
         }).then((response) => {
           if (response.status === 200) {
             // 성공시
-            // 댓글 데이터
-            console.log(response);
-            console.log("comment data");
-            setComment(response.data);
+            console.log(response.data.response);
+            console.log("paging comment data");
+            setComment(response.data.response);
           } else {
             console.log("예상치 못한 오류!!");
           }
@@ -64,7 +61,44 @@ function DetailDebate() {
         console.log(error);
       }
     }
-    fetchComments();
+
+    commentPagination();
+  }, [page]);
+
+  useEffect(() => {
+    //댓글 get
+    // async function fetchComments() {
+    //   try {
+    //     await axios({
+    //       method: "get",
+    //       //댓글 페이징 요청
+    //       // url: `http://${config.URL}/api/CommentsPaged/page/${page}/size/${size}/proconId/${params.debateId}`,
+    //       //해당 댓글 모두 조회
+    //       url:
+    //         "http://" +
+    //         config.URL +
+    //         "/api/proconTopic/" +
+    //         params.debateId +
+    //         "/comments",
+    //     }).then((commentData) => {
+    //       if (commentData.status === 200) {
+    //         // 성공시
+    //         console.log(commentData.data);
+    //         console.log("comment data");
+    //         setComment(commentData.data);
+    //         // 댓글 데이터
+    //         // console.log(commentData.data.response);
+    //         // console.log("comment data");
+    //         // setComment(commentData.data.response);
+    //       } else {
+    //         console.log("예상치 못한 오류!!");
+    //       }
+    //     });
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
+    // fetchComments();
 
     //책 정보 get
     async function fetchBookData() {
@@ -135,7 +169,18 @@ function DetailDebate() {
         title={bookdata.title}
         body={bodyContent}
       ></BookExplain>
-      <Opinion opList={comment} />
+      {/* <Opinion opList={comment} /> */}
+      {Array.isArray(comment) && comment.length === 0 ? null : (
+        <>
+          <Opinion opList={comment.content} />
+          <Pagination
+            total={comment.totalElements}
+            limit={size}
+            page={page}
+            setPage={setPage}
+          />
+        </>
+      )}
       <EditorForm
         op="찬반"
         onCreate={onCreate}

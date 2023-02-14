@@ -110,7 +110,7 @@ div .wrap {
   -moz-appearance: none;
   appearance: none;
 
-  background: #61dafb;
+  background: #b7c4cf;
   color: #282c34;
 
   margin: 0;
@@ -133,6 +133,10 @@ div .wrap {
   cursor: pointer;
 
   transition: 0.5s;
+}
+
+.free {
+  margin-left: 1rem;
 }
 
 .thumbnail {
@@ -181,4 +185,16 @@ div .wrap {
 .nav-link {
   cursor: pointer;
   padding: 10px 15px;
+}
+
+button[aria-current="page"] {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+button:disabled {
+  opacity: 60%;
+  /* background-color: #6c757d; */
+  cursor: not-allowed;
 }

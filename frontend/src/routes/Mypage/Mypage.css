@@ -1,0 +1,35 @@
+li {
+  cursor: pointer;
+  padding: 1rem 0;
+}
+
+a {
+  text-decoration: none;
+  outline: none;
+  color: black;
+}
+
+/* li a:hover,
+a:active {
+  text-decoration: none;
+  color: var(--light-brown-color);
+} */
+
+.curArticle li a {
+  text-decoration: none;
+  color: var(--light-brown-color);
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+}
+
+aside {
+  width: 200px;
+  margin: 0 5rem;
+}
+
+.pagelist {
+  display: flex;
+}

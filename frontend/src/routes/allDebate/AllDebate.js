@@ -32,7 +32,6 @@ function AllDebate() {
         }).then((data) => {
           if (data.status === 200) {
             // 성공시
-
             console.log(data);
             console.log("성공!!");
             setDebateList(data.data);
@@ -69,7 +68,8 @@ function AllDebate() {
         console.log(error);
       }
     }
-    fetchBookData();
+
+    if (booknum) fetchBookData();
   }, []);
 
   return (
@@ -105,6 +105,7 @@ function AllDebate() {
             // Book_id
             bookId={topics.bookId}
             type="procon"
+            key={topics.id}
           ></DebateTopics>
         ))}
       </main>
