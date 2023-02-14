@@ -58,7 +58,7 @@
   font-size: 13px;
 }
 .modal > section > form button:disabled {
-  opacity: 70%;
+  opacity: 60%;
   /* background-color: #6c757d; */
   cursor: not-allowed;
 }
@@ -99,4 +99,8 @@ form div input,
 textarea {
   border-radius: 3px;
   padding: 0.5rem;
+}
+
+.react-datepicker-popper {
+  margin: 0;
 }

@@ -11,39 +11,54 @@ import { ko } from "date-fns/esm/locale";
 import { FaCalendar } from "react-icons/fa";
 
 /*Error => due-date: null*/
-// function Calender(props) {
-//   const [startDate, setStartDate] = useState(new Date());
-//   let in2Weeks = new Date();
-//   in2Weeks.setDate(in2Weeks.getDate() + 14);
+function Calender({ dateref, func }) {
+  const [startDate, setStartDate] = useState(new Date());
+  let in2Weeks = new Date();
+  in2Weeks.setDate(in2Weeks.getDate() + 14);
+  //console.log(startDate);
+  // console.log(
+  //   startDate.toLocaleDateString().replace(/\./g, "").replace(/\s/g, "-")
+  // );
+  //console.log(startDate.name);
 
-//   return (
-//     <>
-//       <p>기간</p>
-//       <div className="WrapDatePicker">
-//         <DatePicker
-//           name="date"
-//           selected={startDate}
-//           onChange={(date) => setStartDate(date)}
-//           locale={ko}
-//           dateFormat="- yyyy/MM/dd"
-//           minDate={new Date()}
-//           maxDate={in2Weeks}
-//           ref={props.dateref}
-//         />
-//         {/* <FaCalendar /> */}
-//       </div>
-//     </>
-//   );
-// }
+  // if (
+  //   typeof startDate === "object" &&
+  //   startDate !== null &&
+  //   "toLocaleDateString" in startDate
+  // ) {
+  //   console.log(startDate.toLocaleDateString());
+  //   // const result = startDate.toLocaleDateString();
+  //   // console.log(result);
+  // }
 
-function Calender(props) {
   return (
-    <div>
-      <p>기간</p>
-      <input type="date" name="userSetDate" ref={props.dateref} />
+    <div className="WrapDatePicker">
+      <DatePicker
+        name="date"
+        selected={startDate}
+        onChange={(date) => {
+          setStartDate(date);
+          func(date);
+        }}
+        locale={ko}
+        dateFormat="- yyyy/MM/dd"
+        minDate={new Date()}
+        maxDate={in2Weeks}
+        //ref={dateref(startDate)}
+      />
+      {/* <FaCalendar /> */}
     </div>
   );
 }
+
+// function Calender(props) {
+//   return (
+//     <div>
+//       <p>기간</p>
+//       <input type="date" name="userSetDate" ref={props.dateref} />
+//     </div>
+//   );
+// }
 
 const Modal = (props) => {
   const { booknum } = useParams();
@@ -70,9 +85,9 @@ const Modal = (props) => {
           data: {
             id: 0, //dataId.current
             pro_con: type == "debate" ? true : false,
-            topic: inutRef.current[0].value,
-            due_date: inutRef.current[2].value,
-            reason: inutRef.current[1].value, //explan == reason
+            topic: inputs.topic,
+            reason: inputs.explan, //explan == reason
+            due_date: inputs.date,
           },
         }).then((data) => {
           if (data.status === 200) {
@@ -102,7 +117,7 @@ const Modal = (props) => {
     handleSubmit();
   }
 
-  const inutRef = useRef([]);
+  //const inutRef = useRef([]);
 
   const [inputs, setInputs] = useState({
     topic: "",
@@ -111,13 +126,25 @@ const Modal = (props) => {
   });
   const { topic, explan, date } = inputs;
 
-  const validTopic = topic.length <= 20;
-  const validExpln = explan.length <= 100;
+  const validTopic = topic.length <= 20 && topic.length > 0;
+  const validExpln = explan.length <= 100 && explan.length > 0;
 
   const handleChange = (e) => {
     setInputs({
       ...inputs,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleDateChange = (date) => {
+    if (typeof date === "object" && date !== null) {
+      //console.log(date.toLocaleDateString());
+      date = date.toISOString().substring(0, 10);
+      console.log(date);
+    }
+    setInputs({
+      ...inputs,
+      ["date"]: date,
     });
   };
 
@@ -128,7 +155,6 @@ const Modal = (props) => {
         ...inputs,
         topic: "",
       });
-      inutRef.current[0].focus();
     } else if (!validExpln) {
       alert("유효하지 않은 설명");
       setInputs({
@@ -140,7 +166,7 @@ const Modal = (props) => {
 
   const [content, setContent] = useState("");
   //console.log({ inutRef });
-  console.log(content.length);
+  //console.log(explan.length);
 
   return (
     //모달 열렸으면 openModal
@@ -161,9 +187,9 @@ const Modal = (props) => {
                 name="topic"
                 placeholder="주제(20자 이하)"
                 //ref={topicRef}
-                ref={(el) => (inutRef.current[0] = el)}
+                //ref={(el) => (inutRef.current[0] = el)}
               />
-              {validTopic ? null : <span>유효하지 않은 id 입니다.</span>}
+              {validTopic ? null : <span>1자 이상 20자 이하여야 합니다.</span>}
             </div>
             <div>
               <textarea
@@ -174,24 +200,40 @@ const Modal = (props) => {
                 }}
                 cols="55"
                 rows="10"
-                name="userExplan"
+                name="explan"
                 placeholder="설명(100자 이하)"
                 //ref={explanRef}
-                ref={(el) => (inutRef.current[1] = el)}
+                //ref={(el) => (inutRef.current[1] = el)}
               />
-              {validExpln ? null : <span>유효하지 않은 id 입니다.</span>}
+              {validExpln ? null : <span>1자 이상 100자 이하여야 합니다.</span>}
             </div>
 
             {type == "debate" && (
-              <Calender
-                dateref={(el) => (inutRef.current[2] = el)}
-                //dateref={dateRef}
-              />
+              <div>
+                <p>기간</p>
+                {/* <input
+                  type="date"
+                  name="date"
+                  ref={(el) => (inutRef.current[2] = el)}
+                  onChange={(e) => {
+                    handleChange(e);
+                    console.log(e.target.value);
+                  }}
+                /> */}
+                <Calender
+                  // dateref={(el) => {
+                  //   inutRef.current[2] = el;
+                  //   console.log(el);
+                  // }}
+                  func={handleDateChange}
+                  //dateref={dateRef}
+                />
+              </div>
             )}
             <div className="formbtn">
               <button
                 onClick={handleClick}
-                disabled={topic.length < 1 || content.length < 1}
+                disabled={!validTopic || !validExpln}
               >
                 생성
               </button>
