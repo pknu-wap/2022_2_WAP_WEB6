@@ -27,7 +27,11 @@ function EditorBox(props) {
         />
       </div>
       <p className="editorsubmit">
-        <button className="btn" onClick={props.onSubmit}>
+        <button
+          className="btn"
+          onClick={props.onSubmit}
+          disabled={props.disabled}
+        >
           {props.print}
         </button>
       </p>
