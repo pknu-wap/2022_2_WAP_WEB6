@@ -9,6 +9,7 @@ import FreeDebateList from "./routes/debateList/FreeDebateList";
 import DetailDebate from "./routes/DetailDebate/DetailDebate";
 import DetailFree from "./routes/FreeDebate/DetailFree";
 import AllDebate from "./routes/allDebate/AllDebate";
+import Mypage from "./routes/Mypage/Mypage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="join" element={<Join />} />
         <Route path="allDebate" element={<AllDebate />} />
+        <Route path="mypage" element={<Mypage />} />
 
         {/* <Route path="debateList" element={<DebateList />} /> */}
         {/*<Route path="debateList/:title" element={<DebateList />} />*/}

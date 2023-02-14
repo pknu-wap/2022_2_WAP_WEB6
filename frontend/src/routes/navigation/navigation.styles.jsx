@@ -8,8 +8,9 @@ export const NavigationContainer = styled.div`
   justify-content: space-between;
   margin-bottom: 25px;
 `;
-export const LogoContainer = styled(Link)`
+export const LogoContainer = styled.div`
   // height: 100%;
+  cursor: pointer;
   width: 70px;
   padding: 10px;
 `;
