@@ -97,6 +97,7 @@ function DebateList() {
             // Due_date
             dueDate={topics.due_date}
             type="procon"
+            key={topics.id}
           ></DebateTopics>
         ))}
       </div>
