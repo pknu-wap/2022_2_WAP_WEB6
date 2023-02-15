@@ -11,4 +11,8 @@ public interface LikeDislikeCommentRepository extends JpaRepository<LikeDislikeC
 
     @Query(value = "SELECT * FROM like_dislike_table WHERE user_id = :userId", nativeQuery = true)
     LikeDislikeCommentEntity getByUserId(@Param("userId") long userId);
+
+
+    @Query(value = "SELECT * FROM like_dislike_table WHERE user_id = :userId AND debate_id = :proconId", nativeQuery = true)
+    LikeDislikeCommentEntity getByUserIdAndProconId(@Param("userId") long userId, @Param("proconId") long proconId);
 }

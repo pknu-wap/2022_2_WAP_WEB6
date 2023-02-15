@@ -8,6 +8,7 @@ import javax.persistence.Column;
 @NoArgsConstructor
 @Getter
 @ToString
+@Setter
 //@Setter
 public class CommentDto {
     private Long id;
@@ -18,7 +19,7 @@ public class CommentDto {
     private Long dislikeNum;
     private Long userId;
     private String userName;
-
+    private Long favStatus;
     private boolean reply;
     private Long parentCommentId;
     // Entity -> dto
@@ -32,6 +33,7 @@ public class CommentDto {
                 c.getDislikeNum(),
                 c.getUser().getId(),
                 c.getUser().getUsername(),
+                0L,
                 c.isReply(),
                 c.getParentCommentId()
         );

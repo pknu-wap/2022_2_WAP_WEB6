@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -58,9 +59,20 @@ public class CommentApiController {
         return ResponseEntity.status(HttpStatus.OK).body(createdDto);
     }
     //paging 해서 전달
+//    @GetMapping("/api/CommentsPaged/page/{offset}/size/{pageSize}/proconId/{proconId}")
+//    public APIResponse<Page<CommentDto>> getCommentsTopicPaged(@PathVariable int offset, @PathVariable int pageSize, @PathVariable Long proconId) {
+//        Page<CommentDto> comments = commentService.proConCommentsWithPagination(offset, pageSize, proconId);
+//        return new APIResponse<>(comments.getSize(), comments);
+//    }
+    //paging 해서 전달
     @GetMapping("/api/CommentsPaged/page/{offset}/size/{pageSize}/proconId/{proconId}")
-    public APIResponse<Page<CommentDto>> getCommentsTopicPaged(@PathVariable int offset, @PathVariable int pageSize, @PathVariable Long proconId) {
-        Page<CommentDto> comments = commentService.proConCommentsWithPagination(offset, pageSize, proconId);
+    public APIResponse<Page<?>> getCommentsTopicPaged(@PathVariable int offset,
+                                                      @PathVariable int pageSize,
+                                                      @PathVariable Long proconId,
+                                                      @RequestBody HashMap<String, Long> map) {
+
+        Page<?> comments = commentService.proConCommentsWithPagination(offset, pageSize, proconId, map);
+
         return new APIResponse<>(comments.getSize(), comments);
     }
     
