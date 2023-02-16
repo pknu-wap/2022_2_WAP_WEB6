@@ -74,7 +74,17 @@ VALUES (16, 2, 25, 52, true, '데미안 토론주제 반대 2', 2, false, 0);
 INSERT INTO comment(id, procontopic_id, dislike_num, like_num, pro_con, content, user_id, reply, parent_comment_id)
 VALUES (17, 2, 25, 52, true, '데미안 토론주제 반대 2', 2, false, 0);
 
+INSERT INTO like_dislike_table(like_dislike_id, comment_id, debate_id, status, user_id)
+VALUES (1, 1, 1, 1, 1);
 
+INSERT INTO like_dislike_table(like_dislike_id, comment_id, debate_id, status, user_id)
+VALUES (2, 1, 1, 1, 2);
+
+INSERT INTO like_dislike_table(like_dislike_id, comment_id, debate_id, status, user_id)
+VALUES (3, 2, 1, -1, 1);
+
+INSERT INTO like_dislike_table(like_dislike_id, comment_id, debate_id, status, user_id)
+VALUES (4, 3, 1, -1, 1);
 
 
 

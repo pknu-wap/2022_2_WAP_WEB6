@@ -47,6 +47,9 @@ function DetailDebate() {
           method: "get",
           //댓글 페이징 요청
           url: `http://${config.URL}/api/CommentsPaged/page/${page}/size/${size}/proconId/${params.debateId}`,
+          data: {
+            userId : null
+          },
         }).then((response) => {
           if (response.status === 200) {
             // 성공시

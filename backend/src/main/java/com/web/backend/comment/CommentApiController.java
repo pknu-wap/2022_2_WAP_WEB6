@@ -64,14 +64,20 @@ public class CommentApiController {
 //        Page<CommentDto> comments = commentService.proConCommentsWithPagination(offset, pageSize, proconId);
 //        return new APIResponse<>(comments.getSize(), comments);
 //    }
+
     //paging 해서 전달
     @GetMapping("/api/CommentsPaged/page/{offset}/size/{pageSize}/proconId/{proconId}")
     public APIResponse<Page<?>> getCommentsTopicPaged(@PathVariable int offset,
                                                       @PathVariable int pageSize,
                                                       @PathVariable Long proconId,
                                                       @RequestBody HashMap<String, Long> map) {
+        // 임시 방편
+        if (map.get("userId") == null) {
+            map.put("userId", 0L);
 
+        }
         Page<?> comments = commentService.proConCommentsWithPagination(offset, pageSize, proconId, map);
+
 
         return new APIResponse<>(comments.getSize(), comments);
     }

@@ -1,8 +1,6 @@
 package com.web.backend.comment;
 
-import com.web.backend.likedislikecomment.LikeDislikeCommentEntity;
 import com.web.backend.likedislikecomment.LikeDislikeCommentRepository;
-import com.web.backend.proconboard.ProConTopicDto;
 import com.web.backend.proconboard.ProConTopicEntity;
 import com.web.backend.proconboard.ProConTopicRepository;
 import com.web.backend.user.UserDetailsRepository;
@@ -13,8 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Pageable;
-import javax.annotation.PostConstruct;
+
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -69,14 +66,11 @@ public class CommentService {
     }
 
     public Page<CommentDto> proConCommentsWithPagination(int offset, int pageSize, Long proconId, HashMap<String, Long> map) {
-        LikeDislikeCommentEntity likeDislikeCommentEntity =
-                likeDislikeCommentRepository.getByUserIdAndProconId(map.get("userId"), proconId );
-        System.out.println("----------------------------------------------------------");
-        System.out.println(likeDislikeCommentEntity);
-        System.out.println("----------------------------------------------------------");
+        List<?> likeDislikeCommentEntity = likeDislikeCommentRepository.getByUserIdAndProconId(map.get("userId"), proconId );
+
 
         offset -= 1;
-        List<CommentEntity> comments = commentRepository.findByProConTopicId(proconId);
+        List<CommentEntity> comments = commentRepository.findComments(proconId);
         List<CommentDto> dtos = new ArrayList<CommentDto>();
 
         for (int i = 0; i < comments.size(); i++) {
