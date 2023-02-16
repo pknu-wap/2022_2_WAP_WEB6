@@ -1,5 +1,6 @@
 package com.web.backend.comment;
 
+import com.web.backend.likedislikecomment.LikeDislikeCommentEntity;
 import com.web.backend.likedislikecomment.LikeDislikeCommentRepository;
 import com.web.backend.proconboard.ProConTopicEntity;
 import com.web.backend.proconboard.ProConTopicRepository;
@@ -65,34 +66,7 @@ public class CommentService {
         return comments;
     }
 
-    public Page<CommentDto> proConCommentsWithPagination(int offset, int pageSize, Long proconId, HashMap<String, Long> map) {
-        List<?> likeDislikeCommentEntity = likeDislikeCommentRepository.getByUserIdAndProconId(map.get("userId"), proconId );
 
-
-        offset -= 1;
-        List<CommentEntity> comments = commentRepository.findComments(proconId);
-        List<CommentDto> dtos = new ArrayList<CommentDto>();
-
-        for (int i = 0; i < comments.size(); i++) {
-
-            CommentEntity c = comments.get(i);
-
-            CommentDto dto = CommentDto.createCommentDto(c);
-
-//            dto.setFavStatus();
-
-            dtos.add(dto);
-        }
-        dtos = dtos.stream().sorted(Comparator.comparing(CommentDto::getLikeNum).reversed()).collect(Collectors.toList());
-
-        PageRequest pageRequest = PageRequest.of(offset, pageSize);
-        int start = (int) pageRequest.getOffset();
-        int end = Math.min((start + pageRequest.getPageSize()), dtos.size());
-        Page<CommentDto> commentPage = new PageImpl<>(dtos.subList(start, end), pageRequest, dtos.size());
-
-
-        return commentPage;
-    }
 
 
     // 찬반토론 댓글 목록 조회
@@ -111,11 +85,49 @@ public class CommentService {
         return dtos;
 
     }
+    public Page<CommentDto> proConCommentsWithPagination(int offset, int pageSize, Long proconId, HashMap<String, Long> map) {
+        List<LikeDislikeCommentEntity> likeDislikeCommentEntity = likeDislikeCommentRepository.getByUserIdAndProconId(map.get("userId"), proconId);
 
+        HashMap<Long, Integer> commentStatus = new HashMap<>();
+        for (int i = 0; i < likeDislikeCommentEntity.size(); i++) {
+            LikeDislikeCommentEntity c = likeDislikeCommentEntity.get(i);
+            commentStatus.put(c.getCommentId(), c.getStatus());
+        }
+
+        offset -= 1;
+        List<CommentEntity> comments = commentRepository.findComments(proconId);
+        List<CommentDto> dtos = new ArrayList<CommentDto>();
+
+        for (int i = 0; i < comments.size(); i++) {
+            CommentEntity c = comments.get(i);
+            CommentDto dto = CommentDto.createCommentDto(c);
+
+            if (commentStatus.containsKey(c.getId())) {
+                dto.setFavStatus(Long.valueOf(commentStatus.get(c.getId())));
+            }
+            dtos.add(dto);
+        }
+        dtos = dtos.stream().sorted(Comparator.comparing(CommentDto::getLikeNum).reversed()).collect(Collectors.toList());
+
+        PageRequest pageRequest = PageRequest.of(offset, pageSize);
+        int start = (int) pageRequest.getOffset();
+        int end = Math.min((start + pageRequest.getPageSize()), dtos.size());
+        Page<CommentDto> commentPage = new PageImpl<>(dtos.subList(start, end), pageRequest, dtos.size());
+
+
+        return commentPage;
+    }
     //댓글 대댓글 조회
-    public List<CommentDto> replyComments(Long proconId, Long parentCommentId) {
+    public List<CommentDto> replyComments(Long proconId, Long parentCommentId, HashMap<String, Long> map) {
+        List<LikeDislikeCommentEntity> likeDislikeCommentEntity = likeDislikeCommentRepository.getByUserIdAndProconId(map.get("userId"), proconId);
+
+        HashMap<Long, Integer> commentStatus = new HashMap<>();
+        for (int i = 0; i < likeDislikeCommentEntity.size(); i++) {
+            LikeDislikeCommentEntity c = likeDislikeCommentEntity.get(i);
+            commentStatus.put(c.getCommentId(), c.getStatus());
+        }
+
         List<CommentEntity> comments = commentRepository.findByCommentId(proconId, parentCommentId);
-//        List<CommentEntity> comments = commentRepository.findByCommentId(proconId);
 
         // 변환: 엔티티 -> DTO
         List<CommentDto> dtos = new ArrayList<CommentDto>();
@@ -123,6 +135,9 @@ public class CommentService {
         for (int i = 0; i < comments.size(); i++) {
             CommentEntity c = comments.get(i);
             CommentDto dto = CommentDto.createCommentDto(c);
+            if (commentStatus.containsKey(c.getId())) {
+                dto.setFavStatus(Long.valueOf(commentStatus.get(c.getId())));
+            }
             dtos.add(dto);
         }
 
@@ -139,7 +154,7 @@ public class CommentService {
                 .orElseThrow(() -> new IllegalArgumentException("찬반주제 페이지 생성실패! 대상 유저가 없습"));
 
         // 댓글 엔티티 생성
-        CommentEntity comment = CommentEntity.createComment(dto, user,0L, proConTopic);
+        CommentEntity comment = CommentEntity.createComment(dto, user, 0L, proConTopic);
 
         // 댓글 엔티티를 DB에 저장
         CommentEntity created = commentRepository.save(comment);
@@ -149,6 +164,7 @@ public class CommentService {
         return CommentDto.createCommentDto(created);
 
     }
+
     @Transactional
     public CommentDto createReplyComment(Long userId, Long proConTopicId, Long parentId, CommentDto dto) {
 

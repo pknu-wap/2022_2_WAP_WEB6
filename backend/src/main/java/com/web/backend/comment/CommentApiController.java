@@ -27,11 +27,34 @@ public class CommentApiController {
     }
     // 대댓글 조회
     @GetMapping("/api/reply/proconTopic/{proconId}/motherComment/{parentCommentId}")
-    public ResponseEntity<List<CommentDto>> replyComments(@PathVariable Long proconId, @PathVariable Long parentCommentId) {
+    public ResponseEntity<List<CommentDto>> replyComments(@PathVariable Long proconId,
+                                                          @PathVariable Long parentCommentId,
+                                                          @RequestBody HashMap<String, Long> map) {
+        // 임시 방편
+        if (map.get("userId") == null) {
+            map.put("userId", 0L);
+        }
         // 서비스에게 위임
-        List<CommentDto> dtos = commentService.replyComments(proconId, parentCommentId);
+        List<CommentDto> dtos = commentService.replyComments(proconId, parentCommentId, map);
         // 결과 응답
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
+    }
+
+    //일반 댓글 페이징 해서 전달
+    @GetMapping("/api/CommentsPaged/page/{offset}/size/{pageSize}/proconId/{proconId}")
+    public APIResponse<Page<?>> getCommentsTopicPaged(@PathVariable int offset,
+                                                      @PathVariable int pageSize,
+                                                      @PathVariable Long proconId,
+                                                      @RequestBody HashMap<String, Long> map) {
+        // 임시 방편
+        if (map.get("userId") == null) {
+            map.put("userId", 0L);
+        }
+
+        Page<CommentDto> comments = commentService.proConCommentsWithPagination(offset, pageSize, proconId, map);
+
+
+        return new APIResponse<>(comments.getSize(), comments);
     }
 
     // 댓글 생성
@@ -54,6 +77,7 @@ public class CommentApiController {
                                                    @PathVariable Long parentId,
                                                    @RequestBody CommentDto dto) {
 
+
         CommentDto createdDto = commentService.createReplyComment(userId, proConTopicId, parentId, dto);
         // 결과 응답
         return ResponseEntity.status(HttpStatus.OK).body(createdDto);
@@ -65,22 +89,7 @@ public class CommentApiController {
 //        return new APIResponse<>(comments.getSize(), comments);
 //    }
 
-    //paging 해서 전달
-    @GetMapping("/api/CommentsPaged/page/{offset}/size/{pageSize}/proconId/{proconId}")
-    public APIResponse<Page<?>> getCommentsTopicPaged(@PathVariable int offset,
-                                                      @PathVariable int pageSize,
-                                                      @PathVariable Long proconId,
-                                                      @RequestBody HashMap<String, Long> map) {
-        // 임시 방편
-        if (map.get("userId") == null) {
-            map.put("userId", 0L);
 
-        }
-        Page<?> comments = commentService.proConCommentsWithPagination(offset, pageSize, proconId, map);
-
-
-        return new APIResponse<>(comments.getSize(), comments);
-    }
     
 
     // 댓글 수정
