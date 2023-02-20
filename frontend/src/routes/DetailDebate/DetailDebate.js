@@ -12,6 +12,7 @@ import EditorForm from "../../components/EditorForm/EditorForm";
 import axios from "axios";
 import * as config from "../../config";
 import Pagination from "../../components/Pagination/Pagination";
+import {getId} from "../../userInfo/userInfo";
 
 //찬반 토론 상세 페이지
 function DetailDebate() {
@@ -44,17 +45,19 @@ function DetailDebate() {
     async function commentPagination() {
       try {
         await axios({
-          method: "get",
+          method: "post",
           //댓글 페이징 요청
           url: `http://${config.URL}/api/CommentsPaged/page/${page}/size/${size}/proconId/${params.debateId}`,
           data: {
-            userId : null
-          },
+            // userInfo.getId()
+            "userId" : getId()
+          }
+
         }).then((response) => {
           if (response.status === 200) {
             // 성공시
-            console.log(response.data.response);
-            console.log("paging comment data");
+            // console.log(response.data.response);
+            // console.log("paging comment data");
             setComment(response.data.response);
           } else {
             console.log("예상치 못한 오류!!");
@@ -113,8 +116,8 @@ function DetailDebate() {
           if (response.status === 200) {
             // 성공시
             // 책 데이터
-            console.log(response);
-            console.log("book data");
+            // console.log(response);
+            // console.log("book data");
             setBookdata(response.data);
           } else {
             console.log("예상치 못한 오류!!");
@@ -136,8 +139,8 @@ function DetailDebate() {
           if (response.status === 200) {
             // 성공시
             // 책 데이터
-            console.log(response);
-            console.log("debate data");
+            // console.log(response);
+            // console.log("debate data");
             setDebatedata(response.data);
           } else {
             console.log("예상치 못한 오류!!");

@@ -14,10 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -85,7 +82,7 @@ public class CommentService {
         return dtos;
 
     }
-    public Page<CommentDto> proConCommentsWithPagination(int offset, int pageSize, Long proconId, HashMap<String, Long> map) {
+    public Page<CommentDto> proConCommentsWithPagination(int offset, int pageSize, Long proconId, Map<String,Long> map) {
         List<LikeDislikeCommentEntity> likeDislikeCommentEntity = likeDislikeCommentRepository.getByUserIdAndProconId(map.get("userId"), proconId);
 
         HashMap<Long, Integer> commentStatus = new HashMap<>();
@@ -118,7 +115,7 @@ public class CommentService {
         return commentPage;
     }
     //댓글 대댓글 조회
-    public List<CommentDto> replyComments(Long proconId, Long parentCommentId, HashMap<String, Long> map) {
+    public List<CommentDto> replyComments(Long proconId, Long parentCommentId, Map<String, Long> map) {
         List<LikeDislikeCommentEntity> likeDislikeCommentEntity = likeDislikeCommentRepository.getByUserIdAndProconId(map.get("userId"), proconId);
 
         HashMap<Long, Integer> commentStatus = new HashMap<>();

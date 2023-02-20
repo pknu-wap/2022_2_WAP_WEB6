@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class CommentApiController {
@@ -26,10 +27,10 @@ public class CommentApiController {
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
     // 대댓글 조회
-    @GetMapping("/api/reply/proconTopic/{proconId}/motherComment/{parentCommentId}")
+    @PostMapping("/api/reply/proconTopic/{proconId}/motherComment/{parentCommentId}")
     public ResponseEntity<List<CommentDto>> replyComments(@PathVariable Long proconId,
                                                           @PathVariable Long parentCommentId,
-                                                          @RequestBody HashMap<String, Long> map) {
+                                                          @RequestBody Map<String, Long> map) {
         // 임시 방편
         if (map.get("userId") == null) {
             map.put("userId", 0L);
@@ -41,18 +42,17 @@ public class CommentApiController {
     }
 
     //일반 댓글 페이징 해서 전달
-    @GetMapping("/api/CommentsPaged/page/{offset}/size/{pageSize}/proconId/{proconId}")
+    @PostMapping("/api/CommentsPaged/page/{offset}/size/{pageSize}/proconId/{proconId}")
     public APIResponse<Page<?>> getCommentsTopicPaged(@PathVariable int offset,
                                                       @PathVariable int pageSize,
                                                       @PathVariable Long proconId,
-                                                      @RequestBody HashMap<String, Long> map) {
-        // 임시 방편
+                                                      @RequestBody Map<String,Long> map
+                                                      ) {
+
         if (map.get("userId") == null) {
             map.put("userId", 0L);
         }
-
         Page<CommentDto> comments = commentService.proConCommentsWithPagination(offset, pageSize, proconId, map);
-
 
         return new APIResponse<>(comments.getSize(), comments);
     }

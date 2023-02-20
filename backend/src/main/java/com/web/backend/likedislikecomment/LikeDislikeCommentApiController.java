@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class LikeDislikeCommentApiController {
     @Autowired
     private LikeDislikeCommentService likeDislikeCommentService;
     @PostMapping("/api/toggle/comment/like/dislike")
-    public ResponseEntity<?> likeComment(@RequestBody HashMap<String, Long> map) {
+    public ResponseEntity<?> likeComment(@RequestBody Map<String, Long> map) {
         // true or false
         likeDislikeCommentService.toggleComment(map);
         return ResponseEntity.status(HttpStatus.OK).body("success");

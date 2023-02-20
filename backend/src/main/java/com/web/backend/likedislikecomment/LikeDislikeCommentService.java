@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class LikeDislikeCommentService {
@@ -19,14 +20,14 @@ public class LikeDislikeCommentService {
     private CommentRepository commentRepository;
 
     @Transactional
-    public void toggleComment(HashMap<String, Long> map) {
+    public void toggleComment(Map<String, Long> map) {
         Long commentId = map.get("commentId");
         Long userId = map.get("userId");
         Long debateId = map.get("debateId");
         Long status = map.get("status");
 
         CommentEntity commentEntity = commentRepository.getById(map.get("commentId"));
-        LikeDislikeCommentEntity likeDislikeCommentEntity = likeDislikeCommentRepository.getByUserId(map.get("userId"));
+        LikeDislikeCommentEntity likeDislikeCommentEntity = likeDislikeCommentRepository.getByUserId(map.get("userId"), map.get("commentId"));
 
         if (likeDislikeCommentEntity == null) {
             likeDislikeCommentEntity = createLikeDislikeComment(commentId, userId, debateId);
