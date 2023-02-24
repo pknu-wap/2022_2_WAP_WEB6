@@ -11,7 +11,7 @@ function DebateHeader(props) {
   const closeModal = () => {
     setModalOpen(false);
   };
-  console.log(props.title);
+  //console.log(props.title);
 
   return (
     <>

@@ -8,7 +8,16 @@ import { getId } from "../../userInfo/userInfo";
 import { AiOutlineUp, AiOutlineDown } from "react-icons/ai";
 import LikeDislike from "../LikeDislike/LikeDislike";
 
-function CommentBox({ name, content, likeNum, dislikeNum, favStatus }) {
+function CommentBox({
+  id,
+  name,
+  content,
+  likeNum,
+  dislikeNum,
+  favStatus,
+  debateId,
+  getFavStatus,
+}) {
   return (
     <li className="commentBox">
       <div className="commetUserImg">
@@ -23,8 +32,14 @@ function CommentBox({ name, content, likeNum, dislikeNum, favStatus }) {
         <p dangerouslySetInnerHTML={{ __html: content }}></p>
       </div>
       <div className="reaction">
-        <span>👍 {likeNum}</span>
-        <span>👎 {dislikeNum}</span>
+        <LikeDislike
+          likeNum={likeNum}
+          dislikeNum={dislikeNum}
+          favStatus={favStatus}
+          commentId={id}
+          debateId={debateId}
+          getFavStatus={getFavStatus}
+        ></LikeDislike>
       </div>
     </li>
   );
@@ -62,8 +77,8 @@ function ChatBox(props) {
           method: "post",
           url: `http://${config.URL}/api/reply/proconTopic/${params.debateId}/motherComment/${props.id}`,
           data: {
-            "userId" : getId()
-          }
+            userId: getId(),
+          },
         }).then((response) => {
           if (response.status === 200) {
             //console.log(response);
@@ -78,7 +93,8 @@ function ChatBox(props) {
     }
 
     fetchNestedComment();
-  }, [getVisible === true]);
+  }, [getVisible === true, props.getFavStatus]);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (getId() == null) {
@@ -127,77 +143,79 @@ function ChatBox(props) {
     }
   };
 
-
   return (
-      <li>
-        <div className="ChatBox-container">
-          <div className={"userImg" + classNameSet}>
-            <img
-                src="https://cdn-icons-png.flaticon.com/512/4553/4553212.png"
-                height="40"
-                width="40"
-            ></img>
-            {opinionDiv}
-          </div>
-          <div className={"msg-container " + "msg" + classNameSet}>
-            <h5>{props.userName}</h5>
-            <p dangerouslySetInnerHTML={{__html: props.content}}></p>
-          </div>
-          <div className={"reaction " + "reaction" + classNameSet}>
-            {/* 기능 구현X -> 좋아요, 싫어요, 대댓글*/}
-            <LikeDislike
-                likeNum = {props.likeNum}
-                dislikeNum = {props.dislikeNum}
-                favStatus = {props.favStatus}
-                commentId = {props.id}
-                debateId =  {params.debateId}
-            >
-            </LikeDislike>
-            {/*<span> <FontAwesomeIcon icon={faThumbsUp} size="1x"/> {props.likeNum}</span>*/}
-            {/*<span> <FontAwesomeIcon icon={faThumbsDown} size="1x"/> {props.dislikeNum}</span>*/}
-            <button
-                onClick={() => {
-                  setPostVisible(!postVisible);
-                }}
-            >
-              답글
-            </button>
-          </div>
-          <div className={postVisible ? "reply" : ""}>
-            {postVisible && (
-                <EditorBox
-                    //value="댓글"
-                    print="작성"
-                    setContent={setContent}
-                    onSubmit={handleSubmit}
-                    disabled={!validContent}
-                />
-            )}
-          </div>
-          <div
-              className={"nestedComment-btn " + "getBtn-" + classNameSet}
-              onClick={() => setGetVisible(!getVisible)}
-          >
-            {getVisible ? <AiOutlineUp/> : <AiOutlineDown/>}
-            <span>답글</span>
-          </div>
-          <ol className="commentWrap">
-            {getVisible &&
-                nestedComment.map((it) => {
-                  return (
-                      <CommentBox
-                          key={it.id}
-                          name={it.userName}
-                          content={it.content}
-                          likeNum={it.likeNum}
-                          dislikeNum={it.dislikeNum}
-                          favStatus={it.favStatus}
-                      />
-                  );
-                })}
-          </ol>
+    <li>
+      <div className="ChatBox-container">
+        <div className={"userImg" + classNameSet}>
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/4553/4553212.png"
+            height="40"
+            width="40"
+          ></img>
+          {opinionDiv}
         </div>
-      </li>
+        <div className={"msg-container " + "msg" + classNameSet}>
+          <h5>{props.userName}</h5>
+          <p dangerouslySetInnerHTML={{ __html: props.content }}></p>
+        </div>
+        <div className={"reaction " + "reaction" + classNameSet}>
+          {/* 기능 구현X -> 좋아요, 싫어요, 대댓글*/}
+          <LikeDislike
+            likeNum={props.likeNum}
+            dislikeNum={props.dislikeNum}
+            favStatus={props.favStatus}
+            commentId={props.id}
+            debateId={params.debateId}
+            getFavStatus={props.getFavStatus}
+          ></LikeDislike>
+          {/*<span> <FontAwesomeIcon icon={faThumbsUp} size="1x"/> {props.likeNum}</span>*/}
+          {/*<span> <FontAwesomeIcon icon={faThumbsDown} size="1x"/> {props.dislikeNum}</span>*/}
+          <button
+            onClick={() => {
+              setPostVisible(!postVisible);
+            }}
+          >
+            답글
+          </button>
+        </div>
+        <div className={postVisible ? "reply" : ""}>
+          {postVisible && (
+            <EditorBox
+              //value="댓글"
+              print="작성"
+              setContent={setContent}
+              onSubmit={handleSubmit}
+              disabled={!validContent}
+            />
+          )}
+        </div>
+        <div
+          className={"nestedComment-btn " + "getBtn-" + classNameSet}
+          onClick={() => setGetVisible(!getVisible)}
+        >
+          {getVisible ? <AiOutlineUp /> : <AiOutlineDown />}
+          <span>답글</span>
+        </div>
+        <ol className="commentWrap">
+          {getVisible &&
+            nestedComment.map((it) => {
+              return (
+                <CommentBox
+                  key={it.id}
+                  id={it.id}
+                  name={it.userName}
+                  content={it.content}
+                  likeNum={it.likeNum}
+                  dislikeNum={it.dislikeNum}
+                  favStatus={it.favStatus}
+                  debateId={params.debateId}
+                  getFavStatus={props.getFavStatus}
+                />
+              );
+            })}
+        </ol>
+      </div>
+    </li>
   );
 }
 

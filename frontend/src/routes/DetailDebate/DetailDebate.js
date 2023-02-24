@@ -12,7 +12,7 @@ import EditorForm from "../../components/EditorForm/EditorForm";
 import axios from "axios";
 import * as config from "../../config";
 import Pagination from "../../components/Pagination/Pagination";
-import {getId} from "../../userInfo/userInfo";
+import { getId } from "../../userInfo/userInfo";
 
 //찬반 토론 상세 페이지
 function DetailDebate() {
@@ -21,6 +21,9 @@ function DetailDebate() {
   const [debatedata, setDebatedata] = useState([]);
   const [page, setPage] = useState(1);
   const size = 10;
+  const [fav, setFav] = useState(false);
+  const getFavStatus = () => setFav(!fav);
+  //console.log(fav);
 
   const dataId = useRef(0);
   const params = useParams();
@@ -50,13 +53,12 @@ function DetailDebate() {
           url: `http://${config.URL}/api/CommentsPaged/page/${page}/size/${size}/proconId/${params.debateId}`,
           data: {
             // userInfo.getId()
-            "userId" : getId()
-          }
-
+            userId: getId(),
+          },
         }).then((response) => {
           if (response.status === 200) {
             // 성공시
-            // console.log(response.data.response);
+            //console.log(response.data.response);
             // console.log("paging comment data");
             setComment(response.data.response);
           } else {
@@ -69,43 +71,9 @@ function DetailDebate() {
     }
 
     commentPagination();
-  }, [page]);
+  }, [page, fav]);
 
   useEffect(() => {
-    //댓글 get
-    // async function fetchComments() {
-    //   try {
-    //     await axios({
-    //       method: "get",
-    //       //댓글 페이징 요청
-    //       // url: `http://${config.URL}/api/CommentsPaged/page/${page}/size/${size}/proconId/${params.debateId}`,
-    //       //해당 댓글 모두 조회
-    //       url:
-    //         "http://" +
-    //         config.URL +
-    //         "/api/proconTopic/" +
-    //         params.debateId +
-    //         "/comments",
-    //     }).then((commentData) => {
-    //       if (commentData.status === 200) {
-    //         // 성공시
-    //         console.log(commentData.data);
-    //         console.log("comment data");
-    //         setComment(commentData.data);
-    //         // 댓글 데이터
-    //         // console.log(commentData.data.response);
-    //         // console.log("comment data");
-    //         // setComment(commentData.data.response);
-    //       } else {
-    //         console.log("예상치 못한 오류!!");
-    //       }
-    //     });
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
-    // fetchComments();
-
     //책 정보 get
     async function fetchBookData() {
       try {
@@ -175,10 +143,9 @@ function DetailDebate() {
         title={bookdata.title}
         body={bodyContent}
       ></BookExplain>
-      {/* <Opinion opList={comment} /> */}
       {Array.isArray(comment) && comment.length === 0 ? null : (
         <>
-          <Opinion opList={comment.content} />
+          <Opinion opList={comment.content} getFavStatus={getFavStatus} />
           <Pagination
             total={comment.totalElements}
             limit={size}

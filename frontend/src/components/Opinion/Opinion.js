@@ -16,7 +16,14 @@ function Opinion(props) {
       <ol>
         {props.opList.map((it) => {
           if (!it.reply) {
-            return <ChatBox key={it.id} {...it} user={it.userName} />;
+            return (
+              <ChatBox
+                key={it.id}
+                {...it}
+                user={it.userName}
+                getFavStatus={props.getFavStatus}
+              />
+            );
           }
           // return <ChatBox key={it.id} {...it} user={it.userName} />;
         })}
