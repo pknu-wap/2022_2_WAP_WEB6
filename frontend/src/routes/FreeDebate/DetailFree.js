@@ -3,7 +3,6 @@ import React, { useState, useRef } from "react";
 // import BookExplain from "../components/detailDebate/BookExplan";
 // import Opinion from "../components/detailDebate/Opinion";
 // import Form from "../components/detailDebate/Form";
-import "../DetailDebate/DetailDebate.css";
 import dummy from "../debateList/data.json";
 import { Form, useParams } from "react-router-dom";
 import TopicHeader from "../../components/TopicHeader/TopicHeader";

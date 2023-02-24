@@ -1,13 +1,17 @@
-import React from 'react';
+import React from "react";
 
 export const getToken = () => {
-    return localStorage.getItem('token');
-}
+  return localStorage.getItem("token");
+};
 
 export const getUsername = () => {
-    return localStorage.getItem("username");
+  return localStorage.getItem("username");
 };
 
 export const getId = () => {
-    return localStorage.getItem("id")
-}
+  return localStorage.getItem("id");
+};
+
+export const getAuthorities = () => {
+  return JSON.parse(localStorage.getItem("authorities"));
+};

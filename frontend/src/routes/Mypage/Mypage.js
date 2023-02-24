@@ -1,5 +1,6 @@
 import "./Mypage.css";
 import React, { useState } from "react";
+import { getAuthorities, getUsername } from "../../userInfo/userInfo";
 
 function Aside(props) {
   const lis = [];
@@ -38,13 +39,29 @@ function Article(props) {
 }
 
 function Mypage() {
+  const checkAdmin = getAuthorities().some(
+    (i) => i.roleDescription === "Admin role"
+  );
+  // console.log(checkAdmin);
+
   const [mode, setMode] = useState("MAIN");
   const [id, setId] = useState(null);
+  let userInfoBody = (
+    <>
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/4553/4553212.png"
+        height="40"
+        width="40"
+      ></img>
+      <h3>{getUsername()}</h3>
+    </>
+  );
   const mainArticle = [
     { id: 1, title: "토론 목록 조회", body: "생성글 목록" },
     { id: 2, title: "댓글 목록 조회", body: "작성 댓글 목록" },
     { id: 3, title: "좋아요 목록", body: "좋아요 누른 목록" },
-    { id: 4, title: "사용자 정보", body: "사용자 정보 변경" },
+    { id: 4, title: "사용자 정보", body: userInfoBody },
+    checkAdmin && { id: 5, title: "관리자", body: "관리자 페이지" },
   ];
 
   let content = null;

@@ -95,7 +95,10 @@ function Login() {
             localStorage.setItem("id", data.data.user.id);
             localStorage.setItem("username", data.data.user.username);
             localStorage.setItem("token", data.data.jwtToken);
-
+            localStorage.setItem(
+              "authorities",
+              JSON.stringify(data.data.user.authorities)
+            );
             window.location.replace("/");
           } else if (data.data == "sameIdExist") {
             alert("중복된 ID 입니다. 다시 입력해주세요!!");
